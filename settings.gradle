@@ -1,0 +1,3 @@
+include ':BuildSrc'
+include ':app'
+include ':core-ui-base'
