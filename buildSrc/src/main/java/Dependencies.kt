@@ -4,7 +4,7 @@ object Versions {
     const val targetSdk = 30
     const val minSdk = 21
 
-    const val kotlin = "1.4.0"
+    const val kotlin = "1.4.10"
     const val retrofit = "2.9.0"
     const val stetho = "1.5.1"
     const val glide = "4.11.0"
