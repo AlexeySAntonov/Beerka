@@ -41,6 +41,8 @@ abstract class BaseFragment : Fragment() {
     }
   }
 
+  open fun onReturnToScreen() {}
+
   protected open fun getViewToApplyStatusBarPadding(root: View): Array<View> = emptyArray()
   protected open fun getViewToApplyNavigationBarPadding(root: View): Array<View> = emptyArray()
 
@@ -64,5 +66,9 @@ abstract class BaseFragment : Fragment() {
 
   protected inline fun <T> LiveData<T>.observe(crossinline observer: (T) -> Unit) {
     observe(viewLifecycleOwner, { observer.invoke(it) })
+  }
+
+  companion object {
+    const val ARG_IS_IN_TAB_NAVIGATION = "arg_is_in_tab_navigation"
   }
 }

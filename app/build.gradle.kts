@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("kotlin-android")
+    id("kotlin-kapt")
 }
 
 android {
@@ -29,7 +30,10 @@ android {
 
 dependencies {
     implementation(project(":core-ui-base"))
+    implementation(project(":core-navigation"))
     implementation(Libs.kotlin)
     implementation(Libs.material)
     implementation(Libs.constraintLayout)
+    implementation(Libs.dagger)
+    kapt(Libs.daggerCompiler)
 }
