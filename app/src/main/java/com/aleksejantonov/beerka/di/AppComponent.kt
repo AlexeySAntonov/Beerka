@@ -1,5 +1,6 @@
 package com.aleksejantonov.beerka.di
 
+import com.aleksejantonov.core.di.GlobalFeatureProvider
 import dagger.Component
 import javax.inject.Singleton
 
@@ -11,5 +12,5 @@ import javax.inject.Singleton
   ]
 )
 interface AppComponent {
-
+  fun globalFeatureProvider(): GlobalFeatureProvider
 }

@@ -6,6 +6,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.aleksejantonov.beerka.MainActivity
 import com.aleksejantonov.beerka.R
+import com.aleksejantonov.beerka.di.DI
 import com.aleksejantonov.core.navigation.NavigationTab
 import com.aleksejantonov.core.ui.base.BaseFragment
 import com.aleksejantonov.core.ui.base.show
@@ -16,8 +17,8 @@ class MainTabsFragment : BaseFragment(R.layout.fragment_main_tabs) {
 
     private val visibleContainer: View?
         get() = when {
-            beersListTab.isVisible -> beersListTab
-            favoriteBeersTab.isVisible -> favoriteBeersTab
+            beerListContainer.isVisible -> beerListContainer
+            favoriteBeersContainer.isVisible -> favoriteBeersContainer
             else -> null
         }
 
@@ -43,7 +44,8 @@ class MainTabsFragment : BaseFragment(R.layout.fragment_main_tabs) {
         super.onResume()
         val tabNavigation = (activity as? MainActivity)?.localRouter?.tabNavigation ?: return
         if (tabNavigation.currentScreen() == null) {
-//            tabNavigation.switchTab({ /** BeerListFragment */ }, NavigationTab.BEER_LIST)
+            val fragment = DI.appComponent.globalFeatureProvider().provideFeatureBeerList()
+            tabNavigation.switchTab({ fragment }, NavigationTab.BEER_LIST)
         }
     }
 

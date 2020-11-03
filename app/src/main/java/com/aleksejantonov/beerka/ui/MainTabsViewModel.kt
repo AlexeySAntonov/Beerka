@@ -2,6 +2,7 @@ package com.aleksejantonov.beerka.ui
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.aleksejantonov.beerka.di.DI
 import com.aleksejantonov.core.navigation.AppRouter
 import com.aleksejantonov.core.navigation.NavigationTab
 import com.aleksejantonov.core.ui.base.BaseViewModel
@@ -19,16 +20,16 @@ class MainTabsViewModel : BaseViewModel() {
   fun onTabClick(tab: NavigationTab, wasSelected: Boolean) {
     when (tab) {
       NavigationTab.BEER_LIST -> {
-//        AppRouter.switchTab(
-//            rootFactory = { /** BeerListFragment */ },
-//            tab = NavigationTab.BEER_LIST
-//        )
+        AppRouter.switchTab(
+            rootFactory = { DI.appComponent.globalFeatureProvider().provideFeatureBeerList() },
+            tab = NavigationTab.BEER_LIST
+        )
       }
       NavigationTab.FAVORITES -> {
-//          AppRouter.switchTab(
-//              rootFactory = { /** FavoriteBeersFragment */ },
-//              tab = NavigationTab.FAVORITES
-//          )
+          AppRouter.switchTab(
+              rootFactory = { DI.appComponent.globalFeatureProvider().provideFeatureFavorites() },
+              tab = NavigationTab.FAVORITES
+          )
       }
     }
   }

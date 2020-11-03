@@ -7,26 +7,19 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/beerListContainer"
-        android:name="hellomobile.hello.core.ui.navigation.NavHostFragment"
+        android:name="com.aleksejantonov.core.navigation.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="76dp"
-        android:tag="FEED" />
+        android:tag="BEER_LIST" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/favoriteBeersContainer"
-        android:name="hellomobile.hello.core.ui.navigation.NavHostFragment"
+        android:name="com.aleksejantonov.core.navigation.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="76dp"
-        android:tag="ACTIVITY" />
-
-    <View
-        android:id="@+id/tabsBackground"
-        android:layout_width="match_parent"
-        android:layout_height="76dp"
-        android:layout_gravity="bottom"
-        android:background="@color/purple_200" />
+        android:tag="FAVORITES" />
 
     <Button
         android:id="@+id/beersListTab"

@@ -26,7 +26,7 @@ class MainScreenLocalRouter(
   override fun applyRoute(route: NavigationRoute) {
     when (route) {
       is NavigationRoute.Page -> pagerNavigation.openPage(route.index)
-//      is NavigationRoute.Tab -> tabNavigation.switchTab(route.fragmentFactory, route.id)
+      is NavigationRoute.Tab -> tabNavigation.switchTab(route.fragmentFactory, route.id)
 //      is NavigationRoute.PersistentBottom -> persistentBottomNavigation.open(route.fragmentFactory.invoke(), route.addToBackStack)
       is NavigationRoute.FullScreen -> handleFullScreen(route)
       is NavigationRoute.NextScreen -> handleNext(route)
