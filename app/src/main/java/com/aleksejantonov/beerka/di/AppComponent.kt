@@ -4,7 +4,12 @@ import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [
-    AppModule::class
-])
-interface AppComponent
+@Component(
+  modules = [
+    AppModule::class,
+    FeatureProviderModule::class
+  ]
+)
+interface AppComponent {
+
+}

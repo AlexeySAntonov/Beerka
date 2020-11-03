@@ -26,15 +26,7 @@ class MainActivity : BaseNavHostActivity() {
     )
   }
 
-  private val pageChangeListener: ViewPager.OnPageChangeListener = object : ViewPager.SimpleOnPageChangeListener() {
-    override fun onPageSelected(position: Int) {
-      for (i in 0 until (findViewById<NonSwipeableViewPager>(R.id.pager).adapter?.count ?: 0)) {
-        val f = supportFragmentManager.findFragmentByTag(makeFragmentName(i.toLong()))
-//        (f as? OnShowFragmentListener)?.onShow(position == i)
-      }
-//      AndroidHelpers.hideKeyboard(binding.pager)
-    }
-  }
+
 
   override fun localRouter(): LocalRouter = localRouter
 

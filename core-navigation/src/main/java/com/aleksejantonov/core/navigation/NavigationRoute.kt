@@ -6,6 +6,11 @@ sealed class NavigationRoute {
 
   data class Page(val index: Int) : NavigationRoute()
 
+  data class Tab(
+      val id: NavigationTab,
+      val fragmentFactory: () -> Fragment
+  ) : NavigationRoute()
+
   data class FullScreen(
       val fragmentFactory: () -> Fragment,
       val addToBackStack: Boolean = true

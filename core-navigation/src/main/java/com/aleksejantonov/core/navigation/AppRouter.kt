@@ -51,6 +51,10 @@ object AppRouter {
         )
     }
 
+    fun switchTab(rootFactory: () -> Fragment, tab: NavigationTab) {
+        navigationRoutes.sendBlocking(NavigationRoute.Tab(tab, rootFactory))
+    }
+
     private fun openFullScreen(fragment: Fragment, addToStack: Boolean = true) {
         navigationRoutes.sendBlocking(NavigationRoute.FullScreen({ fragment }, addToStack))
     }

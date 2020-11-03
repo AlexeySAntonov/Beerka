@@ -4,12 +4,13 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import timber.log.Timber
 
-abstract class BaseFragment : Fragment() {
+abstract class BaseFragment(@LayoutRes contentLayoutId: Int) : Fragment(contentLayoutId) {
   private val statusBarHeight by lazy { statusBarHeight() }
   private val navBarHeight by lazy { navBarHeight() }
 

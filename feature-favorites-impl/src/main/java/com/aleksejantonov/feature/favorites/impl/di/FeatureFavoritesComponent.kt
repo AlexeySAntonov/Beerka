@@ -1,19 +1,25 @@
 package com.aleksejantonov.feature.favorites.impl.di
 
 import com.aleksejantonov.core.db.api.di.CoreDatabaseApi
+import com.aleksejantonov.core.di.FeatureScope
 import com.aleksejantonov.feature.favorites.api.di.FeatureFavoritesApi
 import dagger.Component
-import javax.inject.Singleton
 
 @Component(
     modules = [FeatureFavoritesModule::class],
     dependencies = [FeatureFavoritesComponentDependencies::class]
 )
-@Singleton
-interface MediaPlayerComponent : FeatureFavoritesApi {
+@FeatureScope
+interface FeatureFavoritesComponent : FeatureFavoritesApi {
 
     companion object {
 
+        fun init(dependencies: FeatureFavoritesComponentDependencies): FeatureFavoritesApi {
+            return DaggerFeatureFavoritesComponent.builder()
+                .featureFavoritesComponentDependencies(dependencies)
+                .build()
+
+        }
     }
 }
 
