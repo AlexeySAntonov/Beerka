@@ -8,6 +8,10 @@ import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
+import com.aleksejantonov.core.ui.base.mvvm.navBarHeight
+import com.aleksejantonov.core.ui.base.mvvm.setMargins
+import com.aleksejantonov.core.ui.base.mvvm.setPaddings
+import com.aleksejantonov.core.ui.base.mvvm.statusBarHeight
 import timber.log.Timber
 
 abstract class BaseFragment(@LayoutRes contentLayoutId: Int) : Fragment(contentLayoutId) {
@@ -70,6 +74,7 @@ abstract class BaseFragment(@LayoutRes contentLayoutId: Int) : Fragment(contentL
   }
 
   companion object {
+    const val COMPONENT_KEY = "COMPONENT_KEY"
     const val ARG_IS_IN_TAB_NAVIGATION = "arg_is_in_tab_navigation"
   }
 }

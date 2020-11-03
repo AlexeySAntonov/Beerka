@@ -2,6 +2,7 @@ package com.aleksejantonov.core.di
 
 import androidx.fragment.app.Fragment
 import com.aleksejantonov.feature.beerlist.api.di.FeatureBeerListApi
+import com.aleksejantonov.feature.details.api.di.FeatureDetailsApi
 import com.aleksejantonov.feature.favorites.api.di.FeatureFavoritesApi
 import javax.inject.Inject
 import javax.inject.Provider
@@ -10,7 +11,8 @@ import javax.inject.Singleton
 @Singleton
 class GlobalFeatureProvider @Inject constructor(
     private val featureBeerListProvider: Provider<FeatureBeerListApi>,
-    private val featureFavoritesApiProvider: Provider<FeatureFavoritesApi>
+    private val featureFavoritesApiProvider: Provider<FeatureFavoritesApi>,
+    private val featureDetailsApiProvider: Provider<FeatureDetailsApi>
 ) {
 
     fun provideFeatureBeerList(): Fragment {
@@ -19,5 +21,9 @@ class GlobalFeatureProvider @Inject constructor(
 
     fun provideFeatureFavorites(): Fragment {
         return featureFavoritesApiProvider.get().featureFavoritesScreenProvider().screen()
+    }
+
+    fun provideFeatureDetails(): Fragment {
+        return featureDetailsApiProvider.get().featureDetailsScreenProvider().screen()
     }
 }

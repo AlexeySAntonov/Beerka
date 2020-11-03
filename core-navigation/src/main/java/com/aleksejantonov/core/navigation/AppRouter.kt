@@ -3,7 +3,6 @@ package com.aleksejantonov.core.navigation
 import android.content.Intent
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import com.aleksejantonov.feature.favorites.api.di.FeatureFavoritesApi
 import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.sendBlocking
 import kotlinx.coroutines.flow.asFlow
@@ -12,11 +11,6 @@ import java.util.*
 import kotlin.reflect.KClass
 
 object AppRouter {
-
-    fun openFeatureFavorites() {
-//        val fragment = featureFavoritesApiProvider.get().featureFavoritesScreenProvider().screen()
-//        openFullScreen(fragment)
-    }
 
     const val EXTRA_FRAGMENT_KEY = "extra_fragment_key"
     private val activityArgs = mutableMapOf<String, Fragment>()
@@ -55,7 +49,7 @@ object AppRouter {
         navigationRoutes.sendBlocking(NavigationRoute.Tab(tab, rootFactory))
     }
 
-    private fun openFullScreen(fragment: Fragment, addToStack: Boolean = true) {
+    fun openFullScreen(fragment: Fragment, addToStack: Boolean = true) {
         navigationRoutes.sendBlocking(NavigationRoute.FullScreen({ fragment }, addToStack))
     }
 

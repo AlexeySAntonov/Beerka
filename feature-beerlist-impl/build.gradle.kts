@@ -30,13 +30,16 @@ android {
 
 dependencies {
     api(project(":feature-beerlist-api"))
+    implementation(project(":feature-details-api"))
     implementation(project(":core-ui-base"))
     implementation(project(":core-db-api"))
     implementation(project(":core-di"))
+    implementation(project(":core-navigation"))
     implementation(Libs.kotlin)
     implementation(Libs.appCompat)
     implementation(Libs.constraintLayout)
     implementation(Libs.material)
+    implementation(Libs.fragment)
     implementation(Libs.dagger)
     kapt(Libs.daggerCompiler)
 

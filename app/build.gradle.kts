@@ -36,6 +36,7 @@ dependencies {
     implementation(project(":core-navigation"))
     implementation(project(":feature-beerlist-impl"))
     implementation(project(":feature-favorites-impl"))
+    implementation(project(":feature-details-impl"))
     implementation(Libs.kotlin)
     implementation(Libs.ktx)
     implementation(Libs.material)

@@ -1,4 +1,4 @@
-package com.aleksejantonov.core.ui.base
+package com.aleksejantonov.core.ui.base.mvvm
 
 import androidx.annotation.MainThread
 import androidx.lifecycle.LifecycleOwner

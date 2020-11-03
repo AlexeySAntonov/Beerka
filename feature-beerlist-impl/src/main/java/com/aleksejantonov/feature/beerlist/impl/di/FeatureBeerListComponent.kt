@@ -1,15 +1,16 @@
 package com.aleksejantonov.feature.beerlist.impl.di
 
 import com.aleksejantonov.core.db.api.di.CoreDatabaseApi
-import com.aleksejantonov.core.di.FeatureScope
+import com.aleksejantonov.core.di.RootScope
 import com.aleksejantonov.feature.beerlist.api.di.FeatureBeerListApi
+import com.aleksejantonov.feature.details.api.data.FeatureDetailsScreenProvider
 import dagger.Component
 
 @Component(
     modules = [FeatureBeerListModule::class],
     dependencies = [FeatureBeerListComponentDependencies::class]
 )
-@FeatureScope
+@RootScope
 interface FeatureBeerListComponent : FeatureBeerListApi {
 
 
@@ -29,4 +30,5 @@ interface FeatureBeerListComponent : FeatureBeerListApi {
  */
 interface FeatureBeerListComponentDependencies {
     fun coreDatabaseApi(): CoreDatabaseApi
+    fun featureDetailsScreenProvider(): FeatureDetailsScreenProvider
 }

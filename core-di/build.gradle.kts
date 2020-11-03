@@ -30,6 +30,7 @@ android {
 dependencies {
     implementation(project(":feature-beerlist-api"))
     implementation(project(":feature-favorites-api"))
+    implementation(project(":feature-details-api"))
     implementation(Libs.kotlin)
     implementation(Libs.appCompat)
     implementation(Libs.dagger)

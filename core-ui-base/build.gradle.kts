@@ -1,6 +1,7 @@
 plugins {
     id("com.android.library")
     id("kotlin-android")
+    id("kotlin-kapt")
 }
 
 android {
@@ -39,4 +40,6 @@ dependencies {
     implementation(Libs.timber)
     implementation(Libs.glide)
     implementation(Libs.coroutines)
+    implementation(Libs.dagger)
+    kapt(Libs.daggerCompiler)
 }

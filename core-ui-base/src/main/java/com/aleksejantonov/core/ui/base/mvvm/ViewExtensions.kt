@@ -1,4 +1,4 @@
-package com.aleksejantonov.core.ui.base
+package com.aleksejantonov.core.ui.base.mvvm
 
 import android.app.Activity
 import android.content.Context

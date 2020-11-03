@@ -2,6 +2,7 @@ package com.aleksejantonov.core.ui.base
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import com.aleksejantonov.core.ui.base.mvvm.SingleLiveEvent
 import kotlinx.coroutines.CoroutineExceptionHandler
 import timber.log.Timber
 

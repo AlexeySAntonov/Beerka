@@ -10,17 +10,10 @@ import javax.inject.Singleton
 interface DatabaseComponent : CoreDatabaseApi {
 
     companion object {
-//        lateinit var coreDatabaseApi: CoreDatabaseApi
-
         fun init(context: Context): CoreDatabaseApi {
             return DaggerDatabaseComponent.builder()
                 .databaseModule(DatabaseModule(context))
                 .build()
         }
-
-//        fun get(): CoreDatabaseApi {
-//            return if (::coreDatabaseApi.isInitialized) coreDatabaseApi
-//            else throw IllegalStateException("Database must be initialized")
-//        }
     }
 }

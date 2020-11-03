@@ -5,36 +5,36 @@
     android:layout_height="match_parent"
     tools:context=".ui.MainTabsFragment">
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/beerListContainer"
-        android:name="com.aleksejantonov.core.navigation.NavHostFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="76dp"
-        android:tag="BEER_LIST" />
+  <androidx.fragment.app.FragmentContainerView
+      android:id="@+id/beerListContainer"
+      android:name="com.aleksejantonov.core.navigation.NavHostFragment"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_marginBottom="76dp"
+      android:tag="BEER_LIST" />
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/favoriteBeersContainer"
-        android:name="com.aleksejantonov.core.navigation.NavHostFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="76dp"
-        android:tag="FAVORITES" />
+  <androidx.fragment.app.FragmentContainerView
+      android:id="@+id/favoriteBeersContainer"
+      android:name="com.aleksejantonov.core.navigation.NavHostFragment"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_marginBottom="76dp"
+      android:tag="FAVORITES" />
 
-    <Button
-        android:id="@+id/beersListTab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|start"
-        android:layout_margin="16dp"
-        android:text="Beers list" />
+  <com.google.android.material.button.MaterialButton
+      android:id="@+id/beersListTab"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="bottom|start"
+      android:layout_margin="16dp"
+      android:text="Beers list" />
 
-    <Button
-        android:id="@+id/favoriteBeersTab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
-        android:text="Favorites" />
+  <com.google.android.material.button.MaterialButton
+      android:id="@+id/favoriteBeersTab"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="bottom|end"
+      android:layout_margin="16dp"
+      android:text="Favorites" />
 
 </FrameLayout>

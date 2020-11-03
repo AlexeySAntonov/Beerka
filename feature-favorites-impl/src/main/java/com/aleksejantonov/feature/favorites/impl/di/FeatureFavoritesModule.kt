@@ -1,6 +1,6 @@
 package com.aleksejantonov.feature.favorites.impl.di
 
-import com.aleksejantonov.core.di.FeatureScope
+import com.aleksejantonov.core.di.RootScope
 import com.aleksejantonov.feature.favorites.api.data.FeatureFavoritesScreenProvider
 import com.aleksejantonov.feature.favorites.impl.data.FeatureFavoritesScreenProviderImpl
 import dagger.Binds
@@ -10,6 +10,6 @@ import dagger.Module
 abstract class FeatureFavoritesModule {
 
   @Binds
-  @FeatureScope
+  @RootScope
   abstract fun featureFavoritesScreenProvider(provider: FeatureFavoritesScreenProviderImpl): FeatureFavoritesScreenProvider
 }

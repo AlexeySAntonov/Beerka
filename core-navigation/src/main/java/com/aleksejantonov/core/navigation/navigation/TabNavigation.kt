@@ -8,7 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import com.aleksejantonov.core.navigation.NavigationTab
 import com.aleksejantonov.core.navigation.R
 import com.aleksejantonov.core.ui.base.BaseFragment
-import com.aleksejantonov.core.ui.base.requireValue
+import com.aleksejantonov.core.ui.base.mvvm.requireValue
 
 class TabNavigation(
     private val hostFragment: () -> Fragment?
