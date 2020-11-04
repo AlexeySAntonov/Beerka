@@ -37,6 +37,7 @@ dependencies {
     implementation(Libs.appCompat)
     implementation(Libs.constraintLayout)
     implementation(Libs.material)
+    implementation(Libs.fragment)
     implementation(Libs.dagger)
     kapt(Libs.daggerCompiler)
 

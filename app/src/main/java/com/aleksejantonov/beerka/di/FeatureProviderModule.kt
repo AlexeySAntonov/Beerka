@@ -5,7 +5,6 @@ import com.aleksejantonov.core.di.GlobalFeatureProvider
 import com.aleksejantonov.feature.beerlist.api.di.FeatureBeerListApi
 import com.aleksejantonov.feature.beerlist.impl.di.FeatureBeerListComponent
 import com.aleksejantonov.feature.beerlist.impl.di.FeatureBeerListComponentDependencies
-import com.aleksejantonov.feature.details.api.data.FeatureDetailsScreenProvider
 import com.aleksejantonov.feature.details.api.di.FeatureDetailsApi
 import com.aleksejantonov.feature.details.impl.di.FeatureDetailsComponent
 import com.aleksejantonov.feature.details.impl.di.FeatureDetailsComponentDependencies
@@ -23,12 +22,12 @@ class FeatureProviderModule {
   @Provides
   @Singleton
   fun providesGlobalFeatureProvider(
-    featureBeerListProvider: Provider<FeatureBeerListApi>,
+    featureBeerListApiProvider: Provider<FeatureBeerListApi>,
     featureFavoritesApiProvider: Provider<FeatureFavoritesApi>,
     featureDetailsApiProvider: Provider<FeatureDetailsApi>
   ): GlobalFeatureProvider {
     return GlobalFeatureProvider(
-      featureBeerListProvider,
+      featureBeerListApiProvider,
       featureFavoritesApiProvider,
       featureDetailsApiProvider
     )
@@ -38,11 +37,9 @@ class FeatureProviderModule {
   @Singleton
   fun provideFeatureBeerListDependencies(
     coreDatabaseApi: CoreDatabaseApi,
-    featureDetailsApi: FeatureDetailsApi
   ): FeatureBeerListComponentDependencies {
     return object : FeatureBeerListComponentDependencies {
       override fun coreDatabaseApi(): CoreDatabaseApi = coreDatabaseApi
-      override fun featureDetailsScreenProvider(): FeatureDetailsScreenProvider = featureDetailsApi.featureDetailsScreenProvider()
     }
   }
 

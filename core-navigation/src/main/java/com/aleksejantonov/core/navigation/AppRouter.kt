@@ -3,6 +3,8 @@ package com.aleksejantonov.core.navigation
 import android.content.Intent
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import com.aleksejantonov.core.di.GlobalFeatureProvider
+import com.aleksejantonov.core.di.ScreenData
 import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.sendBlocking
 import kotlinx.coroutines.flow.asFlow
@@ -11,6 +13,21 @@ import java.util.*
 import kotlin.reflect.KClass
 
 object AppRouter {
+
+    /** FEATURE NAVIGATION REGION */
+
+    private lateinit var globalFeatureProvider: GlobalFeatureProvider
+
+    fun attachFeatureProvider(provider: GlobalFeatureProvider) {
+        this.globalFeatureProvider = provider
+    }
+
+    fun openDetailsFeature(screenData: ScreenData) {
+        val fragment = globalFeatureProvider.provideFeatureDetails(screenData)
+        openFullScreen(fragment)
+    }
+
+    /** FEATURE NAVIGATION REGION END */
 
     const val EXTRA_FRAGMENT_KEY = "extra_fragment_key"
     private val activityArgs = mutableMapOf<String, Fragment>()

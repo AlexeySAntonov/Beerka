@@ -2,6 +2,7 @@ package com.aleksejantonov.feature.details.impl.di
 
 import com.aleksejantonov.core.db.api.di.CoreDatabaseApi
 import com.aleksejantonov.core.di.FeatureScope
+import com.aleksejantonov.core.ui.base.mvvm.ViewModelFactory
 import com.aleksejantonov.feature.details.api.di.FeatureDetailsApi
 import dagger.Component
 
@@ -12,6 +13,7 @@ import dagger.Component
 @FeatureScope
 interface FeatureDetailsComponent : FeatureDetailsApi {
 
+    fun viewModelFactory(): ViewModelFactory
 
     companion object {
 

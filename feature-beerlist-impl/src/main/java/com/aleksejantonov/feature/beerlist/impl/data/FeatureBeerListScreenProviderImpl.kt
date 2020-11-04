@@ -8,11 +8,9 @@ import com.aleksejantonov.feature.beerlist.impl.ui.BeerListFragment
 import javax.inject.Inject
 
 @RootScope
-class FeatureBeerListScreenProviderImpl @Inject constructor(
-    private val databaseApi: CoreDatabaseApi
-) : FeatureBeerListScreenProvider {
+class FeatureBeerListScreenProviderImpl @Inject constructor() : FeatureBeerListScreenProvider {
 
-    override fun screen(): Fragment {
-        return BeerListFragment.create(0)
+    override fun screen(componentKey: Long): Fragment {
+        return BeerListFragment.create(componentKey)
     }
 }

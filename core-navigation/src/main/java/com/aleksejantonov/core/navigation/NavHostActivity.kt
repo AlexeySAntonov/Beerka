@@ -12,9 +12,9 @@ class NavHostActivity : BaseNavHostActivity() {
 //  private lateinit var binding: ActivityNavHostBinding
 
   private val localRouter by lazy {
-    val bottomSheetHost = supportFragmentManager
-        .findFragmentById(R.id.persistentBottomSheetContainer)
-        ?: throw IllegalStateException("Bottom sheet host not found")
+//    val bottomSheetHost = supportFragmentManager
+//        .findFragmentById(R.id.persistentBottomSheetContainer)
+//        ?: throw IllegalStateException("Bottom sheet host not found")
     OverlayLocalRouter(
         activity = this,
         fragmentNavigation = FragmentNavigation(R.id.fragmentContainerView, supportFragmentManager/**, SlideTransitionProvider()*/),

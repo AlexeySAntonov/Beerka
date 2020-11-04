@@ -27,8 +27,9 @@ android {
 }
 
 dependencies {
-    implementation(project(":feature-favorites-api"))
+//    implementation(project(":feature-favorites-api"))
     implementation(project(":core-ui-base"))
+    implementation(project(":core-di"))
     implementation(Libs.kotlin)
     implementation(Libs.appCompat)
     implementation(Libs.material)

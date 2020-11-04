@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import com.aleksejantonov.core.di.RootScope
 import com.aleksejantonov.core.ui.base.mvvm.ViewModelKey
 import com.aleksejantonov.feature.beerlist.api.data.FeatureBeerListScreenProvider
+import com.aleksejantonov.feature.beerlist.impl.data.FeatureBeerListScreenInteractor
+import com.aleksejantonov.feature.beerlist.impl.data.FeatureBeerListScreenInteractorImpl
 import com.aleksejantonov.feature.beerlist.impl.data.FeatureBeerListScreenProviderImpl
 import com.aleksejantonov.feature.beerlist.impl.ui.BeerListViewModel
 import dagger.Binds
@@ -16,6 +18,10 @@ abstract class FeatureBeerListModule {
   @Binds
   @RootScope
   abstract fun featureBeerListScreenProvider(provider: FeatureBeerListScreenProviderImpl): FeatureBeerListScreenProvider
+
+  @Binds
+  @RootScope
+  abstract fun featureBeerListScreenInteractor(interactor: FeatureBeerListScreenInteractorImpl): FeatureBeerListScreenInteractor
 
   @Binds
   @IntoMap

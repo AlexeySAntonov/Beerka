@@ -2,8 +2,8 @@ package com.aleksejantonov.feature.beerlist.impl.di
 
 import com.aleksejantonov.core.db.api.di.CoreDatabaseApi
 import com.aleksejantonov.core.di.RootScope
+import com.aleksejantonov.core.ui.base.mvvm.ViewModelFactory
 import com.aleksejantonov.feature.beerlist.api.di.FeatureBeerListApi
-import com.aleksejantonov.feature.details.api.data.FeatureDetailsScreenProvider
 import dagger.Component
 
 @Component(
@@ -13,6 +13,7 @@ import dagger.Component
 @RootScope
 interface FeatureBeerListComponent : FeatureBeerListApi {
 
+    fun viewModelFactory(): ViewModelFactory
 
     companion object {
 
@@ -30,5 +31,4 @@ interface FeatureBeerListComponent : FeatureBeerListApi {
  */
 interface FeatureBeerListComponentDependencies {
     fun coreDatabaseApi(): CoreDatabaseApi
-    fun featureDetailsScreenProvider(): FeatureDetailsScreenProvider
 }

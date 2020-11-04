@@ -7,5 +7,6 @@ import androidx.room.PrimaryKey
 data class BeerEntity(
     @PrimaryKey(autoGenerate = false)
     val id: Long = 0L,
-    val name: String = ""
+    val name: String = "",
+    val imageUrl: String? = null
 )

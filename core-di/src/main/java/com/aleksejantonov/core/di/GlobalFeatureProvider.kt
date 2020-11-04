@@ -10,20 +10,29 @@ import javax.inject.Singleton
 
 @Singleton
 class GlobalFeatureProvider @Inject constructor(
-    private val featureBeerListProvider: Provider<FeatureBeerListApi>,
+    private val featureBeerListApiProvider: Provider<FeatureBeerListApi>,
     private val featureFavoritesApiProvider: Provider<FeatureFavoritesApi>,
     private val featureDetailsApiProvider: Provider<FeatureDetailsApi>
 ) {
 
     fun provideFeatureBeerList(): Fragment {
-        return featureBeerListProvider.get().featureBeerListScreenProvider().screen()
+        val component = featureBeerListApiProvider.get()
+        val componentKey = System.currentTimeMillis()
+        ComponentsManager.save(componentKey, component)
+        return component.featureBeerListScreenProvider().screen(componentKey)
     }
 
     fun provideFeatureFavorites(): Fragment {
-        return featureFavoritesApiProvider.get().featureFavoritesScreenProvider().screen()
+        val component = featureFavoritesApiProvider.get()
+        val componentKey = System.currentTimeMillis()
+        ComponentsManager.save(componentKey, component)
+        return component.featureFavoritesScreenProvider().screen(componentKey)
     }
 
-    fun provideFeatureDetails(): Fragment {
-        return featureDetailsApiProvider.get().featureDetailsScreenProvider().screen()
+    fun provideFeatureDetails(screenData: ScreenData): Fragment {
+        val component = featureDetailsApiProvider.get()
+        val componentKey = System.currentTimeMillis()
+        ComponentsManager.save(componentKey, component)
+        return component.featureDetailsScreenProvider().screen(componentKey, screenData)
     }
 }
