@@ -32,6 +32,7 @@ dependencies {
     api(project(":feature-details-api"))
     implementation(project(":core-ui-base"))
     implementation(project(":core-db-api"))
+    implementation(project(":core-navigation"))
     implementation(Libs.kotlin)
     implementation(Libs.appCompat)
     implementation(Libs.constraintLayout)

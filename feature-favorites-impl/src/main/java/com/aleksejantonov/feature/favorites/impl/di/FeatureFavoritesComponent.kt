@@ -2,6 +2,7 @@ package com.aleksejantonov.feature.favorites.impl.di
 
 import com.aleksejantonov.core.db.api.di.CoreDatabaseApi
 import com.aleksejantonov.core.di.RootScope
+import com.aleksejantonov.core.ui.base.mvvm.ViewModelFactoryProvider
 import com.aleksejantonov.feature.favorites.api.di.FeatureFavoritesApi
 import dagger.Component
 
@@ -10,7 +11,7 @@ import dagger.Component
     dependencies = [FeatureFavoritesComponentDependencies::class]
 )
 @RootScope
-interface FeatureFavoritesComponent : FeatureFavoritesApi {
+interface FeatureFavoritesComponent : FeatureFavoritesApi, ViewModelFactoryProvider {
 
     companion object {
 

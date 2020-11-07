@@ -37,6 +37,7 @@ dependencies {
     implementation(project(":feature-beerlist-impl"))
     implementation(project(":feature-favorites-impl"))
     implementation(project(":feature-details-impl"))
+    implementation(project(":feature-details-next-impl"))
     implementation(Libs.kotlin)
     implementation(Libs.ktx)
     implementation(Libs.material)

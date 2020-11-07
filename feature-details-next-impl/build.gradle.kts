@@ -2,6 +2,7 @@ plugins {
     id("com.android.library")
     id("kotlin-android")
     id("kotlin-kapt")
+    id("kotlin-android-extensions")
 }
 
 android {
@@ -28,12 +29,15 @@ android {
 }
 
 dependencies {
-    implementation(project(":feature-beerlist-api"))
-    implementation(project(":feature-favorites-api"))
-    implementation(project(":feature-details-api"))
-    implementation(project(":feature-details-next-api"))
+    api(project(":feature-details-next-api"))
+    implementation(project(":core-ui-base"))
+    implementation(project(":core-db-api"))
     implementation(Libs.kotlin)
     implementation(Libs.appCompat)
+    implementation(Libs.constraintLayout)
+    implementation(Libs.material)
+    implementation(Libs.fragment)
     implementation(Libs.dagger)
     kapt(Libs.daggerCompiler)
+
 }
