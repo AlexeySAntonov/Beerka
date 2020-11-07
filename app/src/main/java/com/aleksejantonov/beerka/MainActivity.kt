@@ -6,7 +6,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.aleksejantonov.beerka.ui.MainTabsFragment
-import com.aleksejantonov.beerka.ui.base.MainScreenLocalRouter
+import com.aleksejantonov.core.navigation.localrouting.MainScreenLocalRouter
 import com.aleksejantonov.core.navigation.BaseNavHostActivity
 import com.aleksejantonov.core.navigation.navigation.PagerNavigation
 import com.aleksejantonov.core.navigation.navigation.PersistentBottomSheetNavigation

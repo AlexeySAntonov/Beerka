@@ -1,4 +1,4 @@
-package com.aleksejantonov.beerka.ui.base
+package com.aleksejantonov.core.navigation.localrouting
 
 import androidx.fragment.app.Fragment
 import com.aleksejantonov.core.navigation.AppRouter
