@@ -21,6 +21,10 @@ abstract class BaseNavHostActivity : AppCompatActivity() {
     super.onPause()
   }
 
+  override fun onBackPressed() {
+    AppRouter.back()
+  }
+
   fun currentScreen(): Fragment? = viewModel.currentScreen()
 
   protected abstract fun localRouter(): LocalRouter

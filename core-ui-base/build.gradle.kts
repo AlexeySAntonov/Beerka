@@ -28,6 +28,7 @@ android {
 }
 
 dependencies {
+    api(project(":core-di"))
     implementation(Libs.kotlin)
     implementation(Libs.appCompat)
     implementation(Libs.fragment)

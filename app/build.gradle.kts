@@ -45,4 +45,5 @@ dependencies {
     implementation(Libs.lifecycleViewModelKtx)
     implementation(Libs.dagger)
     kapt(Libs.daggerCompiler)
+    implementation(Libs.leakCanary)
 }

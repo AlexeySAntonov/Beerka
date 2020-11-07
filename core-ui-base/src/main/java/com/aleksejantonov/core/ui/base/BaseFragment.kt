@@ -8,6 +8,7 @@ import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
+import com.aleksejantonov.core.di.ComponentsManager
 import com.aleksejantonov.core.ui.base.mvvm.navBarHeight
 import com.aleksejantonov.core.ui.base.mvvm.setMargins
 import com.aleksejantonov.core.ui.base.mvvm.setPaddings
@@ -17,6 +18,9 @@ import timber.log.Timber
 abstract class BaseFragment(@LayoutRes contentLayoutId: Int) : Fragment(contentLayoutId) {
   private val statusBarHeight by lazy { statusBarHeight() }
   private val navBarHeight by lazy { navBarHeight() }
+
+  private var stateSaved = false
+  private val componentKey by lazy { arguments?.getLong(COMPONENT_KEY) }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
@@ -28,10 +32,54 @@ abstract class BaseFragment(@LayoutRes contentLayoutId: Int) : Fragment(contentL
     getViewToApplyNavigationBarMargin(view).forEach { it.setMargins(bottom = navBarHeight) }
   }
 
+  override fun onStart() {
+    super.onStart()
+    stateSaved = false
+  }
+
+  override fun onResume() {
+    super.onResume()
+    stateSaved = false
+  }
+
+  override fun onSaveInstanceState(outState: Bundle) {
+    super.onSaveInstanceState(outState)
+    stateSaved = true
+  }
+
   override fun onDestroyView() {
     val viewGroup = (view as? ViewGroup)
     viewGroup?.let { releaseAdaptersRecursively(it) }
     super.onDestroyView()
+  }
+
+  override fun onDestroy() {
+    super.onDestroy()
+
+    //We leave the screen and respectively all fragments will be destroyed
+    if (activity?.isFinishing == true) {
+      componentKey?.let { ComponentsManager.release(it) }
+      return
+    }
+
+    // When we rotate device isRemoving() return true for fragment placed in backstack
+    // http://stackoverflow.com/questions/34649126/fragment-back-stack-and-isremoving
+    if (stateSaved) {
+      stateSaved = false
+      return
+    }
+
+    // See https://github.com/Arello-Mobile/Moxy/issues/24
+    var anyParentIsRemoving = false
+    var parent = parentFragment
+    while (!anyParentIsRemoving && parent != null) {
+      anyParentIsRemoving = parent.isRemoving
+      parent = parent.parentFragment
+    }
+
+    if (isRemoving || anyParentIsRemoving) {
+      componentKey?.let { ComponentsManager.release(it) }
+    }
   }
 
   private fun releaseAdaptersRecursively(viewGroup: ViewGroup) {

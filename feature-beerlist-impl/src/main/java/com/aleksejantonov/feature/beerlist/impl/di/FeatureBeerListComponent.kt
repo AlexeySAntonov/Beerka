@@ -2,7 +2,7 @@ package com.aleksejantonov.feature.beerlist.impl.di
 
 import com.aleksejantonov.core.db.api.di.CoreDatabaseApi
 import com.aleksejantonov.core.di.RootScope
-import com.aleksejantonov.core.ui.base.mvvm.ViewModelFactory
+import com.aleksejantonov.core.ui.base.mvvm.ViewModelFactoryProvider
 import com.aleksejantonov.feature.beerlist.api.di.FeatureBeerListApi
 import dagger.Component
 
@@ -11,9 +11,7 @@ import dagger.Component
     dependencies = [FeatureBeerListComponentDependencies::class]
 )
 @RootScope
-interface FeatureBeerListComponent : FeatureBeerListApi {
-
-    fun viewModelFactory(): ViewModelFactory
+interface FeatureBeerListComponent : FeatureBeerListApi, ViewModelFactoryProvider {
 
     companion object {
 

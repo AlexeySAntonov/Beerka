@@ -70,6 +70,11 @@ object AppRouter {
         navigationRoutes.sendBlocking(NavigationRoute.FullScreen({ fragment }, addToStack))
     }
 
+    fun back(force: Boolean = false): Boolean {
+        navigationRoutes.sendBlocking(NavigationRoute.Back(force))
+        return true
+    }
+
     fun currentScreen(): Fragment? = activity()?.currentScreen()
 
     fun activity(): BaseNavHostActivity? = activityRef?.get()
