@@ -24,6 +24,10 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
         }
     }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
     kotlinOptions {
         jvmTarget = "1.8"
     }
@@ -31,6 +35,7 @@ android {
 
 dependencies {
     implementation(project(":core-di"))
+    implementation(project(":core-api"))
     implementation(project(":core-ui-base"))
     implementation(project(":core-db-impl"))
     implementation(project(":core-navigation"))

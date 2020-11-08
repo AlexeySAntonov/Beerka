@@ -5,7 +5,7 @@ import android.os.Bundle
 import com.aleksejantonov.core.navigation.localrouting.OverlayLocalRouter
 import com.aleksejantonov.core.navigation.navigation.FragmentNavigation
 import com.aleksejantonov.core.navigation.navigation.PersistentBottomSheetNavigation
-import hellomobile.hello.core.ui.navigation.LocalRouter
+import com.aleksejantonov.core.navigation.localrouting.LocalRouter
 
 class NavHostActivity : BaseNavHostActivity() {
 

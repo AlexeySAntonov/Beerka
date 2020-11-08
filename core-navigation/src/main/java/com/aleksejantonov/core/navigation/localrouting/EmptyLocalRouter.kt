@@ -1,4 +1,4 @@
-package hellomobile.hello.core.ui.navigation
+package com.aleksejantonov.core.navigation.localrouting
 
 import androidx.fragment.app.Fragment
 import com.aleksejantonov.core.navigation.NavigationRoute

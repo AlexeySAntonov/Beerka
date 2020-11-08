@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.aleksejantonov.beerka">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:name=".TrApplication"
         android:allowBackup="true"

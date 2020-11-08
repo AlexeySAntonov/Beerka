@@ -11,7 +11,7 @@ import com.aleksejantonov.core.navigation.BaseNavHostActivity
 import com.aleksejantonov.core.navigation.navigation.PagerNavigation
 import com.aleksejantonov.core.navigation.navigation.PersistentBottomSheetNavigation
 import com.aleksejantonov.core.navigation.navigation.TabNavigation
-import hellomobile.hello.core.ui.navigation.LocalRouter
+import com.aleksejantonov.core.navigation.localrouting.LocalRouter
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseNavHostActivity() {

@@ -3,7 +3,7 @@ package com.aleksejantonov.core.navigation
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import hellomobile.hello.core.ui.navigation.LocalRouter
+import com.aleksejantonov.core.navigation.localrouting.LocalRouter
 
 abstract class BaseNavHostActivity : AppCompatActivity() {
 

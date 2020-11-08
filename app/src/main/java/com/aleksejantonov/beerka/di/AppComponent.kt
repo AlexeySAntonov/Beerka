@@ -1,5 +1,6 @@
 package com.aleksejantonov.beerka.di
 
+import com.aleksejantonov.core.api.di.NetworkModule
 import com.aleksejantonov.core.di.GlobalFeatureProvider
 import dagger.Component
 import javax.inject.Singleton
@@ -8,7 +9,8 @@ import javax.inject.Singleton
 @Component(
   modules = [
     AppModule::class,
-    FeatureProviderModule::class
+    FeatureProviderModule::class,
+    NetworkModule::class
   ]
 )
 interface AppComponent {

@@ -3,8 +3,8 @@ package com.aleksejantonov.core.navigation
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.viewModelScope
 import com.aleksejantonov.core.ui.base.BaseViewModel
-import hellomobile.hello.core.ui.navigation.EmptyLocalRouter
-import hellomobile.hello.core.ui.navigation.LocalRouter
+import com.aleksejantonov.core.navigation.localrouting.EmptyLocalRouter
+import com.aleksejantonov.core.navigation.localrouting.LocalRouter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch

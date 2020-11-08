@@ -1,5 +1,6 @@
 package com.aleksejantonov.beerka.di
 
+import com.aleksejantonov.core.api.BeersApi
 import com.aleksejantonov.core.db.api.di.CoreDatabaseApi
 import com.aleksejantonov.core.di.GlobalFeatureProvider
 import com.aleksejantonov.feature.beerlist.api.di.FeatureBeerListApi
@@ -41,9 +42,11 @@ class FeatureProviderModule {
   @Provides
   @Singleton
   fun provideFeatureBeerListDependencies(
-    coreDatabaseApi: CoreDatabaseApi,
+    beersApi: BeersApi,
+    coreDatabaseApi: CoreDatabaseApi
   ): FeatureBeerListComponentDependencies {
     return object : FeatureBeerListComponentDependencies {
+      override fun beersApi(): BeersApi = beersApi
       override fun coreDatabaseApi(): CoreDatabaseApi = coreDatabaseApi
     }
   }

@@ -8,7 +8,7 @@ import com.aleksejantonov.core.navigation.NavigationRoute
 import com.aleksejantonov.core.navigation.navigation.FragmentNavigation
 import com.aleksejantonov.core.navigation.navigation.PersistentBottomSheetNavigation
 import com.aleksejantonov.core.ui.base.BaseFragment
-import hellomobile.hello.core.ui.navigation.LocalRouter
+import com.aleksejantonov.core.navigation.localrouting.LocalRouter
 
 
 class OverlayLocalRouter(

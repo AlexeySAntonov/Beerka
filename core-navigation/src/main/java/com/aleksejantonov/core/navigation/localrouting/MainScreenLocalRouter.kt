@@ -9,7 +9,7 @@ import com.aleksejantonov.core.navigation.navigation.PagerNavigation
 import com.aleksejantonov.core.navigation.navigation.PersistentBottomSheetNavigation
 import com.aleksejantonov.core.navigation.navigation.TabNavigation
 import com.aleksejantonov.core.ui.base.BaseFragment
-import hellomobile.hello.core.ui.navigation.LocalRouter
+import com.aleksejantonov.core.navigation.localrouting.LocalRouter
 import java.lang.ref.WeakReference
 
 class MainScreenLocalRouter(

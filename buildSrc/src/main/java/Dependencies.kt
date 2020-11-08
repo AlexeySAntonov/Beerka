@@ -38,7 +38,7 @@ object Libs {
     //Network
     const val retrofit2 = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
     const val retrofit2ConverterGson = "com.squareup.retrofit2:converter-gson:${Versions.retrofit}"
-    const val retrofit2RxAdapter = "com.squareup.retrofit2:adapter-rxjava2:${Versions.retrofit}"
+    const val okhttp3Logging = "com.squareup.okhttp3:logging-interceptor:4.7.2"
     const val stetho = "com.facebook.stetho:stetho:${Versions.stetho}"
     const val stethoOkHttp = "com.facebook.stetho:stetho-okhttp3:${Versions.stetho}"
     const val gson = "com.google.code.gson:gson:2.8.6"

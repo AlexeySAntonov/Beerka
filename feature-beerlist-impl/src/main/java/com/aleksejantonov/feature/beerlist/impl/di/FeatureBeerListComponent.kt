@@ -1,5 +1,6 @@
 package com.aleksejantonov.feature.beerlist.impl.di
 
+import com.aleksejantonov.core.api.BeersApi
 import com.aleksejantonov.core.db.api.di.CoreDatabaseApi
 import com.aleksejantonov.core.di.RootScope
 import com.aleksejantonov.core.ui.base.mvvm.ViewModelFactoryProvider
@@ -28,5 +29,6 @@ interface FeatureBeerListComponent : FeatureBeerListApi, ViewModelFactoryProvide
  * Clear interface which hides dependencies provider implementation
  */
 interface FeatureBeerListComponentDependencies {
+    fun beersApi(): BeersApi
     fun coreDatabaseApi(): CoreDatabaseApi
 }
