@@ -33,9 +33,7 @@ android {
 dependencies {
     implementation(project(":core-ui-base"))
     implementation(project(":core-di"))
-    implementation(Libs.kotlin)
-    implementation(Libs.appCompat)
-    implementation(Libs.material)
+
     implementation(Libs.coroutines)
     implementation(Libs.lifecycleViewModelKtx)
     implementation(Libs.fragment)

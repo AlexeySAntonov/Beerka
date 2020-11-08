@@ -43,12 +43,7 @@ dependencies {
     implementation(project(":feature-favorites-impl"))
     implementation(project(":feature-details-impl"))
     implementation(project(":feature-details-next-impl"))
-    implementation(Libs.kotlin)
-    implementation(Libs.ktx)
-    implementation(Libs.material)
-    implementation(Libs.constraintLayout)
-    implementation(Libs.fragment)
-    implementation(Libs.lifecycleViewModelKtx)
+
     implementation(Libs.dagger)
     kapt(Libs.daggerCompiler)
     implementation(Libs.leakCanary)

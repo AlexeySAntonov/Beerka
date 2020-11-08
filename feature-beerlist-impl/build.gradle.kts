@@ -39,12 +39,7 @@ dependencies {
     implementation(project(":core-db-api"))
     implementation(project(":core-api"))
     implementation(project(":core-navigation"))
-    implementation(Libs.kotlin)
-    implementation(Libs.appCompat)
-    implementation(Libs.constraintLayout)
-    implementation(Libs.material)
-    implementation(Libs.fragment)
-    implementation(Libs.delegates)
+
     implementation(Libs.coroutines)
     implementation(Libs.dagger)
     kapt(Libs.daggerCompiler)

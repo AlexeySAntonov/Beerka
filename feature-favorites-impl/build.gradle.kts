@@ -37,10 +37,7 @@ dependencies {
     implementation(project(":core-ui-base"))
     implementation(project(":core-db-api"))
     implementation(project(":core-navigation"))
-    implementation(Libs.kotlin)
-    implementation(Libs.appCompat)
-    implementation(Libs.constraintLayout)
-    implementation(Libs.material)
+
     implementation(Libs.dagger)
     kapt(Libs.daggerCompiler)
 
