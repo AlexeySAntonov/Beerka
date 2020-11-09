@@ -5,15 +5,18 @@ import android.view.View
 import com.aleksejantonov.core.ui.base.BaseFragment
 import com.aleksejantonov.core.ui.base.adapter.SimpleDiffAdapter
 import com.aleksejantonov.core.ui.base.adapter.delegate.PaginationLoadingDelegate
+import com.aleksejantonov.core.ui.base.mvvm.dpToPx
+import com.aleksejantonov.core.ui.base.mvvm.setMargins
 import com.aleksejantonov.core.ui.base.mvvm.trueViewModels
 import com.aleksejantonov.feature.beerlist.impl.R
 import com.aleksejantonov.feature.beerlist.impl.ui.delegate.BeerItemDelegate
+import com.aleksejantonov.feature.beerlist.impl.ui.delegate.item.BeerItem
 import kotlinx.android.synthetic.main.fragment_beer_list.*
 
 class BeerListFragment : BaseFragment(R.layout.fragment_beer_list) {
 
   private val viewModel by trueViewModels<BeerListViewModel>()
-  private val adapter by lazy { BeersAdapter() }
+  private val adapter by lazy { BeersAdapter { viewModel.navigateToDetails(it) } }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
@@ -21,11 +24,19 @@ class BeerListFragment : BaseFragment(R.layout.fragment_beer_list) {
     viewModel.data.observe { adapter.items = it }
   }
 
-  private class BeersAdapter : SimpleDiffAdapter() {
+  override fun onStatusBarHeight(statusBarHeight: Int) {
+    recyclerView.setMargins(top = statusBarHeight)
+  }
+
+  override fun onNavigationBarHeight(navBarHeight: Int) {
+    recyclerView.setMargins(bottom = navBarHeight)
+  }
+
+  private class BeersAdapter(onBeerClick: (BeerItem) -> Unit) : SimpleDiffAdapter() {
     init {
       delegatesManager
         .addDelegate(PaginationLoadingDelegate())
-        .addDelegate(BeerItemDelegate())
+        .addDelegate(BeerItemDelegate(onBeerClick))
     }
   }
 

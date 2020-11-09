@@ -7,7 +7,8 @@ data class BeerItem(
   val id: Long,
   val name: String,
   val description: String,
-  val image: String?
+  val image: String?,
+  val isFavorite: Boolean
 ) : ListItem {
 
   override fun itemId(): Long = id
@@ -19,7 +20,8 @@ data class BeerItem(
         id = id,
         name = name,
         description = description,
-        image = image
+        image = image,
+        isFavorite = isFavorite
       )
     }
   }

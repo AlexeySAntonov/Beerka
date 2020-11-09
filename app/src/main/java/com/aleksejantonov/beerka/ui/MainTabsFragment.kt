@@ -9,6 +9,8 @@ import com.aleksejantonov.beerka.R
 import com.aleksejantonov.beerka.di.DI
 import com.aleksejantonov.core.navigation.NavigationTab
 import com.aleksejantonov.core.ui.base.BaseFragment
+import com.aleksejantonov.core.ui.base.mvvm.dpToPx
+import com.aleksejantonov.core.ui.base.mvvm.setMargins
 import com.aleksejantonov.core.ui.base.show
 import kotlinx.android.synthetic.main.fragment_main_tabs.*
 
@@ -38,6 +40,11 @@ class MainTabsFragment : BaseFragment(R.layout.fragment_main_tabs) {
             }
         }
 
+    }
+
+    override fun onNavigationBarHeight(navBarHeight: Int) {
+        beersListTab.setMargins(bottom = navBarHeight + requireContext().dpToPx(16f))
+        favoriteBeersTab.setMargins(bottom = navBarHeight + requireContext().dpToPx(16f))
     }
 
     override fun onResume() {

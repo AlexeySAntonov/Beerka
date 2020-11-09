@@ -123,6 +123,7 @@ abstract class BaseFragment(@LayoutRes contentLayoutId: Int) : Fragment(contentL
 
   companion object {
     const val COMPONENT_KEY = "COMPONENT_KEY"
+    const val SCREEN_DATA = "SCREEN_DATA"
     const val ARG_IS_IN_TAB_NAVIGATION = "arg_is_in_tab_navigation"
   }
 }
