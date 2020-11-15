@@ -42,6 +42,7 @@ class BeerItemDelegate(
           .load(item.image)
           .transition(withCrossFade(200))
           .fitCenter()
+          .error(R.drawable.ic_beer_stub)
           .into(image)
       }
     }

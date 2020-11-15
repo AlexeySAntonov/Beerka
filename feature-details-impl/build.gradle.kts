@@ -35,6 +35,7 @@ android {
 dependencies {
     api(project(":feature-details-api"))
     implementation(project(":core-ui-base"))
+    implementation(project(":core-resources"))
     implementation(project(":core-db-api"))
     implementation(project(":core-navigation"))
 

@@ -32,6 +32,7 @@ class DetailsFragment : BaseFragment(R.layout.fragment_details) {
           .load(it.args[3])
           .transition(DrawableTransitionOptions.withCrossFade(200))
           .fitCenter()
+          .error(R.drawable.ic_beer_stub)
           .into(image)
 
         name.text = it.args[1] as String
