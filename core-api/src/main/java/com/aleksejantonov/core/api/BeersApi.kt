@@ -5,7 +5,7 @@ import com.aleksejantonov.core.model.BeerModel
 
 class BeersApi(private val controller: BeersController) {
 
-  suspend fun getBeers(): List<BeerModel> {
-    return controller.getBeers().map { it.model() }
+  suspend fun getBeers(page: Int, limit: Int): List<BeerModel> {
+    return controller.getBeers(page = page, limit = limit).map { it.model() }
   }
 }

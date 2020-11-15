@@ -5,4 +5,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface FeatureBeerListScreenInteractor {
   suspend fun data(): Flow<List<ListItem>>
+  suspend fun loadMore()
 }

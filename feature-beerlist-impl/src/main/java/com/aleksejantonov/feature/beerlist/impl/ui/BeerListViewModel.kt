@@ -27,6 +27,12 @@ class BeerListViewModel @Inject constructor(
     }
   }
 
+  fun loadMore() {
+    viewModelScope.launch(Dispatchers.IO) {
+      interactor.loadMore()
+    }
+  }
+
   fun navigateToDetails(item: BeerItem) {
     AppRouter.openDetailsFeature(ScreenData(item.id, item.name, item.description, item.image))
   }
