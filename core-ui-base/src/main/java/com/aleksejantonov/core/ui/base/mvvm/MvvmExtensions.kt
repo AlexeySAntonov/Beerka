@@ -19,7 +19,7 @@ inline fun <reified VM : ViewModel> Fragment.trueViewModels(
   storeProducer = { ownerProducer().viewModelStore },
   factoryProducer = {
     arguments?.getLong(BaseFragment.COMPONENT_KEY)?.let {
-      (ComponentsManager.get(it) as ViewModelFactoryProvider).viewModelFactory()
+      (ComponentsManager.get(it) as? ViewModelFactoryProvider)?.viewModelFactory()
     } ?: defaultViewModelProviderFactory
   }
 )

@@ -10,8 +10,8 @@ object ComponentsManager {
   }
 
   @Synchronized
-  fun <T> get(key: Long): T {
-    return requireNotNull(componentsMap[key] as? T)
+  fun <T> get(key: Long): T? {
+    return componentsMap[key] as? T
   }
 
   @Synchronized

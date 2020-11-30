@@ -8,5 +8,7 @@ data class BeerEntity(
     @PrimaryKey(autoGenerate = false)
     val id: Long = 0L,
     val name: String = "",
-    val imageUrl: String? = null
+    val description: String = "",
+    val imageUrl: String? = null,
+    val isFavorite: Boolean = false
 )

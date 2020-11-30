@@ -30,7 +30,7 @@ android {
 
 dependencies {
     implementation(Libs.kotlin)
-//    api(project(":core-model"))
+    api(project(":core-model"))
     implementation(Libs.room)
     kapt(Libs.roomCompiler)
     implementation(Libs.roomKtx)
