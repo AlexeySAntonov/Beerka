@@ -2,48 +2,63 @@ package com.aleksejantonov.feature.details.impl.ui
 
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.lifecycleScope
 import com.aleksejantonov.core.di.ScreenData
 import com.aleksejantonov.core.ui.base.BaseFragment
 import com.aleksejantonov.core.ui.base.GlideApp
+import com.aleksejantonov.core.ui.base.mvvm.dpToPx
+import com.aleksejantonov.core.ui.base.mvvm.setBackgroundTint
 import com.aleksejantonov.core.ui.base.mvvm.setMargins
 import com.aleksejantonov.core.ui.base.mvvm.trueViewModels
+import com.aleksejantonov.core.ui.model.BeerItem
 import com.aleksejantonov.feature.details.impl.R
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import kotlinx.android.synthetic.main.fragment_details.*
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 class DetailsFragment : BaseFragment(R.layout.fragment_details) {
 
   private val viewModel by trueViewModels<DetailsViewModel>()
-  private val screenData by lazy { arguments?.getSerializable(SCREEN_DATA) as? ScreenData }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-    applyInitialState()
+    uiStateJob = lifecycleScope.launch { viewModel.data.collect { setData(it) } }
+    favoriteButton.setOnClickListener { viewModel.toggleFavorite() }
   }
 
   override fun onStatusBarHeight(statusBarHeight: Int) {
     image.setMargins(top = statusBarHeight)
   }
 
-  private fun applyInitialState() {
-    screenData?.let {
-      runCatching {
-        GlideApp.with(requireContext())
-          .load(it.args[3])
-          .transition(DrawableTransitionOptions.withCrossFade(200))
-          .fitCenter()
-          .error(R.drawable.ic_beer_stub)
-          .into(image)
+  override fun onNavigationBarHeight(navBarHeight: Int) {
+    favoriteButton.setMargins(bottom = navBarHeight + (context?.dpToPx(16f) ?: 0))
+  }
 
-        name.text = it.args[1] as String
-        description.text = it.args[2] as String
-      }
+  private fun setData(item: BeerItem) {
+    GlideApp.with(requireContext())
+      .load(item.image)
+      .transition(DrawableTransitionOptions.withCrossFade(200))
+      .fitCenter()
+      .error(R.drawable.ic_beer_stub)
+      .into(image)
+
+    name.text = item.name
+    description.text = item.description
+    if (item.isFavorite) {
+      favoriteButton.text = resources.getString(R.string.remove_from_favorite)
+      favoriteButton.setIconResource(R.drawable.ic_close_24)
+      favoriteButton.setBackgroundTint(R.color.red)
+    } else {
+      favoriteButton.text = resources.getString(R.string.add_to_favorite)
+      favoriteButton.setIconResource(R.drawable.ic_star_empty_24)
+      favoriteButton.setBackgroundTint(R.color.gold)
     }
   }
 
   companion object {
     /**
-     * ScreenData: [0] - id: Long, [1] - name: String, [2] - description: String, [3] - image: String?
+     * ScreenData: args[0] - id: Long
      */
     fun create(componentKey: Long, screenData: ScreenData) = DetailsFragment().apply {
       arguments = Bundle().apply {

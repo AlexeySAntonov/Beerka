@@ -8,7 +8,9 @@ import android.util.DisplayMetrics
 import android.util.TypedValue
 import android.view.*
 import android.widget.TextView
+import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 
 val View.topMargin get() = (layoutParams as ViewGroup.MarginLayoutParams).topMargin
@@ -102,6 +104,11 @@ fun fullScreenSize(context: Context): Point {
 
 fun TextView.textColor(id: Int) {
   setTextColor(ContextCompat.getColor(context, id))
+}
+
+fun View.setBackgroundTint(@ColorRes id: Int) {
+  val wrappedDrawable = DrawableCompat.wrap(background)
+  DrawableCompat.setTint(wrappedDrawable.mutate(), ContextCompat.getColor(context, id))
 }
 
 fun Context.getScreenHeight(): Int {

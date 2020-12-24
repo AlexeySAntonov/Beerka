@@ -1,7 +1,6 @@
-package com.aleksejantonov.feature.beerlist.impl.ui.delegate.item
+package com.aleksejantonov.core.ui.model
 
 import com.aleksejantonov.core.model.BeerModel
-import com.aleksejantonov.core.ui.base.adapter.ListItem
 
 data class BeerItem(
   val id: Long,
@@ -24,5 +23,13 @@ data class BeerItem(
         isFavorite = isFavorite
       )
     }
+
+    fun fromArgs(vararg args: Any?) = BeerItem(
+      id = args[0] as Long,
+      name = args[1] as String,
+      description = args[2] as String,
+      image = args[3] as String?,
+      isFavorite = false
+    )
   }
 }

@@ -1,6 +1,7 @@
 package com.aleksejantonov.core.ui.base.adapter
 
 import androidx.recyclerview.widget.DiffUtil
+import com.aleksejantonov.core.ui.model.ListItem
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 
 open class SimpleDiffAdapter : AsyncListDifferDelegationAdapter<ListItem>(DIFF_CALLBACK) {

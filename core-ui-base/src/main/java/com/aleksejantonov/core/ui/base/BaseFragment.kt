@@ -13,9 +13,12 @@ import com.aleksejantonov.core.ui.base.mvvm.navBarHeight
 import com.aleksejantonov.core.ui.base.mvvm.setMargins
 import com.aleksejantonov.core.ui.base.mvvm.setPaddings
 import com.aleksejantonov.core.ui.base.mvvm.statusBarHeight
+import kotlinx.coroutines.Job
 import timber.log.Timber
 
 abstract class BaseFragment(@LayoutRes contentLayoutId: Int) : Fragment(contentLayoutId) {
+  protected var uiStateJob: Job? = null
+
   private val statusBarHeight by lazy { statusBarHeight() }
   private val navBarHeight by lazy { navBarHeight() }
 
@@ -48,6 +51,8 @@ abstract class BaseFragment(@LayoutRes contentLayoutId: Int) : Fragment(contentL
   }
 
   override fun onDestroyView() {
+    uiStateJob?.cancel()
+    uiStateJob = null
     val viewGroup = (view as? ViewGroup)
     viewGroup?.let { releaseAdaptersRecursively(it) }
     super.onDestroyView()

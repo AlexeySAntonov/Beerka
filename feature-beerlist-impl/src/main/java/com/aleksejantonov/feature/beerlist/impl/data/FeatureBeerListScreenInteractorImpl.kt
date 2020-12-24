@@ -1,9 +1,9 @@
 package com.aleksejantonov.feature.beerlist.impl.data
 
 import com.aleksejantonov.core.di.RootScope
-import com.aleksejantonov.core.ui.base.adapter.ListItem
+import com.aleksejantonov.core.ui.model.ListItem
 import com.aleksejantonov.core.ui.base.adapter.delegate.PaginationLoadingItem
-import com.aleksejantonov.feature.beerlist.impl.ui.delegate.item.BeerItem
+import com.aleksejantonov.core.ui.model.BeerItem
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject

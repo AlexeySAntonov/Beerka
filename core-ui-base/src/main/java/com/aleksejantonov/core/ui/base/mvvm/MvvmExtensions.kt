@@ -20,6 +20,6 @@ inline fun <reified VM : ViewModel> Fragment.trueViewModels(
   factoryProducer = {
     arguments?.getLong(BaseFragment.COMPONENT_KEY)?.let {
       (ComponentsManager.get(it) as? ViewModelFactoryProvider)?.viewModelFactory()
-    } ?: defaultViewModelProviderFactory
+    } ?: throw IllegalArgumentException("To use trueViewModels extension you must provide component which implements ViewModelFactoryProvider")
   }
 )

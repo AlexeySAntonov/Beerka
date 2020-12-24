@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.aleksejantonov.core.ui.base.R
-import com.aleksejantonov.core.ui.base.adapter.ListItem
+import com.aleksejantonov.core.ui.model.ListItem
 import com.hannesdorfmann.adapterdelegates4.AbsListItemAdapterDelegate
 
 class PaginationLoadingDelegate : AbsListItemAdapterDelegate<PaginationLoadingItem, ListItem, PaginationLoadingDelegate.ViewHolder>() {

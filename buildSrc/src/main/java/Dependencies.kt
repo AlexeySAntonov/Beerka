@@ -4,7 +4,8 @@ object Versions {
     const val targetSdk = 30
     const val minSdk = 21
 
-    const val kotlin = "1.4.10"
+    const val kotlin = "1.4.20"
+    const val coroutines = "1.4.0"
     const val retrofit = "2.9.0"
     const val stetho = "1.5.1"
     const val glide = "4.11.0"
@@ -16,7 +17,7 @@ object Versions {
 object Libs {
     const val kotlin = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.kotlin}"
     const val ktx = "androidx.core:core-ktx:1.3.0"
-    const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.8"
+    const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
 
     const val timber = "com.jakewharton.timber:timber:4.7.1"
     const val leakCanary = "com.squareup.leakcanary:leakcanary-android:2.3"
@@ -56,6 +57,6 @@ object Libs {
 
 object BuildPlugins {
     const val kotlinGradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
-    const val androidTools = "com.android.tools.build:gradle:4.1.0"
+    const val androidTools = "com.android.tools.build:gradle:4.1.1"
     const val googleServices = "com.google.gms:google-services:4.3.4"
 }

@@ -7,12 +7,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.aleksejantonov.core.ui.base.BaseFragment
 import com.aleksejantonov.core.ui.base.adapter.SimpleDiffAdapter
 import com.aleksejantonov.core.ui.base.adapter.delegate.PaginationLoadingDelegate
-import com.aleksejantonov.core.ui.base.mvvm.dpToPx
 import com.aleksejantonov.core.ui.base.mvvm.setMargins
 import com.aleksejantonov.core.ui.base.mvvm.trueViewModels
 import com.aleksejantonov.feature.beerlist.impl.R
 import com.aleksejantonov.feature.beerlist.impl.ui.delegate.BeerItemDelegate
-import com.aleksejantonov.feature.beerlist.impl.ui.delegate.item.BeerItem
+import com.aleksejantonov.core.ui.model.BeerItem
 import kotlinx.android.synthetic.main.fragment_beer_list.*
 
 class BeerListFragment : BaseFragment(R.layout.fragment_beer_list) {

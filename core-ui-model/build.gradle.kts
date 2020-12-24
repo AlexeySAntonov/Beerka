@@ -1,7 +1,6 @@
 plugins {
     id("com.android.library")
     id("kotlin-android")
-    id("kotlin-kapt")
 }
 
 android {
@@ -32,21 +31,6 @@ android {
 }
 
 dependencies {
-    api(project(":core-ui-model"))
-    api(project(":core-di"))
-    api(Libs.kotlin)
-    api(Libs.appCompat)
-    api(Libs.fragment)
-    api(Libs.material)
-    api(Libs.constraintLayout)
-    api(Libs.delegates)
-    api(Libs.ktx)
-    api(Libs.lifecycleExtensions)
-    api(Libs.lifecycleViewModelKtx)
-    api(Libs.glide)
-    kapt(Libs.glideCompiler)
-    implementation(Libs.timber)
-    implementation(Libs.coroutines)
-    implementation(Libs.dagger)
-    kapt(Libs.daggerCompiler)
+    implementation(Libs.kotlin)
+    api(project(":core-model"))
 }

@@ -5,10 +5,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.aleksejantonov.core.ui.base.GlideApp
-import com.aleksejantonov.core.ui.base.adapter.ListItem
 import com.aleksejantonov.core.ui.base.releaseGlide
+import com.aleksejantonov.core.ui.model.BeerItem
+import com.aleksejantonov.core.ui.model.ListItem
 import com.aleksejantonov.feature.beerlist.impl.R
-import com.aleksejantonov.feature.beerlist.impl.ui.delegate.item.BeerItem
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
 import com.hannesdorfmann.adapterdelegates4.AbsListItemAdapterDelegate
 import kotlinx.android.synthetic.main.item_beer.view.*
@@ -37,6 +37,7 @@ class BeerItemDelegate(
         name.text = item.name
         description.text = item.description
         setOnClickListener { onBeerClick.invoke(item) }
+        favoriteIcon.setImageResource(if (item.isFavorite) R.drawable.ic_star_24 else R.drawable.ic_star_empty_24)
 
         GlideApp.with(context)
           .load(item.image)

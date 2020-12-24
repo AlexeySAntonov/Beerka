@@ -14,7 +14,7 @@ class FavoritesFragment : BaseFragment(R.layout.fragment_favorites) {
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-    details.setOnClickListener { viewModel.navigateToDetails(ScreenData(1, "Baltica", null)) }
+    details.setOnClickListener { viewModel.navigateToDetails(ScreenData(1L)) }
   }
 
   companion object {

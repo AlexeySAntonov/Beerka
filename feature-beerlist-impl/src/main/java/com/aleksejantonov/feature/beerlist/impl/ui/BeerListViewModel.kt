@@ -6,9 +6,9 @@ import androidx.lifecycle.viewModelScope
 import com.aleksejantonov.core.navigation.AppRouter
 import com.aleksejantonov.core.ui.base.BaseViewModel
 import com.aleksejantonov.core.di.ScreenData
-import com.aleksejantonov.core.ui.base.adapter.ListItem
+import com.aleksejantonov.core.ui.model.ListItem
 import com.aleksejantonov.feature.beerlist.impl.data.FeatureBeerListScreenInteractor
-import com.aleksejantonov.feature.beerlist.impl.ui.delegate.item.BeerItem
+import com.aleksejantonov.core.ui.model.BeerItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -34,6 +34,6 @@ class BeerListViewModel @Inject constructor(
   }
 
   fun navigateToDetails(item: BeerItem) {
-    AppRouter.openDetailsFeature(ScreenData(item.id, item.name, item.description, item.image))
+    AppRouter.openDetailsFeature(ScreenData(item.id))
   }
 }

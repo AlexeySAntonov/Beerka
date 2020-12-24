@@ -39,6 +39,7 @@ dependencies {
     implementation(project(":core-db-api"))
     implementation(project(":core-navigation"))
 
+    implementation(Libs.coroutines)
     implementation(Libs.dagger)
     kapt(Libs.daggerCompiler)
 
