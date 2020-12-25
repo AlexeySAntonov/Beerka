@@ -14,7 +14,9 @@ import javax.inject.Singleton
 class BeersStoreImpl @Inject constructor(private val db: DatabaseClientApi) : BeersStore {
 
   override fun insertBeers(beers: List<BeerModel>) {
-    db.beerDao().insertBeers(beers.map { it.entity() })
+    val ids = beers.map { it.id }.toSet()
+    val existentBeers = db.beerDao().getBeers(ids).associateBy { it.id }
+    db.beerDao().insertBeers(beers.map { it.entity().copy(isFavorite = existentBeers[it.id]?.isFavorite ?: false) })
   }
 
   override fun beerData(id: Long): Flow<BeerModel> {

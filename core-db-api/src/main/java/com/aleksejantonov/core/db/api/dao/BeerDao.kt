@@ -13,6 +13,9 @@ interface BeerDao {
   @Insert(onConflict = OnConflictStrategy.REPLACE)
   fun insertBeers(beers: List<BeerEntity>)
 
+  @Query("SELECT * FROM beers WHERE id in (:ids)")
+  fun getBeers(ids: Set<Long>): List<BeerEntity>
+
   @Query("SELECT * FROM beers WHERE id = :id")
   fun beerData(id: Long): Flow<BeerEntity>
 
