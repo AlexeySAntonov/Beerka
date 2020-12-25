@@ -25,6 +25,10 @@ class BeersStoreImpl @Inject constructor(private val db: DatabaseClientApi) : Be
     return db.beerDao().beersData(limit, offset).map { it.map { entity -> entity.model() } }
   }
 
+  override fun favoriteBeersData(limit: Int, offset: Int): Flow<List<BeerModel>> {
+    return db.beerDao().favoriteBeersData(limit, offset).map { it.map { entity -> entity.model() } }
+  }
+
   override fun beersCount(): Int {
     return db.beerDao().beersCount().toInt()
   }

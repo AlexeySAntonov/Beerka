@@ -13,8 +13,7 @@
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"
-      tools:src="@drawable/abc_vector_test"
-      tools:tint="@color/design_default_color_on_secondary" />
+      tools:src="@drawable/ic_beer_stub" />
 
   <TextView
       android:id="@+id/name"

@@ -19,11 +19,11 @@ abstract class FeatureBeerListModule {
 
   @Binds
   @RootScope
-  abstract fun featureBeerListScreenInteractor(interactor: FeatureBeerListScreenInteractorImpl): FeatureBeerListScreenInteractor
+  abstract fun featureBeerListScreenInteractor(interactor: BeerListInteractorImpl): BeerListInteractor
 
   @Binds
   @RootScope
-  abstract fun featureBeerListScreenRepository(repository: FeatureBeerListScreenRepositoryImpl): FeatureBeerListScreenRepository
+  abstract fun featureBeerListScreenRepository(repository: BeerListRepositoryImpl): BeerListRepository
 
   @Binds
   @IntoMap

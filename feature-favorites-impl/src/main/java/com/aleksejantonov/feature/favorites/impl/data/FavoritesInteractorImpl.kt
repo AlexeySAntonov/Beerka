@@ -1,4 +1,4 @@
-package com.aleksejantonov.feature.beerlist.impl.data
+package com.aleksejantonov.feature.favorites.impl.data
 
 import com.aleksejantonov.core.di.RootScope
 import com.aleksejantonov.core.ui.model.ListItem
@@ -9,9 +9,9 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 @RootScope
-class FeatureBeerListScreenInteractorImpl @Inject constructor(
-  private val repository: FeatureBeerListScreenRepository
-) : FeatureBeerListScreenInteractor {
+class FavoritesInteractorImpl @Inject constructor(
+  private val repository: FavoritesRepository
+) : FavoritesInteractor {
 
   override suspend fun data(): Flow<List<ListItem>> {
     return repository.data().map { dtoState ->

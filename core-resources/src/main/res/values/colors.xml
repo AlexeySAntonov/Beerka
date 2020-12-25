@@ -3,4 +3,6 @@
   <color name="grey">#D8D8D8</color>
   <color name="gold">#FFEB3B</color>
   <color name="red">#EF4B5F</color>
+  <color name="blue">#4C8BFF</color>
+  <color name="semiTransparentBlue">#264C8BFF</color>
 </resources>

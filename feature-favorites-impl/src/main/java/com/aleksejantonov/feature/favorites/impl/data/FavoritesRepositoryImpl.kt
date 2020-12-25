@@ -1,6 +1,5 @@
-package com.aleksejantonov.feature.beerlist.impl.data
+package com.aleksejantonov.feature.favorites.impl.data
 
-import com.aleksejantonov.core.api.BeersApi
 import com.aleksejantonov.core.db.api.di.CoreDatabaseApi
 import com.aleksejantonov.core.di.RootScope
 import com.aleksejantonov.core.model.BeerModel
@@ -13,13 +12,11 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
-import kotlin.Exception
 
 @RootScope
-class FeatureBeerListScreenRepositoryImpl @Inject constructor(
-  private val beersApi: BeersApi,
+class FavoritesRepositoryImpl @Inject constructor(
   private val databaseApi: CoreDatabaseApi
-) : FeatureBeerListScreenRepository {
+) : FavoritesRepository {
 
   private val beersChannel = ConflatedBroadcastChannel<PagingState<BeerModel>>()
   private val busy = AtomicBoolean(false)
@@ -36,16 +33,8 @@ class FeatureBeerListScreenRepositoryImpl @Inject constructor(
     if (busy.compareAndSet(false, true) && !beersChannel.value.allLoadedEnd) {
       job?.cancel()
       job = scope.launch {
-        databaseApi.beersStore().beersData(DEFAULT_LIMIT + beersChannel.value.itemCount(), 0)
+        databaseApi.beersStore().favoriteBeersData(DEFAULT_LIMIT + beersChannel.value.itemCount(), 0)
           .map { PagingState(data = it) }
-          .onStart {
-            try {
-              val beers = beersApi.getBeers(page = beersChannel.value.itemCount() / DEFAULT_LIMIT + 1, limit = DEFAULT_LIMIT)
-              allLoadedEnd = beers.size < DEFAULT_LIMIT
-              databaseApi.beersStore().insertBeers(beers)
-            } catch (e: Exception) {
-            }
-          }
           .collect { beersChannel.send(it) }
       }
       busy.set(false)
@@ -53,16 +42,8 @@ class FeatureBeerListScreenRepositoryImpl @Inject constructor(
   }
 
   private fun initialData(): Flow<PagingState<BeerModel>> {
-    return databaseApi.beersStore().beersData(DEFAULT_LIMIT, 0)
+    return databaseApi.beersStore().favoriteBeersData(DEFAULT_LIMIT, 0)
       .map { PagingState(data = it) }
-      .onStart {
-        try {
-          val beers = beersApi.getBeers(page = 1, limit = DEFAULT_LIMIT)
-          allLoadedEnd = beers.size < DEFAULT_LIMIT
-          databaseApi.beersStore().insertBeers(beers)
-        } catch (e: Exception) {
-        }
-      }
   }
 
   private companion object {

@@ -7,7 +7,7 @@ import com.aleksejantonov.core.navigation.AppRouter
 import com.aleksejantonov.core.ui.base.BaseViewModel
 import com.aleksejantonov.core.di.ScreenData
 import com.aleksejantonov.core.ui.model.ListItem
-import com.aleksejantonov.feature.beerlist.impl.data.FeatureBeerListScreenInteractor
+import com.aleksejantonov.feature.beerlist.impl.data.BeerListInteractor
 import com.aleksejantonov.core.ui.model.BeerItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class BeerListViewModel @Inject constructor(
-  private val interactor: FeatureBeerListScreenInteractor
+  private val interactor: BeerListInteractor
 ) : BaseViewModel() {
 
   private val _data = MutableLiveData<List<ListItem>>()
