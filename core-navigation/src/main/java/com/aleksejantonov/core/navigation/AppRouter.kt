@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.aleksejantonov.core.di.GlobalFeatureProvider
 import com.aleksejantonov.core.di.ScreenData
+import com.aleksejantonov.core.navigation.transition.ActivityTransition
 import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.sendBlocking
 import kotlinx.coroutines.flow.asFlow
@@ -35,6 +36,7 @@ object AppRouter {
     /** FEATURE NAVIGATION REGION END */
 
     const val EXTRA_FRAGMENT_KEY = "extra_fragment_key"
+    const val EXTRA_ACTIVITY_TRANSITION = "extra_activity_transition"
     private val activityArgs = mutableMapOf<String, Fragment>()
 
     private var activityRef: WeakReference<BaseNavHostActivity>? = null
@@ -58,13 +60,20 @@ object AppRouter {
         }
     }
 
-    fun <T : FragmentActivity> openActivity(current: FragmentActivity, dest: KClass<T>, fragment: Fragment) {
+    fun <T : FragmentActivity> openActivity(
+        current: FragmentActivity,
+        dest: KClass<T>,
+        fragment: Fragment,
+        transition: ActivityTransition = ActivityTransition.Slide()
+    ) {
         val key = UUID.randomUUID().toString()
         activityArgs[key] = fragment
         current.startActivity(
             Intent(current, dest.java)
                 .putExtra(EXTRA_FRAGMENT_KEY, key)
+                .putExtra(EXTRA_ACTIVITY_TRANSITION, transition)
         )
+        current.overridePendingTransition(transition.openEnter, transition.openExit)
     }
 
     fun switchTab(rootFactory: () -> Fragment, tab: NavigationTab) {

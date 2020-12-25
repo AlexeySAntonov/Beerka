@@ -6,10 +6,13 @@ import com.aleksejantonov.core.navigation.localrouting.OverlayLocalRouter
 import com.aleksejantonov.core.navigation.navigation.FragmentNavigation
 import com.aleksejantonov.core.navigation.navigation.PersistentBottomSheetNavigation
 import com.aleksejantonov.core.navigation.localrouting.LocalRouter
+import com.aleksejantonov.core.navigation.transition.ActivityTransition
 
 class NavHostActivity : BaseNavHostActivity() {
 
-//  private lateinit var binding: ActivityNavHostBinding
+  private val transition: ActivityTransition by lazy {
+    (intent.getSerializableExtra(AppRouter.EXTRA_ACTIVITY_TRANSITION) as? ActivityTransition) ?: ActivityTransition.Slide()
+  }
 
   private val localRouter by lazy {
 //    val bottomSheetHost = supportFragmentManager
@@ -24,7 +27,6 @@ class NavHostActivity : BaseNavHostActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-//    binding = ActivityNavHostBinding.inflate(layoutInflater)
     setContentView(R.layout.activity_nav_host)
 
     if (savedInstanceState == null) {
@@ -43,12 +45,14 @@ class NavHostActivity : BaseNavHostActivity() {
     viewModel.firstStartEvent.observe(this, { handleIntent(intent) })
   }
 
+  override fun finish() {
+    super.finish()
+    overridePendingTransition(transition.closeEnter, transition.closeExit)
+  }
+
   override fun localRouter(): LocalRouter = localRouter
 
   private fun handleIntent(intent: Intent) {
-//    try {
-//      DI.appComponent.notificationAppRouter().route(PushNotificationModel.from(intent))
-//    } catch (ignored: Exception) {
-//    }
+    // Under dev
   }
 }
