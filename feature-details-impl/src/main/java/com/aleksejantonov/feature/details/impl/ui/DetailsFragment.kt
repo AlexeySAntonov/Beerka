@@ -50,11 +50,11 @@ class DetailsFragment : BaseFragment(R.layout.fragment_details) {
     if (item.isFavorite) {
       favoriteButton.text = resources.getString(R.string.remove_from_favorite)
       favoriteButton.setIconResource(R.drawable.ic_close_24)
-      favoriteButton.setBackgroundTint(R.color.red)
+      favoriteButton.setBackgroundTint(R.color.appRed)
     } else {
       favoriteButton.text = resources.getString(R.string.add_to_favorite)
       favoriteButton.setIconResource(R.drawable.ic_star_empty_24)
-      favoriteButton.setBackgroundTint(R.color.gold)
+      favoriteButton.setBackgroundTint(R.color.appYellow)
     }
   }
 

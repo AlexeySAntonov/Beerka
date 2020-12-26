@@ -26,8 +26,12 @@ class MainTabsFragment : BaseFragment(R.layout.fragment_main_tabs) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        beersListTab.setOnClickListener { viewModel.onTabClick(NavigationTab.BEER_LIST, false) }
-        favoriteBeersTab.setOnClickListener { viewModel.onTabClick(NavigationTab.FAVORITES, false) }
+        toggleGroup.onSwitchTabClick { tab ->
+            when(tab) {
+                TabsSwitcherBlockView.SwitchTab.BEERS -> viewModel.onTabClick(NavigationTab.BEER_LIST, false)
+                TabsSwitcherBlockView.SwitchTab.FAVORITES -> viewModel.onTabClick(NavigationTab.FAVORITES, false)
+            }
+        }
 
         beerListContainer.isVisible = true
         favoriteBeersContainer.isVisible = false
@@ -43,8 +47,7 @@ class MainTabsFragment : BaseFragment(R.layout.fragment_main_tabs) {
     }
 
     override fun onNavigationBarHeight(navBarHeight: Int) {
-        beersListTab.setMargins(bottom = navBarHeight + requireContext().dpToPx(16f))
-        favoriteBeersTab.setMargins(bottom = navBarHeight + requireContext().dpToPx(16f))
+        toggleGroup.setMargins(bottom = navBarHeight + requireContext().dpToPx(16f))
     }
 
     override fun onResume() {

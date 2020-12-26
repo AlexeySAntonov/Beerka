@@ -1,8 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <color name="grey">#D8D8D8</color>
-  <color name="gold">#FFEB3B</color>
-  <color name="red">#EF4B5F</color>
-  <color name="blue">#4C8BFF</color>
+  <color name="white">#FFFFFF</color>
+  <color name="appRed">#EF4B5F</color>
+  <color name="appPink">#FFCDD6</color>
+  <color name="appGrey">#887D93</color>
+  <color name="appGreyLight">#D8D8D8</color>
+  <color name="appGreyDisabled">#8C887D93</color>
+  <color name="appBlue">#4C8BFF</color>
+  <color name="appBlueLight">#67AAE7</color>
+  <color name="appGreen">#65A75C</color>
+  <color name="appYellow">#FFB430</color>
+  <color name="appOrange">#FF7338</color>
+  <color name="appTextColor">#212121</color>
+  <color name="appTextGray">#575757</color>
+  <color name="semiTransparent">#42000000</color>
+  <color name="semiTransparentPink">#26FFCDD6</color>
   <color name="semiTransparentBlue">#264C8BFF</color>
+  <color name="semiTransparentGreen">#8865A75C</color>
+  <color name="semiTransparentWhite">#DDFFFFFF</color>
+
+  <!--  Links  -->
+  <color name="divider">@color/appGreyLight</color>
+
+  <color name="actionButtonColor">@color/appRed</color>
+  <color name="actionButtonColorPressed">@color/semiTransparentPink</color>
+  <color name="actionButtonColorPressedBlue">@color/semiTransparentBlue</color>
+  <color name="actionButtonColorPressedGreen">@color/semiTransparentGreen</color>
 </resources>

@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+  <string name="filters">Filters</string>
+  <string name="beers">Beers</string>
+  <string name="favorites">Favorites</string>
   <string name="add_to_favorite">Add to favorite</string>
   <string name="remove_from_favorite">Remove from favorite</string>
 </resources>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/tabs_switcher_height"
+    android:clipToPadding="false"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:padding="8dp"
+    tools:parentTag="com.google.android.material.button.MaterialButtonToggleGroup">
+
+  <com.google.android.material.button.MaterialButton
+      android:id="@+id/beersToggle"
+      style="@style/ActionButtonStyle.White.Stroke"
+      android:layout_width="match_parent"
+      android:layout_height="36dp"
+      android:layout_weight="1"
+      android:text="@string/beers"
+      android:textColor="@color/appGrey"
+      app:strokeColor="@color/appGreyLight" />
+
+  <com.google.android.material.button.MaterialButton
+      android:id="@+id/filterToggle"
+      style="@style/ActionButtonStyle.White.Stroke"
+      android:layout_width="match_parent"
+      android:layout_height="36dp"
+      android:layout_weight="1"
+      android:text="@string/filters"
+      android:textColor="@color/appGrey"
+      app:icon="@drawable/ic_filter_24"
+      app:strokeColor="@color/appGreyLight" />
+
+  <com.google.android.material.button.MaterialButton
+      android:id="@+id/favoritesToggle"
+      style="@style/ActionButtonStyle.White.Stroke"
+      android:layout_width="match_parent"
+      android:layout_height="36dp"
+      android:layout_marginStart="8dp"
+      android:layout_weight="1"
+      android:text="@string/favorites"
+      android:textColor="@color/appGrey"
+      app:strokeColor="@color/appGreyLight" />
+
+</merge>

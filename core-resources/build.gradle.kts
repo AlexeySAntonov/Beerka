@@ -21,3 +21,7 @@ android {
         }
     }
 }
+
+dependencies {
+    implementation(Libs.material)
+}
