@@ -40,6 +40,7 @@ class MainTabsFragment : BaseFragment(R.layout.fragment_main_tabs) {
         favoriteBeersContainer.isVisible = false
 
         (activity as? MainActivity)?.localRouter?.tabNavigation?.currentTab?.observe {
+            toggleGroup.switchTab(TabsSwitcherBlockView.SwitchTab.values()[it.ordinal])
             visibleContainer?.show(false)
             when (it) {
                 NavigationTab.BEER_LIST -> beerListContainer.show(true)

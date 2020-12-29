@@ -10,66 +10,64 @@ import kotlinx.android.synthetic.main.view_tabs_switcher_block.view.*
 
 class TabsSwitcherBlockView(context: Context, attrs: AttributeSet? = null) : MaterialButtonToggleGroup(context, attrs) {
 
-    enum class SwitchTab {
-        BEERS,
-        FAVORITES
-    }
+  enum class SwitchTab {
+    BEERS,
+    FAVORITES
+  }
 
-    init {
-        inflate(R.layout.view_tabs_switcher_block, attachToRoot = true)
+  init {
+    inflate(R.layout.view_tabs_switcher_block, attachToRoot = true)
 
-        orientation = HORIZONTAL
-        gravity = Gravity.CENTER
-        isSingleSelection = true
+    orientation = HORIZONTAL
+    gravity = Gravity.CENTER
+    isSingleSelection = true
 
-        val horPad = context.dpToPx(HORIZONTAL_PADDING)
-        val verPad = context.dpToPx(VERTICAL_PADDING)
-        setPaddings(left = horPad, top = verPad, right = horPad, bottom = verPad)
-        clipToPadding = false
+    val horPad = context.dpToPx(HORIZONTAL_PADDING)
+    val verPad = context.dpToPx(VERTICAL_PADDING)
+    setPaddings(left = horPad, top = verPad, right = horPad, bottom = verPad)
+    clipToPadding = false
 
-        setBackgroundResource(android.R.color.transparent)
+    setBackgroundResource(android.R.color.transparent)
 
-        initViews()
-    }
+    initViews()
+  }
 
-    private var lastCheckedType = SwitchTab.BEERS
-    private var listener: ((SwitchTab) -> Unit)? = null
+  private var listener: ((SwitchTab) -> Unit)? = null
 
-    fun onSwitchTabClick(listener: (SwitchTab) -> Unit) {
-        this.listener = listener
-    }
+  fun onSwitchTabClick(listener: (SwitchTab) -> Unit) {
+    this.listener = listener
+  }
 
-    private fun initViews() {
+  fun switchTab(tab: SwitchTab) {
+    when (tab) {
+      SwitchTab.BEERS -> {
         beersToggle.textColor(R.color.white)
         beersToggle.setBackgroundTint(R.color.appBlue)
-        beersToggle.setOnClickListener { _ ->
-            if (lastCheckedType != SwitchTab.BEERS) {
-                beersToggle.textColor(R.color.white)
-                beersToggle.setBackgroundTint(R.color.appBlue)
-
-                favoritesToggle.textColor(R.color.appBlue)
-                favoritesToggle.setBackgroundTint(R.color.white)
-
-                lastCheckedType = SwitchTab.BEERS
-                listener?.invoke(lastCheckedType)
-            }
-        }
-        favoritesToggle.setOnClickListener { _ ->
-            if (lastCheckedType != SwitchTab.FAVORITES) {
-                beersToggle.textColor(R.color.appBlue)
-                beersToggle.setBackgroundTint(R.color.white)
-
-                favoritesToggle.textColor(R.color.white)
-                favoritesToggle.setBackgroundTint(R.color.appBlue)
-
-                lastCheckedType = SwitchTab.FAVORITES
-                listener?.invoke(lastCheckedType)
-            }
-        }
+        favoritesToggle.textColor(R.color.appBlue)
+        favoritesToggle.setBackgroundTint(R.color.white)
+      }
+      SwitchTab.FAVORITES -> {
+        beersToggle.textColor(R.color.appBlue)
+        beersToggle.setBackgroundTint(R.color.white)
+        favoritesToggle.textColor(R.color.white)
+        favoritesToggle.setBackgroundTint(R.color.appBlue)
+      }
     }
+  }
 
-    companion object {
-        private const val HORIZONTAL_PADDING = 16f
-        private const val VERTICAL_PADDING = 16f
+  private fun initViews() {
+    beersToggle.textColor(R.color.white)
+    beersToggle.setBackgroundTint(R.color.appBlue)
+    beersToggle.setOnClickListener { _ ->
+      listener?.invoke(SwitchTab.BEERS)
     }
+    favoritesToggle.setOnClickListener { _ ->
+      listener?.invoke(SwitchTab.FAVORITES)
+    }
+  }
+
+  companion object {
+    private const val HORIZONTAL_PADDING = 16f
+    private const val VERTICAL_PADDING = 16f
+  }
 }

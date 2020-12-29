@@ -72,8 +72,7 @@ class TabNavigation(
 
   override fun back(force: Boolean): Boolean {
     if (isRoot()) {
-//      resetTab(NavigationTab.PROFILE)
-//      resetTab(NavigationTab.ACTIVITY)
+      resetTab(NavigationTab.FAVORITES)
       return false
     }
     val fm = fragmentManager(currentTab.requireValue()) ?: return false
@@ -93,8 +92,7 @@ class TabNavigation(
   }
 
   fun resetToRoot() {
-//    resetTab(NavigationTab.PROFILE)
-//    resetTab(NavigationTab.ACTIVITY)
+    resetTab(NavigationTab.FAVORITES)
     fragmentManager(NavigationTab.BEER_LIST)?.apply {
       while (backStackEntryCount > 1) {
         popBackStackImmediate()
