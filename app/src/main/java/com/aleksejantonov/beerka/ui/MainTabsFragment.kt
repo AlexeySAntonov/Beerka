@@ -47,7 +47,7 @@ class MainTabsFragment : BaseFragment(R.layout.fragment_main_tabs) {
     }
 
     override fun onNavigationBarHeight(navBarHeight: Int) {
-        toggleGroup.setMargins(bottom = navBarHeight + requireContext().dpToPx(16f))
+        toggleGroup.setMargins(bottom = navBarHeight)
     }
 
     override fun onResume() {

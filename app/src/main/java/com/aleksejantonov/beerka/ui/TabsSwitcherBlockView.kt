@@ -22,7 +22,9 @@ class TabsSwitcherBlockView(context: Context, attrs: AttributeSet? = null) : Mat
         gravity = Gravity.CENTER
         isSingleSelection = true
 
-        setPaddings(left = PADDING * 2, top = PADDING, right = PADDING * 2, bottom = PADDING)
+        val horPad = context.dpToPx(HORIZONTAL_PADDING)
+        val verPad = context.dpToPx(VERTICAL_PADDING)
+        setPaddings(left = horPad, top = verPad, right = horPad, bottom = verPad)
         clipToPadding = false
 
         setBackgroundResource(android.R.color.transparent)
@@ -39,13 +41,13 @@ class TabsSwitcherBlockView(context: Context, attrs: AttributeSet? = null) : Mat
 
     private fun initViews() {
         beersToggle.textColor(R.color.white)
-        beersToggle.setBackgroundTint(R.color.appGrey)
+        beersToggle.setBackgroundTint(R.color.appBlue)
         beersToggle.setOnClickListener { _ ->
             if (lastCheckedType != SwitchTab.BEERS) {
                 beersToggle.textColor(R.color.white)
-                beersToggle.setBackgroundTint(R.color.appGrey)
+                beersToggle.setBackgroundTint(R.color.appBlue)
 
-                favoritesToggle.textColor(R.color.appGrey)
+                favoritesToggle.textColor(R.color.appBlue)
                 favoritesToggle.setBackgroundTint(R.color.white)
 
                 lastCheckedType = SwitchTab.BEERS
@@ -54,11 +56,11 @@ class TabsSwitcherBlockView(context: Context, attrs: AttributeSet? = null) : Mat
         }
         favoritesToggle.setOnClickListener { _ ->
             if (lastCheckedType != SwitchTab.FAVORITES) {
-                beersToggle.textColor(R.color.appGrey)
+                beersToggle.textColor(R.color.appBlue)
                 beersToggle.setBackgroundTint(R.color.white)
 
                 favoritesToggle.textColor(R.color.white)
-                favoritesToggle.setBackgroundTint(R.color.appGrey)
+                favoritesToggle.setBackgroundTint(R.color.appBlue)
 
                 lastCheckedType = SwitchTab.FAVORITES
                 listener?.invoke(lastCheckedType)
@@ -67,6 +69,7 @@ class TabsSwitcherBlockView(context: Context, attrs: AttributeSet? = null) : Mat
     }
 
     companion object {
-        private const val PADDING = 16
+        private const val HORIZONTAL_PADDING = 16f
+        private const val VERTICAL_PADDING = 16f
     }
 }

@@ -43,6 +43,14 @@
     <item name="strokeColor">@color/color_state_list_action_button_stroke_light</item>
   </style>
 
+  <style name="ActionButtonStyle.Switcher">
+    <item name="android:backgroundTint">@color/color_state_list_action_button_light</item>
+    <item name="iconTint">@color/color_state_list_action_button_text_switcher</item>
+    <item name="android:textColor">@color/color_state_list_action_button_text_switcher</item>
+    <item name="strokeWidth">0.5dp</item>
+    <item name="strokeColor">@color/color_state_list_action_button_stroke_light</item>
+  </style>
+
   <style name="CardViewStyle" parent="Widget.MaterialComponents.CardView">
     <item name="android:clickable">true</item>
     <item name="android:focusable">true</item>

@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <dimen name="tabs_switcher_height">36dp</dimen>
+  <dimen name="tabs_switcher_height">68dp</dimen>
 </resources>

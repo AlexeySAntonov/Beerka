@@ -7,39 +7,42 @@
     android:clipToPadding="false"
     android:gravity="center"
     android:orientation="horizontal"
-    android:padding="8dp"
+    android:paddingStart="16dp"
+    android:paddingTop="16dp"
+    android:paddingEnd="16dp"
+    android:paddingBottom="16dp"
     tools:parentTag="com.google.android.material.button.MaterialButtonToggleGroup">
 
   <com.google.android.material.button.MaterialButton
       android:id="@+id/beersToggle"
-      style="@style/ActionButtonStyle.White.Stroke"
+      style="@style/ActionButtonStyle.Switcher"
       android:layout_width="match_parent"
       android:layout_height="36dp"
       android:layout_weight="1"
       android:text="@string/beers"
-      android:textColor="@color/appGrey"
+      android:textColor="@color/appBlue"
       app:strokeColor="@color/appGreyLight" />
 
   <com.google.android.material.button.MaterialButton
       android:id="@+id/filterToggle"
-      style="@style/ActionButtonStyle.White.Stroke"
+      style="@style/ActionButtonStyle.Switcher"
       android:layout_width="match_parent"
       android:layout_height="36dp"
       android:layout_weight="1"
       android:text="@string/filters"
-      android:textColor="@color/appGrey"
+      android:textColor="@color/appBlue"
       app:icon="@drawable/ic_filter_24"
       app:strokeColor="@color/appGreyLight" />
 
   <com.google.android.material.button.MaterialButton
       android:id="@+id/favoritesToggle"
-      style="@style/ActionButtonStyle.White.Stroke"
+      style="@style/ActionButtonStyle.Switcher"
       android:layout_width="match_parent"
       android:layout_height="36dp"
       android:layout_marginStart="8dp"
       android:layout_weight="1"
       android:text="@string/favorites"
-      android:textColor="@color/appGrey"
+      android:textColor="@color/appBlue"
       app:strokeColor="@color/appGreyLight" />
 
 </merge>
