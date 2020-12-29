@@ -7,7 +7,7 @@ import com.aleksejantonov.core.ui.base.PagingState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.channels.ConflatedBroadcastChannel
+import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.util.concurrent.atomic.AtomicBoolean
@@ -18,24 +18,28 @@ class FavoritesRepositoryImpl @Inject constructor(
   private val databaseApi: CoreDatabaseApi
 ) : FavoritesRepository {
 
-  private val beersChannel = ConflatedBroadcastChannel<PagingState<BeerModel>>()
+  private val beersChannelFlow = MutableSharedFlow<PagingState<BeerModel>>(replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
   private val busy = AtomicBoolean(false)
   private val scope: CoroutineScope = CoroutineScope(Dispatchers.IO)
   private var job: Job? = null
-  private var allLoadedEnd: Boolean = false
 
   override suspend fun data(): Flow<PagingState<BeerModel>> {
-    job = scope.launch { initialData().collect { beersChannel.send(it) } }
-    return beersChannel.asFlow()
+    job = scope.launch { initialData().collect { beersChannelFlow.tryEmit(it) } }
+    return combine(
+      beersChannelFlow,
+      databaseApi.beersStore().favoriteBeersCountData()
+    ) { state, actualCount ->
+      state.copy(allLoadedEnd = actualCount.toInt() == state.itemCount())
+    }
   }
 
   override suspend fun loadMore() {
-    if (busy.compareAndSet(false, true) && !beersChannel.value.allLoadedEnd) {
+    if (busy.compareAndSet(false, true)) {
       job?.cancel()
       job = scope.launch {
-        databaseApi.beersStore().favoriteBeersData(DEFAULT_LIMIT + beersChannel.value.itemCount(), 0)
+        databaseApi.beersStore().favoriteBeersData(DEFAULT_LIMIT + beersChannelFlow.replayCache[0].itemCount(), 0)
           .map { PagingState(data = it) }
-          .collect { beersChannel.send(it) }
+          .collect { beersChannelFlow.tryEmit(it) }
       }
       busy.set(false)
     }
@@ -47,6 +51,6 @@ class FavoritesRepositoryImpl @Inject constructor(
   }
 
   private companion object {
-    const val DEFAULT_LIMIT = 20
+    const val DEFAULT_LIMIT = 8
   }
 }

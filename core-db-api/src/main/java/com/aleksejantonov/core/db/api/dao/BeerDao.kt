@@ -25,6 +25,9 @@ interface BeerDao {
   @Query("SELECT * FROM beers WHERE isFavorite = 1 LIMIT :limit OFFSET :offset")
   fun favoriteBeersData(limit: Int, offset: Int): Flow<List<BeerEntity>>
 
+  @Query("SELECT COUNT(*) FROM beers WHERE isFavorite = 1")
+  fun favoriteBeersCountData(): Flow<Long>
+
   @Query("SELECT COUNT(*) FROM beers")
   fun beersCount(): Long
 
