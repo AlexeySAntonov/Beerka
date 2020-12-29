@@ -5,10 +5,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.annotation.LayoutRes
+import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.aleksejantonov.core.di.ComponentsManager
+import com.aleksejantonov.core.ui.base.bottomnavigation.BottomNavigationScrollHandlers
+import com.aleksejantonov.core.ui.base.bottomnavigation.BottomNavigationViewModel
 import com.aleksejantonov.core.ui.base.mvvm.navBarHeight
 import com.aleksejantonov.core.ui.base.mvvm.setMargins
 import com.aleksejantonov.core.ui.base.mvvm.setPaddings
@@ -25,6 +29,16 @@ abstract class BaseFragment(@LayoutRes contentLayoutId: Int) : Fragment(contentL
   private var stateSaved = false
   private val componentKey by lazy { arguments?.getLong(COMPONENT_KEY) }
 
+  protected val tabNavigationBarHeight by lazy { resources.getDimensionPixelOffset(R.dimen.tabs_switcher_height) }
+  protected val bottomNavigationViewModel by activityViewModels<BottomNavigationViewModel>()
+
+  private val recyclerViewScrollListener by lazy {
+    BottomNavigationScrollHandlers.RecyclerViewListener(bottomNavigationViewModel)
+  }
+  private val nestedScrollViewScrollListener by lazy {
+    BottomNavigationScrollHandlers.NestedScrollViewListener(bottomNavigationViewModel)
+  }
+
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     onStatusBarHeight(statusBarHeight)
@@ -38,6 +52,11 @@ abstract class BaseFragment(@LayoutRes contentLayoutId: Int) : Fragment(contentL
   override fun onStart() {
     super.onStart()
     stateSaved = false
+    val scrollableView = getScrollableViewToChangeBottomNavigationState() ?: return
+    when (scrollableView) {
+      is RecyclerView -> scrollableView.addOnScrollListener(recyclerViewScrollListener)
+      is NestedScrollView -> scrollableView.setOnScrollChangeListener(nestedScrollViewScrollListener)
+    }
   }
 
   override fun onResume() {
@@ -48,6 +67,15 @@ abstract class BaseFragment(@LayoutRes contentLayoutId: Int) : Fragment(contentL
   override fun onSaveInstanceState(outState: Bundle) {
     super.onSaveInstanceState(outState)
     stateSaved = true
+  }
+
+  override fun onStop() {
+    super.onStop()
+    val scrollableView = getScrollableViewToChangeBottomNavigationState() ?: return
+    when (scrollableView) {
+      is RecyclerView -> scrollableView.removeOnScrollListener(recyclerViewScrollListener)
+      is NestedScrollView -> scrollableView.setOnScrollChangeListener(null as NestedScrollView.OnScrollChangeListener?)
+    }
   }
 
   override fun onDestroyView() {
@@ -109,6 +137,8 @@ abstract class BaseFragment(@LayoutRes contentLayoutId: Int) : Fragment(contentL
 
   protected open fun getViewToApplyStatusBarMargin(root: View): Array<View> = emptyArray()
   protected open fun getViewToApplyNavigationBarMargin(root: View): Array<View> = emptyArray()
+
+  protected open fun getScrollableViewToChangeBottomNavigationState(): View? = null
 
   protected fun adjustResize() {
     requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)

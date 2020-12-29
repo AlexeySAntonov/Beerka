@@ -37,7 +37,6 @@ dependencies {
     implementation(project(":core-di"))
     implementation(project(":core-api"))
     implementation(project(":core-ui-base"))
-    implementation(project(":core-resources"))
     implementation(project(":core-db-impl"))
     implementation(project(":core-navigation"))
     implementation(project(":feature-beerlist-impl"))

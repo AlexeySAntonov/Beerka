@@ -8,6 +8,7 @@ import com.aleksejantonov.core.ui.base.BaseFragment
 import com.aleksejantonov.core.ui.base.adapter.SimpleDiffAdapter
 import com.aleksejantonov.core.ui.base.adapter.delegate.PaginationLoadingDelegate
 import com.aleksejantonov.core.ui.base.mvvm.setMargins
+import com.aleksejantonov.core.ui.base.mvvm.setPaddings
 import com.aleksejantonov.core.ui.base.mvvm.trueViewModels
 import com.aleksejantonov.feature.beerlist.impl.R
 import com.aleksejantonov.feature.beerlist.impl.ui.delegate.BeerItemDelegate
@@ -53,8 +54,10 @@ class BeerListFragment : BaseFragment(R.layout.fragment_beer_list) {
   }
 
   override fun onNavigationBarHeight(navBarHeight: Int) {
-    recyclerView.setMargins(bottom = navBarHeight)
+    recyclerView.setPaddings(bottom = navBarHeight + tabNavigationBarHeight)
   }
+
+  override fun getScrollableViewToChangeBottomNavigationState(): View? = recyclerView
 
   private class BeersAdapter(onBeerClick: (BeerItem) -> Unit) : SimpleDiffAdapter() {
     init {

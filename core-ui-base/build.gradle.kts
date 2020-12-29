@@ -32,6 +32,7 @@ android {
 }
 
 dependencies {
+    api(project(":core-resources"))
     api(project(":core-ui-model"))
     api(project(":core-di"))
     api(Libs.kotlin)

@@ -1,7 +1,10 @@
 package com.aleksejantonov.beerka.ui
 
+import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.view.View
+import android.view.animation.AccelerateInterpolator
+import android.view.animation.DecelerateInterpolator
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.aleksejantonov.beerka.MainActivity
@@ -44,6 +47,7 @@ class MainTabsFragment : BaseFragment(R.layout.fragment_main_tabs) {
             }
         }
 
+        setUpFloatingBottomBar()
     }
 
     override fun onNavigationBarHeight(navBarHeight: Int) {
@@ -56,6 +60,39 @@ class MainTabsFragment : BaseFragment(R.layout.fragment_main_tabs) {
         if (tabNavigation.currentScreen() == null) {
             val fragment = DI.appComponent.globalFeatureProvider().provideFeatureBeerList()
             tabNavigation.switchTab({ fragment }, NavigationTab.BEER_LIST)
+        }
+    }
+
+    private fun setUpFloatingBottomBar() {
+        val fullTranslation = dpToPx(tabNavigationBarHeight.toFloat()).toFloat()
+        val showDuration = 200L
+        val hideDuration = 300L
+        val animations = mutableListOf<ObjectAnimator>()
+        toggleGroup.translationY = fullTranslation
+        bottomNavigationViewModel.showData.observe { show ->
+            val destTranslation = if (show) 0f else fullTranslation
+            val currentTranslation = toggleGroup.translationY
+            if (currentTranslation != destTranslation) {
+                val duration =
+                    if (show) currentTranslation / fullTranslation * showDuration
+                    else (1 - currentTranslation / fullTranslation) * hideDuration
+
+                animations.forEach { it.cancel() }
+                animations.clear()
+
+                ObjectAnimator.ofFloat(toggleGroup, "translationY", currentTranslation, destTranslation).apply {
+                    this.duration = duration.toLong()
+                    this.interpolator = if (show) DecelerateInterpolator() else AccelerateInterpolator()
+                    animations.add(this)
+                    this.start()
+                }
+                ObjectAnimator.ofFloat(toggleGroup, "alpha", toggleGroup.alpha, if (show) 1f else 0f).apply {
+                    this.duration = duration.toLong()
+                    this.interpolator = if (show) AccelerateInterpolator() else DecelerateInterpolator()
+                    animations.add(this)
+                    this.start()
+                }
+            }
         }
     }
 

@@ -9,6 +9,7 @@ import com.aleksejantonov.core.ui.base.adapter.SimpleDiffAdapter
 import com.aleksejantonov.core.ui.base.adapter.delegate.PaginationLoadingDelegate
 import com.aleksejantonov.core.ui.base.adapter.delegate.PaginationLoadingItem
 import com.aleksejantonov.core.ui.base.mvvm.setMargins
+import com.aleksejantonov.core.ui.base.mvvm.setPaddings
 import com.aleksejantonov.core.ui.base.mvvm.trueViewModels
 import com.aleksejantonov.core.ui.model.BeerItem
 import com.aleksejantonov.feature.favorites.impl.R
@@ -54,8 +55,10 @@ class FavoritesFragment : BaseFragment(R.layout.fragment_favorites) {
   }
 
   override fun onNavigationBarHeight(navBarHeight: Int) {
-    recyclerView.setMargins(bottom = navBarHeight)
+    recyclerView.setPaddings(bottom = navBarHeight + tabNavigationBarHeight)
   }
+
+  override fun getScrollableViewToChangeBottomNavigationState(): View? = recyclerView
 
   private fun initRecyclerView() {
     with(recyclerView) {
