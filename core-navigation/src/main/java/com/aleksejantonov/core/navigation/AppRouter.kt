@@ -28,11 +28,6 @@ object AppRouter {
         openFullScreen(fragment)
     }
 
-    fun openDetailsNextFeature(screenData: ScreenData) {
-        val fragment = globalFeatureProvider.provideFeatureDetailsNext(screenData)
-        openFullScreen(fragment)
-    }
-
     /** FEATURE NAVIGATION REGION END */
 
     const val EXTRA_FRAGMENT_KEY = "extra_fragment_key"

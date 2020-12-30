@@ -32,10 +32,15 @@ class TabsSwitcherBlockView(context: Context, attrs: AttributeSet? = null) : Mat
     initViews()
   }
 
-  private var listener: ((SwitchTab) -> Unit)? = null
+  private var tabCLickListener: ((SwitchTab) -> Unit)? = null
+  private var filterClickListener: (() -> Unit)? = null
 
   fun onSwitchTabClick(listener: (SwitchTab) -> Unit) {
-    this.listener = listener
+    this.tabCLickListener = listener
+  }
+
+  fun onFilterClick(listener: () -> Unit) {
+    this.filterClickListener = listener
   }
 
   fun switchTab(tab: SwitchTab) {
@@ -59,11 +64,12 @@ class TabsSwitcherBlockView(context: Context, attrs: AttributeSet? = null) : Mat
     beersToggle.textColor(R.color.white)
     beersToggle.setBackgroundTint(R.color.appBlue)
     beersToggle.setOnClickListener { _ ->
-      listener?.invoke(SwitchTab.BEERS)
+      tabCLickListener?.invoke(SwitchTab.BEERS)
     }
     favoritesToggle.setOnClickListener { _ ->
-      listener?.invoke(SwitchTab.FAVORITES)
+      tabCLickListener?.invoke(SwitchTab.FAVORITES)
     }
+    filterToggle.setOnClickListener { filterClickListener?.invoke() }
   }
 
   companion object {

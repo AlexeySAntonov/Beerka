@@ -9,9 +9,6 @@ import com.aleksejantonov.feature.beerlist.impl.di.FeatureBeerListComponentDepen
 import com.aleksejantonov.feature.details.api.di.FeatureDetailsApi
 import com.aleksejantonov.feature.details.impl.di.FeatureDetailsComponent
 import com.aleksejantonov.feature.details.impl.di.FeatureDetailsComponentDependencies
-import com.aleksejantonov.feature.details.next.api.di.FeatureDetailsNextApi
-import com.aleksejantonov.feature.details.next.impl.di.FeatureDetailsNextComponent
-import com.aleksejantonov.feature.details.next.impl.di.FeatureDetailsNextComponentDependencies
 import com.aleksejantonov.feature.favorites.api.di.FeatureFavoritesApi
 import com.aleksejantonov.feature.favorites.impl.di.FeatureFavoritesComponent
 import com.aleksejantonov.feature.favorites.impl.di.FeatureFavoritesComponentDependencies
@@ -28,14 +25,12 @@ class FeatureProviderModule {
   fun providesGlobalFeatureProvider(
     featureBeerListApiProvider: Provider<FeatureBeerListApi>,
     featureFavoritesApiProvider: Provider<FeatureFavoritesApi>,
-    featureDetailsApiProvider: Provider<FeatureDetailsApi>,
-    featureDetailsNextApiProvider: Provider<FeatureDetailsNextApi>
+    featureDetailsApiProvider: Provider<FeatureDetailsApi>
   ): GlobalFeatureProvider {
     return GlobalFeatureProvider(
       featureBeerListApiProvider,
       featureFavoritesApiProvider,
-      featureDetailsApiProvider,
-      featureDetailsNextApiProvider
+      featureDetailsApiProvider
     )
   }
 
@@ -95,21 +90,4 @@ class FeatureProviderModule {
     return FeatureDetailsComponent.init(dependencies)
   }
 
-  @Provides
-  @Singleton
-  fun provideFeatureDetailsNextDependencies(
-    coreDatabaseApi: CoreDatabaseApi
-  ): FeatureDetailsNextComponentDependencies {
-    return object : FeatureDetailsNextComponentDependencies {
-      override fun coreDatabaseApi(): CoreDatabaseApi = coreDatabaseApi
-    }
-  }
-
-  // Unscoped
-  @Provides
-  fun provideFeatureDetailsNextApi(
-    dependencies: FeatureDetailsNextComponentDependencies
-  ): FeatureDetailsNextApi {
-    return FeatureDetailsNextComponent.init(dependencies)
-  }
 }
