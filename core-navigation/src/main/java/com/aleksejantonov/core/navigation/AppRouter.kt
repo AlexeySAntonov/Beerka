@@ -1,6 +1,9 @@
 package com.aleksejantonov.core.navigation
 
+import android.content.Context
 import android.content.Intent
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.aleksejantonov.core.di.GlobalFeatureProvider
@@ -28,6 +31,25 @@ object AppRouter {
         openFullScreen(fragment)
     }
 
+    /** MODALS */
+
+    private var currentModalView: View? = null
+
+    fun addModalView(view: View) {
+        removeCurrentModal()
+        currentModalView = view
+        activityRef?.get()?.window?.decorView?.findViewById<ViewGroup>(android.R.id.content)?.addView(currentModalView)
+    }
+
+    fun removeCurrentModal() {
+        activityRef?.get()?.window?.decorView?.findViewById<ViewGroup>(android.R.id.content)?.removeView(currentModalView)
+        currentModalView = null
+    }
+
+    fun openFilterFeature(context: Context) {
+        addModalView(globalFeatureProvider.provideFeatureFilter(context))
+    }
+
     /** FEATURE NAVIGATION REGION END */
 
     const val EXTRA_FRAGMENT_KEY = "extra_fragment_key"
@@ -50,6 +72,7 @@ object AppRouter {
     }
 
     fun detach(activity: BaseNavHostActivity) {
+        removeCurrentModal()
         if (activity === activity()) {
             activityRef = null
         }
@@ -79,9 +102,10 @@ object AppRouter {
         navigationRoutes.sendBlocking(NavigationRoute.FullScreen({ fragment }, addToStack))
     }
 
-    fun back(force: Boolean = false): Boolean {
-        navigationRoutes.sendBlocking(NavigationRoute.Back(force))
-        return true
+    fun back(force: Boolean = false) {
+        currentModalView?.let { removeCurrentModal() } ?: run {
+            navigationRoutes.sendBlocking(NavigationRoute.Back(force))
+        }
     }
 
     fun currentScreen(): Fragment? = activity()?.currentScreen()

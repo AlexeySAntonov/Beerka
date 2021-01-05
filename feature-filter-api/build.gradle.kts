@@ -1,7 +1,6 @@
 plugins {
     id("com.android.library")
     id("kotlin-android")
-    id("kotlin-kapt")
 }
 
 android {
@@ -32,12 +31,6 @@ android {
 }
 
 dependencies {
-    implementation(project(":feature-beerlist-api"))
-    implementation(project(":feature-favorites-api"))
-    implementation(project(":feature-details-api"))
-    implementation(project(":feature-filter-api"))
     implementation(Libs.kotlin)
     implementation(Libs.appCompat)
-    implementation(Libs.dagger)
-    kapt(Libs.daggerCompiler)
 }

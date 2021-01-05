@@ -54,6 +54,14 @@ fun Fragment.dpToPx(dp: Float): Int {
   return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, metrics).toInt()
 }
 
+fun View.dpToPx(dp: Float): Float {
+  val wm = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+  val display = wm.defaultDisplay
+  val metrics = DisplayMetrics()
+  display.getMetrics(metrics)
+  return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, metrics)
+}
+
 fun Fragment.statusBarHeight(): Int {
   return activity?.statusBarHeight() ?: 0
 }

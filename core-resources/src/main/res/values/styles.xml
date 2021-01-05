@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+  <style name="BottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
+    <item name="android:background">@android:color/transparent</item>
+  </style>
+
+  <style name="BaseModalBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
+    <item name="android:windowIsFloating">false</item>
+    <item name="bottomSheetStyle">@style/BottomSheetStyle</item>
+    <item name="android:windowTranslucentStatus">true</item>
+    <item name="android:statusBarColor">@android:color/transparent</item>
+  </style>
+
+  <style name="ModalBottomSheetDialogTheme" parent="BaseModalBottomSheetDialogTheme">
+    <item name="android:navigationBarColor">@android:color/darker_gray</item>
+  </style>
+
   <style name="ActionButtonStyle" parent="Widget.MaterialComponents.Button">
     <item name="android:insetTop">0dp</item>
     <item name="android:insetBottom">0dp</item>

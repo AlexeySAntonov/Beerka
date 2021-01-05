@@ -15,6 +15,7 @@ import androidx.fragment.app.viewModels
 import com.aleksejantonov.beerka.MainActivity
 import com.aleksejantonov.beerka.R
 import com.aleksejantonov.beerka.di.DI
+import com.aleksejantonov.core.navigation.AppRouter
 import com.aleksejantonov.core.navigation.NavigationTab
 import com.aleksejantonov.core.ui.base.BaseFragment
 import com.aleksejantonov.core.ui.base.LayoutHelper
@@ -43,7 +44,7 @@ class MainTabsFragment : BaseFragment(R.layout.fragment_main_tabs) {
         TabsSwitcherBlockView.SwitchTab.FAVORITES -> viewModel.onTabClick(NavigationTab.FAVORITES, false)
       }
     }
-    toggleGroup.onFilterClick { showModalSheet() }
+    toggleGroup.onFilterClick { context?.let { AppRouter.openFilterFeature(it) } }
 
     beerListContainer.isVisible = true
     favoriteBeersContainer.isVisible = false

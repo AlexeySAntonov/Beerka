@@ -12,6 +12,9 @@ import com.aleksejantonov.feature.details.impl.di.FeatureDetailsComponentDepende
 import com.aleksejantonov.feature.favorites.api.di.FeatureFavoritesApi
 import com.aleksejantonov.feature.favorites.impl.di.FeatureFavoritesComponent
 import com.aleksejantonov.feature.favorites.impl.di.FeatureFavoritesComponentDependencies
+import com.aleksejantonov.feature.filter.api.di.FeatureFilterApi
+import com.aleksejantonov.feature.filter.impl.di.FeatureFilterComponent
+import com.aleksejantonov.feature.filter.impl.di.FeatureFilterComponentDependencies
 import dagger.Module
 import dagger.Provides
 import javax.inject.Provider
@@ -25,12 +28,14 @@ class FeatureProviderModule {
   fun providesGlobalFeatureProvider(
     featureBeerListApiProvider: Provider<FeatureBeerListApi>,
     featureFavoritesApiProvider: Provider<FeatureFavoritesApi>,
-    featureDetailsApiProvider: Provider<FeatureDetailsApi>
+    featureDetailsApiProvider: Provider<FeatureDetailsApi>,
+    featureFilterApiProvider: Provider<FeatureFilterApi>
   ): GlobalFeatureProvider {
     return GlobalFeatureProvider(
       featureBeerListApiProvider,
       featureFavoritesApiProvider,
-      featureDetailsApiProvider
+      featureDetailsApiProvider,
+      featureFilterApiProvider
     )
   }
 
@@ -88,6 +93,24 @@ class FeatureProviderModule {
     dependencies: FeatureDetailsComponentDependencies
   ): FeatureDetailsApi {
     return FeatureDetailsComponent.init(dependencies)
+  }
+
+  @Provides
+  @Singleton
+  fun provideFeatureFilterDependencies(
+    coreDatabaseApi: CoreDatabaseApi
+  ): FeatureFilterComponentDependencies {
+    return object : FeatureFilterComponentDependencies {
+      override fun coreDatabaseApi(): CoreDatabaseApi = coreDatabaseApi
+    }
+  }
+
+  // Unscoped
+  @Provides
+  fun provideFeatureFilterApi(
+    dependencies: FeatureFilterComponentDependencies
+  ): FeatureFilterApi {
+    return FeatureFilterComponent.init(dependencies)
   }
 
 }
