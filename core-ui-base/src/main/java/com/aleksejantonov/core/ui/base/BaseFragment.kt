@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
-import com.aleksejantonov.core.di.ComponentsManager
+import androidx.viewpager2.widget.ViewPager2
 import com.aleksejantonov.core.ui.base.bottomnavigation.BottomNavigationScrollHandlers
 import com.aleksejantonov.core.ui.base.bottomnavigation.BottomNavigationViewModel
 import com.aleksejantonov.core.ui.base.mvvm.navBarHeight
@@ -25,9 +25,6 @@ abstract class BaseFragment(@LayoutRes contentLayoutId: Int) : Fragment(contentL
 
   private val statusBarHeight by lazy { statusBarHeight() }
   private val navBarHeight by lazy { navBarHeight() }
-
-  private var stateSaved = false
-  private val componentKey by lazy { arguments?.getLong(COMPONENT_KEY) }
 
   protected val tabNavigationBarHeight by lazy { resources.getDimensionPixelOffset(R.dimen.tabs_switcher_height) }
   protected val bottomNavigationViewModel by activityViewModels<BottomNavigationViewModel>()
@@ -51,22 +48,11 @@ abstract class BaseFragment(@LayoutRes contentLayoutId: Int) : Fragment(contentL
 
   override fun onStart() {
     super.onStart()
-    stateSaved = false
     val scrollableView = getScrollableViewToChangeBottomNavigationState() ?: return
     when (scrollableView) {
       is RecyclerView -> scrollableView.addOnScrollListener(recyclerViewScrollListener)
       is NestedScrollView -> scrollableView.setOnScrollChangeListener(nestedScrollViewScrollListener)
     }
-  }
-
-  override fun onResume() {
-    super.onResume()
-    stateSaved = false
-  }
-
-  override fun onSaveInstanceState(outState: Bundle) {
-    super.onSaveInstanceState(outState)
-    stateSaved = true
   }
 
   override fun onStop() {
@@ -86,41 +72,16 @@ abstract class BaseFragment(@LayoutRes contentLayoutId: Int) : Fragment(contentL
     super.onDestroyView()
   }
 
-  override fun onDestroy() {
-    super.onDestroy()
-
-    //We leave the screen and respectively all fragments will be destroyed
-    if (activity?.isFinishing == true) {
-      componentKey?.let { ComponentsManager.release(it) }
-      return
-    }
-
-    // When we rotate device isRemoving() return true for fragment placed in backstack
-    // http://stackoverflow.com/questions/34649126/fragment-back-stack-and-isremoving
-    if (stateSaved) {
-      stateSaved = false
-      return
-    }
-
-    // See https://github.com/Arello-Mobile/Moxy/issues/24
-    var anyParentIsRemoving = false
-    var parent = parentFragment
-    while (!anyParentIsRemoving && parent != null) {
-      anyParentIsRemoving = parent.isRemoving
-      parent = parent.parentFragment
-    }
-
-    if (isRemoving || anyParentIsRemoving) {
-      componentKey?.let { ComponentsManager.release(it) }
-    }
-  }
-
   private fun releaseAdaptersRecursively(viewGroup: ViewGroup) {
     for (i in 0 until (viewGroup.childCount)) {
       when (val child = viewGroup.getChildAt(i)) {
         is RecyclerView -> {
           (viewGroup.getChildAt(i) as? RecyclerView)?.adapter = null
           Timber.d("Fragment recycler adapter released: ${viewGroup.getChildAt(i)}")
+        }
+        is ViewPager2 -> {
+          (viewGroup.getChildAt(i) as? ViewPager2)?.adapter = null
+          Timber.d("Fragment ViewPager2 adapter released: ${viewGroup.getChildAt(i)}")
         }
         is ViewGroup -> releaseAdaptersRecursively(child)
       }

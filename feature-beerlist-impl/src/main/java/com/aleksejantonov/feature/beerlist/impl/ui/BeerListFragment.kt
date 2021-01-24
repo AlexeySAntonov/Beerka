@@ -69,8 +69,8 @@ class BeerListFragment : BaseFragment(R.layout.fragment_beer_list) {
 
   companion object {
 
-    fun create(componentKey: Long) = BeerListFragment().apply {
-      arguments = Bundle().apply { putLong(COMPONENT_KEY, componentKey) }
+    fun create(componentKey: String) = BeerListFragment().apply {
+      arguments = Bundle().apply { putString(COMPONENT_KEY, componentKey) }
     }
   }
 }

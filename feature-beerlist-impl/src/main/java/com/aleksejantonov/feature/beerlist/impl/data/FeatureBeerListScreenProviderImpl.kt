@@ -9,7 +9,7 @@ import javax.inject.Inject
 @RootScope
 class FeatureBeerListScreenProviderImpl @Inject constructor() : FeatureBeerListScreenProvider {
 
-    override fun screen(componentKey: Long): Fragment {
+    override fun screen(componentKey: String): Fragment {
         return BeerListFragment.create(componentKey)
     }
 }

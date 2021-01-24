@@ -4,5 +4,5 @@ import android.content.Context
 import android.view.View
 
 interface FeatureFilterViewProvider {
-    fun view(componentKey: Long, context: Context): View
+    fun view(componentKey: String, context: Context): View
 }

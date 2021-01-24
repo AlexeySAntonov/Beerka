@@ -62,9 +62,9 @@ class DetailsFragment : BaseFragment(R.layout.fragment_details) {
     /**
      * ScreenData: args[0] - id: Long
      */
-    fun create(componentKey: Long, screenData: ScreenData) = DetailsFragment().apply {
+    fun create(componentKey: String, screenData: ScreenData) = DetailsFragment().apply {
       arguments = Bundle().apply {
-        putLong(COMPONENT_KEY, componentKey)
+        putString(COMPONENT_KEY, componentKey)
         putSerializable(SCREEN_DATA, screenData)
       }
     }

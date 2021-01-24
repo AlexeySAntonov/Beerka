@@ -3,6 +3,8 @@ package com.aleksejantonov.feature.beerlist.impl.ui
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.aleksejantonov.core.di.ComponentKey
+import com.aleksejantonov.core.di.ComponentsManager
 import com.aleksejantonov.core.navigation.AppRouter
 import com.aleksejantonov.core.ui.base.BaseViewModel
 import com.aleksejantonov.core.di.ScreenData
@@ -15,7 +17,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class BeerListViewModel @Inject constructor(
-  private val interactor: BeerListInteractor
+  @ComponentKey private val componentKey: String,
+  private val interactor: BeerListInteractor,
 ) : BaseViewModel() {
 
   private val _data = MutableLiveData<List<ListItem>>()
@@ -35,5 +38,9 @@ class BeerListViewModel @Inject constructor(
 
   fun navigateToDetails(item: BeerItem) {
     AppRouter.openDetailsFeature(ScreenData(item.id))
+  }
+
+  override fun onCleared() {
+    ComponentsManager.release(componentKey)
   }
 }

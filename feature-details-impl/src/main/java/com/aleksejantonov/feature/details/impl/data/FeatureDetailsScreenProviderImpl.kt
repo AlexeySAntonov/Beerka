@@ -13,7 +13,7 @@ class FeatureDetailsScreenProviderImpl @Inject constructor(
     private val entityIdProvider: EntityIdProvider
 ) : FeatureDetailsScreenProvider {
 
-    override fun screen(componentKey: Long, screenData: Any): Fragment {
+    override fun screen(componentKey: String, screenData: Any): Fragment {
         screenData as ScreenData
         val entityId = (screenData.args[0] as? Long) ?: throw IllegalArgumentException("Entity id must be provided")
         entityIdProvider.safeSetId(entityId)

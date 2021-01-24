@@ -10,7 +10,7 @@ import javax.inject.Inject
 @FeatureScope
 class FeatureFilterViewProviderImpl @Inject constructor() : FeatureFilterViewProvider {
 
-    override fun view(componentKey: Long, context: Context): View {
+    override fun view(componentKey: String, context: Context): View {
         return FilterView.create(context, componentKey)
     }
 

@@ -3,6 +3,8 @@ package com.aleksejantonov.feature.favorites.impl.ui
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.aleksejantonov.core.di.ComponentKey
+import com.aleksejantonov.core.di.ComponentsManager
 import com.aleksejantonov.core.di.ScreenData
 import com.aleksejantonov.core.navigation.AppRouter
 import com.aleksejantonov.core.ui.base.BaseViewModel
@@ -15,7 +17,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class FavoritesViewModel @Inject constructor(
-  private val interactor: FavoritesInteractor
+  @ComponentKey private val componentKey: String,
+  private val interactor: FavoritesInteractor,
 ) :  BaseViewModel() {
 
   private val _data = MutableLiveData<List<ListItem>>()
@@ -35,5 +38,9 @@ class FavoritesViewModel @Inject constructor(
 
   fun navigateToDetails(item: BeerItem) {
     AppRouter.openDetailsFeature(ScreenData(item.id))
+  }
+
+  override fun onCleared() {
+    ComponentsManager.release(componentKey)
   }
 }

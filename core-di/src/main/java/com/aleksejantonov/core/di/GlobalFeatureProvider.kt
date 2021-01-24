@@ -13,37 +13,29 @@ import javax.inject.Singleton
 
 @Singleton
 class GlobalFeatureProvider @Inject constructor(
-    private val featureBeerListApiProvider: Provider<FeatureBeerListApi>,
-    private val featureFavoritesApiProvider: Provider<FeatureFavoritesApi>,
-    private val featureDetailsApiProvider: Provider<FeatureDetailsApi>,
-    private val featureFilterApiProvider: Provider<FeatureFilterApi>
+    private val featureBeerListApiProvider: Provider<Pair<FeatureBeerListApi, String>>,
+    private val featureFavoritesApiProvider: Provider<Pair<FeatureFavoritesApi, String>>,
+    private val featureDetailsApiProvider: Provider<Pair<FeatureDetailsApi, String>>,
+    private val featureFilterApiProvider: Provider<Pair<FeatureFilterApi, String>>
 ) {
 
     fun provideFeatureBeerList(): Fragment {
-        val component = featureBeerListApiProvider.get()
-        val componentKey = System.currentTimeMillis()
-        ComponentsManager.save(componentKey, component)
+        val (component, componentKey) = featureBeerListApiProvider.get()
         return component.featureBeerListScreenProvider().screen(componentKey)
     }
 
     fun provideFeatureFavorites(): Fragment {
-        val component = featureFavoritesApiProvider.get()
-        val componentKey = System.currentTimeMillis()
-        ComponentsManager.save(componentKey, component)
+        val (component, componentKey) = featureFavoritesApiProvider.get()
         return component.featureFavoritesScreenProvider().screen(componentKey)
     }
 
     fun provideFeatureDetails(screenData: ScreenData): Fragment {
-        val component = featureDetailsApiProvider.get()
-        val componentKey = System.currentTimeMillis()
-        ComponentsManager.save(componentKey, component)
+        val (component, componentKey) = featureDetailsApiProvider.get()
         return component.featureDetailsScreenProvider().screen(componentKey, screenData)
     }
 
     fun provideFeatureFilter(context: Context): View {
-        val component = featureFilterApiProvider.get()
-        val componentKey = System.currentTimeMillis()
-        ComponentsManager.save(componentKey, component)
+        val (component, componentKey) = featureFilterApiProvider.get()
         return component.featureFilterViewProvider().view(componentKey, context)
     }
 

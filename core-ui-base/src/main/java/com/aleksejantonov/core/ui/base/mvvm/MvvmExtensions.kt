@@ -18,7 +18,7 @@ inline fun <reified VM : ViewModel> Fragment.trueViewModels(
   viewModelClass = VM::class,
   storeProducer = { ownerProducer().viewModelStore },
   factoryProducer = {
-    arguments?.getLong(BaseFragment.COMPONENT_KEY)?.let {
+    arguments?.getString(BaseFragment.COMPONENT_KEY)?.let {
       (ComponentsManager.get(it) as? ViewModelFactoryProvider)?.viewModelFactory()
     } ?: throw IllegalArgumentException("To use trueViewModels extension you must provide component which implements ViewModelFactoryProvider")
   }

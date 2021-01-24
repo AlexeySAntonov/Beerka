@@ -1,6 +1,8 @@
 package com.aleksejantonov.feature.details.impl.ui
 
 import androidx.lifecycle.viewModelScope
+import com.aleksejantonov.core.di.ComponentKey
+import com.aleksejantonov.core.di.ComponentsManager
 import com.aleksejantonov.core.ui.base.BaseViewModel
 import com.aleksejantonov.core.ui.model.BeerItem
 import com.aleksejantonov.feature.details.impl.data.DetailsInteractor
@@ -13,7 +15,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class DetailsViewModel @Inject constructor(
-  private val interactor: DetailsInteractor
+  @ComponentKey private val componentKey: String,
+  private val interactor: DetailsInteractor,
 ) : BaseViewModel() {
 
   private val _data = MutableSharedFlow<BeerItem>(replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
@@ -31,5 +34,9 @@ class DetailsViewModel @Inject constructor(
     viewModelScope.launch(Dispatchers.IO + exceptionHandler) {
       interactor.toggleFavorite()
     }
+  }
+
+  override fun onCleared() {
+    ComponentsManager.release(componentKey)
   }
 }

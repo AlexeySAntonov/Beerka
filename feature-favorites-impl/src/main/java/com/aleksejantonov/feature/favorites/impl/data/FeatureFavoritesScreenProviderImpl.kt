@@ -12,7 +12,7 @@ class FeatureFavoritesScreenProviderImpl @Inject constructor(
   private val databaseApi: CoreDatabaseApi
 ): FeatureFavoritesScreenProvider {
 
-  override fun screen(componentKey: Long): Fragment {
+  override fun screen(componentKey: String): Fragment {
     return FavoritesFragment.create(componentKey)
   }
 }

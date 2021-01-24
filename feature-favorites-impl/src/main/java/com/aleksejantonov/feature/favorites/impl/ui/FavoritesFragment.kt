@@ -84,8 +84,8 @@ class FavoritesFragment : BaseFragment(R.layout.fragment_favorites) {
 
   companion object {
 
-    fun create(componentKey: Long) = FavoritesFragment().apply {
-      arguments = Bundle().apply { putLong(COMPONENT_KEY, componentKey) }
+    fun create(componentKey: String) = FavoritesFragment().apply {
+      arguments = Bundle().apply { putString(COMPONENT_KEY, componentKey) }
     }
   }
 }

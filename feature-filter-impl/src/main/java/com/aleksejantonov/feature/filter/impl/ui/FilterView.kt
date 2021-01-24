@@ -15,7 +15,7 @@ import kotlin.properties.Delegates
 
 class FilterView(context: Context, attrs: AttributeSet? = null) : ConstraintLayout(context, attrs) {
 
-  private var componentKey: Long by Delegates.notNull()
+  private var componentKey: String by Delegates.notNull()
   private val component: ViewModelFactoryProvider by lazy {
     requireNotNull(ComponentsManager.get(componentKey) as? ViewModelFactoryProvider)
   }
@@ -51,7 +51,7 @@ class FilterView(context: Context, attrs: AttributeSet? = null) : ConstraintLayo
   }
 
   companion object {
-    fun create(context: Context, componentKey: Long): FilterView = FilterView(context).apply {
+    fun create(context: Context, componentKey: String): FilterView = FilterView(context).apply {
       this.componentKey = componentKey
     }
   }

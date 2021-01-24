@@ -26,10 +26,10 @@ class FeatureProviderModule {
   @Provides
   @Singleton
   fun providesGlobalFeatureProvider(
-    featureBeerListApiProvider: Provider<FeatureBeerListApi>,
-    featureFavoritesApiProvider: Provider<FeatureFavoritesApi>,
-    featureDetailsApiProvider: Provider<FeatureDetailsApi>,
-    featureFilterApiProvider: Provider<FeatureFilterApi>
+    featureBeerListApiProvider: Provider<Pair<FeatureBeerListApi, String>>,
+    featureFavoritesApiProvider: Provider<Pair<FeatureFavoritesApi, String>>,
+    featureDetailsApiProvider: Provider<Pair<FeatureDetailsApi, String>>,
+    featureFilterApiProvider: Provider<Pair<FeatureFilterApi, String>>
   ): GlobalFeatureProvider {
     return GlobalFeatureProvider(
       featureBeerListApiProvider,
@@ -55,7 +55,7 @@ class FeatureProviderModule {
   @Provides
   fun provideFeatureBeerListApi(
     dependencies: FeatureBeerListComponentDependencies
-  ): FeatureBeerListApi {
+  ): Pair<FeatureBeerListApi, String> {
     return FeatureBeerListComponent.init(dependencies)
   }
 
@@ -73,7 +73,7 @@ class FeatureProviderModule {
   @Provides
   fun provideFeatureFavoritesApi(
     dependencies: FeatureFavoritesComponentDependencies
-  ): FeatureFavoritesApi {
+  ): Pair<FeatureFavoritesApi, String> {
     return FeatureFavoritesComponent.init(dependencies)
   }
 
@@ -91,7 +91,7 @@ class FeatureProviderModule {
   @Provides
   fun provideFeatureDetailsApi(
     dependencies: FeatureDetailsComponentDependencies
-  ): FeatureDetailsApi {
+  ): Pair<FeatureDetailsApi, String> {
     return FeatureDetailsComponent.init(dependencies)
   }
 
@@ -109,7 +109,7 @@ class FeatureProviderModule {
   @Provides
   fun provideFeatureFilterApi(
     dependencies: FeatureFilterComponentDependencies
-  ): FeatureFilterApi {
+  ): Pair<FeatureFilterApi, String> {
     return FeatureFilterComponent.init(dependencies)
   }
 
