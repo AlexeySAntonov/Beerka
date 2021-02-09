@@ -1,15 +1,10 @@
 package com.aleksejantonov.beerka.ui
 
 import android.animation.ObjectAnimator
-import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.Gravity
-import android.view.MotionEvent
 import android.view.View
-import android.view.ViewGroup
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.aleksejantonov.beerka.MainActivity
@@ -18,13 +13,10 @@ import com.aleksejantonov.beerka.di.DI
 import com.aleksejantonov.core.navigation.AppRouter
 import com.aleksejantonov.core.navigation.NavigationTab
 import com.aleksejantonov.core.ui.base.BaseFragment
-import com.aleksejantonov.core.ui.base.LayoutHelper
 import com.aleksejantonov.core.ui.base.mvvm.dpToPx
 import com.aleksejantonov.core.ui.base.mvvm.setMargins
 import com.aleksejantonov.core.ui.base.show
 import kotlinx.android.synthetic.main.fragment_main_tabs.*
-import timber.log.Timber
-import kotlin.math.abs
 
 class MainTabsFragment : BaseFragment(R.layout.fragment_main_tabs) {
   private val viewModel by viewModels<MainTabsViewModel>()
@@ -72,49 +64,6 @@ class MainTabsFragment : BaseFragment(R.layout.fragment_main_tabs) {
       val fragment = DI.appComponent.globalFeatureProvider().provideFeatureBeerList()
       tabNavigation.switchTab({ fragment }, NavigationTab.BEER_LIST)
     }
-  }
-
-  private var oldEventY = 0f
-  private var oldViewY = 0f
-
-  @SuppressLint("ClickableViewAccessibility")
-  private fun showModalSheet() {
-    (view as? ViewGroup)?.addView(
-      ConstraintLayout(requireContext()).apply {
-        layoutParams = LayoutHelper.getFrameParams(
-          context = context,
-          width = LayoutHelper.MATCH_PARENT,
-          height = 400,
-          gravity = Gravity.BOTTOM
-        )
-        setBackgroundResource(R.color.appGrey)
-        setOnTouchListener { view, event ->
-          when (event.actionMasked) {
-            MotionEvent.ACTION_DOWN -> {
-              oldViewY = view.y
-              oldEventY = event.y
-              true
-            }
-            MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
-//              view.y = oldViewY
-              view.animate().y(oldViewY).setDuration(300L).start()
-              oldViewY = 0f
-              oldEventY = 0f
-              true
-            }
-            MotionEvent.ACTION_MOVE -> {
-              val dy = event.y - oldEventY
-              if (dy > 0) {
-                Timber.e("MOVE DY: $dy")
-                view.y = view.y + dy
-              }
-              true
-            }
-            else -> false
-          }
-        }
-      }
-    )
   }
 
   private fun setUpFloatingBottomBar() {

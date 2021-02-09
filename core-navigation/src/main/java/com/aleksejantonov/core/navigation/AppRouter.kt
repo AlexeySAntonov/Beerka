@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentActivity
 import com.aleksejantonov.core.di.GlobalFeatureProvider
 import com.aleksejantonov.core.di.ScreenData
 import com.aleksejantonov.core.navigation.transition.ActivityTransition
+import com.aleksejantonov.core.ui.base.BottomSheetable
 import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.sendBlocking
 import kotlinx.coroutines.flow.asFlow
@@ -35,10 +36,11 @@ object AppRouter {
 
     private var currentModalView: View? = null
 
-    fun addModalView(view: View) {
+    private fun openModalView(view: View) {
         removeCurrentModal()
         currentModalView = view
         activityRef?.get()?.window?.decorView?.findViewById<ViewGroup>(android.R.id.content)?.addView(currentModalView)
+        (currentModalView as? BottomSheetable)?.animateShow()
     }
 
     fun removeCurrentModal() {
@@ -47,7 +49,7 @@ object AppRouter {
     }
 
     fun openFilterFeature(context: Context) {
-        addModalView(globalFeatureProvider.provideFeatureFilter(context))
+        openModalView(globalFeatureProvider.provideFeatureFilter(context))
     }
 
     /** FEATURE NAVIGATION REGION END */
@@ -103,7 +105,7 @@ object AppRouter {
     }
 
     fun back(force: Boolean = false) {
-        currentModalView?.let { removeCurrentModal() } ?: run {
+        (currentModalView as? BottomSheetable)?.animateHide() ?: run {
             navigationRoutes.sendBlocking(NavigationRoute.Back(force))
         }
     }

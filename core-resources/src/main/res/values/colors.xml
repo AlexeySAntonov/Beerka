@@ -14,6 +14,7 @@
   <color name="appTextColor">#212121</color>
   <color name="appTextGray">#575757</color>
   <color name="semiTransparent">#15000000</color>
+  <color name="semiTransparentDark">#30000000</color>
   <color name="semiTransparentPink">#26FFCDD6</color>
   <color name="semiTransparentBlue">#264C8BFF</color>
   <color name="semiTransparentGreen">#8865A75C</color>
