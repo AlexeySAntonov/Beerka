@@ -70,11 +70,15 @@ class FilterView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
   override fun animateShow() {
     AnimatorSet().apply {
       playTogether(
-        ObjectAnimator.ofFloat(requireNotNull(dimView), View.ALPHA, 0f, 1f),
-        ObjectAnimator.ofFloat(requireNotNull(bottomSheetContainer), View.TRANSLATION_Y, dpToPx(BOTTOM_SHEET_HEIGHT), 0f),
+        ObjectAnimator.ofFloat(requireNotNull(dimView), View.ALPHA, 0f, 1f)
+          .setDuration(220L),
+        ObjectAnimator.ofFloat(requireNotNull(bottomSheetContainer), View.TRANSLATION_Y, dpToPx(BOTTOM_SHEET_HEIGHT), dpToPx(-16f))
+          .setDuration(220L),
+        ObjectAnimator.ofFloat(requireNotNull(bottomSheetContainer), View.TRANSLATION_Y, dpToPx(-16f), 0f)
+          .setDuration(160L)
+          .apply { startDelay = 220L },
       )
       interpolator = AccelerateDecelerateInterpolator()
-      duration = 330L
       start()
     }
   }
@@ -86,7 +90,7 @@ class FilterView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
         ObjectAnimator.ofFloat(requireNotNull(bottomSheetContainer), View.TRANSLATION_Y, 0f, dpToPx(BOTTOM_SHEET_HEIGHT)),
       )
       interpolator = AccelerateInterpolator()
-      duration = 230L
+      duration = 130L
       doOnEnd { AppRouter.removeCurrentModal() }
       start()
     }
