@@ -71,12 +71,21 @@ class FilterView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
     AnimatorSet().apply {
       playTogether(
         ObjectAnimator.ofFloat(requireNotNull(dimView), View.ALPHA, 0f, 1f)
-          .setDuration(220L),
+          .setDuration(SHEET_APPEARANCE_DURATION),
         ObjectAnimator.ofFloat(requireNotNull(bottomSheetContainer), View.TRANSLATION_Y, dpToPx(BOTTOM_SHEET_HEIGHT), dpToPx(-16f))
-          .setDuration(220L),
+          .setDuration(SHEET_APPEARANCE_DURATION),
         ObjectAnimator.ofFloat(requireNotNull(bottomSheetContainer), View.TRANSLATION_Y, dpToPx(-16f), 0f)
-          .setDuration(160L)
-          .apply { startDelay = 220L },
+          .setDuration(SHEET_BOUNCING_DURATION)
+          .apply { startDelay = SHEET_APPEARANCE_DURATION },
+        ObjectAnimator.ofFloat(requireNotNull(abvSeekBar), View.TRANSLATION_Y, dpToPx(BOTTOM_SHEET_HEIGHT), 0f)
+          .setDuration(SEEK_BAR_APPEARANCE_DURATION)
+          .apply { startDelay = SHEET_APPEARANCE_DURATION + SHEET_BOUNCING_DURATION },
+        ObjectAnimator.ofFloat(requireNotNull(ibuSeekBar), View.TRANSLATION_Y, dpToPx(BOTTOM_SHEET_HEIGHT), 0f)
+          .setDuration(SEEK_BAR_APPEARANCE_DURATION)
+          .apply { startDelay = SHEET_APPEARANCE_DURATION + SHEET_BOUNCING_DURATION + 75L },
+        ObjectAnimator.ofFloat(requireNotNull(ebcSeekBar), View.TRANSLATION_Y, dpToPx(BOTTOM_SHEET_HEIGHT), 0f)
+          .setDuration(SEEK_BAR_APPEARANCE_DURATION)
+          .apply { startDelay = SHEET_APPEARANCE_DURATION + SHEET_BOUNCING_DURATION + 150L },
       )
       interpolator = AccelerateDecelerateInterpolator()
       start()
@@ -134,12 +143,13 @@ class FilterView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
       layoutParams = LayoutHelper.getLinearParams(
         context = context,
         width = LayoutHelper.MATCH_PARENT,
-        height = 88,
+        height = SEEK_BAR_HEIGHT,
         leftMargin = 16,
         rightMargin = 16,
         topMargin = 16
       )
       setBackgroundResource(R.color.appRed)
+      translationY = dpToPx(BOTTOM_SHEET_HEIGHT)
     }
     return requireNotNull(abvSeekBar)
   }
@@ -149,12 +159,13 @@ class FilterView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
       layoutParams = LayoutHelper.getLinearParams(
         context = context,
         width = LayoutHelper.MATCH_PARENT,
-        height = 88,
+        height = SEEK_BAR_HEIGHT,
         leftMargin = 16,
         rightMargin = 16,
         topMargin = 16
       )
       setBackgroundResource(R.color.appYellow)
+      translationY = dpToPx(BOTTOM_SHEET_HEIGHT)
     }
     return requireNotNull(ibuSeekBar)
   }
@@ -164,12 +175,13 @@ class FilterView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
       layoutParams = LayoutHelper.getLinearParams(
         context = context,
         width = LayoutHelper.MATCH_PARENT,
-        height = 88,
+        height = SEEK_BAR_HEIGHT,
         leftMargin = 16,
         rightMargin = 16,
         topMargin = 16
       )
       setBackgroundResource(R.color.appGreen)
+      translationY = dpToPx(BOTTOM_SHEET_HEIGHT)
     }
     return requireNotNull(ebcSeekBar)
   }
@@ -207,6 +219,10 @@ class FilterView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
 
   companion object {
     private const val BOTTOM_SHEET_HEIGHT = 400f
+    private const val SEEK_BAR_HEIGHT = 88
+    private const val SHEET_APPEARANCE_DURATION = 220L
+    private const val SHEET_BOUNCING_DURATION = 160L
+    private const val SEEK_BAR_APPEARANCE_DURATION = 120L
 
     fun create(context: Context, componentKey: String): FilterView = FilterView(context).apply {
       this.componentKey = componentKey
