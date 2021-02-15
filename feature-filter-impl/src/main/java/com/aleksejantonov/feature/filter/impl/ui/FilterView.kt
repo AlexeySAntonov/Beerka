@@ -17,8 +17,11 @@ import com.aleksejantonov.core.di.ComponentsManager
 import com.aleksejantonov.core.navigation.AppRouter
 import com.aleksejantonov.core.ui.base.BottomSheetable
 import com.aleksejantonov.core.ui.base.LayoutHelper
+import com.aleksejantonov.core.ui.base.custom.RangeSeekBarWithInfo
 import com.aleksejantonov.core.ui.base.mvvm.ViewModelFactoryProvider
 import com.aleksejantonov.core.ui.base.mvvm.dpToPx
+import com.aleksejantonov.core.ui.base.mvvm.navBarHeight
+import com.aleksejantonov.core.ui.base.mvvm.setPaddings
 import com.aleksejantonov.feature.filter.impl.R
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
@@ -46,6 +49,8 @@ class FilterView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
       height = LayoutHelper.MATCH_PARENT,
       gravity = Gravity.BOTTOM
     )
+    clipChildren = false
+    clipToPadding = false
 
     setupDim()
     setupBottomSheetContainer()
@@ -130,6 +135,7 @@ class FilterView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
       orientation = LinearLayout.VERTICAL
       setBackgroundResource(R.drawable.bg_rounded_20dp)
       translationY = dpToPx(BOTTOM_SHEET_HEIGHT)
+      setPaddings(bottom = context.navBarHeight())
 
       addView(setupAbvSeekBar())
       addView(setupIbuSeekBar())
@@ -139,48 +145,42 @@ class FilterView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
   }
 
   private fun setupAbvSeekBar(): View {
-    abvSeekBar = View(context).apply {
+    abvSeekBar = RangeSeekBarWithInfo(context).apply {
       layoutParams = LayoutHelper.getLinearParams(
         context = context,
         width = LayoutHelper.MATCH_PARENT,
-        height = SEEK_BAR_HEIGHT,
-        leftMargin = 16,
-        rightMargin = 16,
+        height = LayoutHelper.MATCH_PARENT,
         topMargin = 16
       )
-      setBackgroundResource(R.color.appRed)
+      setLabel("ABV")
       translationY = dpToPx(BOTTOM_SHEET_HEIGHT)
     }
     return requireNotNull(abvSeekBar)
   }
 
   private fun setupIbuSeekBar(): View {
-    ibuSeekBar = View(context).apply {
+    ibuSeekBar = RangeSeekBarWithInfo(context).apply {
       layoutParams = LayoutHelper.getLinearParams(
         context = context,
         width = LayoutHelper.MATCH_PARENT,
-        height = SEEK_BAR_HEIGHT,
-        leftMargin = 16,
-        rightMargin = 16,
-        topMargin = 16
+        height = LayoutHelper.MATCH_PARENT,
+        topMargin = 8
       )
-      setBackgroundResource(R.color.appYellow)
+      setLabel("IBU")
       translationY = dpToPx(BOTTOM_SHEET_HEIGHT)
     }
     return requireNotNull(ibuSeekBar)
   }
 
   private fun setupEbcSeekBar(): View {
-    ebcSeekBar = View(context).apply {
+    ebcSeekBar = RangeSeekBarWithInfo(context).apply {
       layoutParams = LayoutHelper.getLinearParams(
         context = context,
         width = LayoutHelper.MATCH_PARENT,
-        height = SEEK_BAR_HEIGHT,
-        leftMargin = 16,
-        rightMargin = 16,
-        topMargin = 16
+        height = LayoutHelper.MATCH_PARENT,
+        topMargin = 8
       )
-      setBackgroundResource(R.color.appGreen)
+      setLabel("EBC")
       translationY = dpToPx(BOTTOM_SHEET_HEIGHT)
     }
     return requireNotNull(ebcSeekBar)
