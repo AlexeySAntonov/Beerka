@@ -135,7 +135,7 @@ class FilterView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
       orientation = LinearLayout.VERTICAL
       setBackgroundResource(R.drawable.bg_rounded_20dp)
       translationY = dpToPx(BOTTOM_SHEET_HEIGHT)
-      setPaddings(bottom = context.navBarHeight())
+      setPaddings(bottom = context.navBarHeight() + dpToPx(24f).toInt())
 
       addView(setupAbvSeekBar())
       addView(setupIbuSeekBar())
@@ -152,7 +152,8 @@ class FilterView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
         height = LayoutHelper.MATCH_PARENT,
         topMargin = 16
       )
-      setLabel("ABV")
+      setLabel("Alcohol by volume")
+      setRangeValues(0f, 60f)
       translationY = dpToPx(BOTTOM_SHEET_HEIGHT)
     }
     return requireNotNull(abvSeekBar)
@@ -166,7 +167,8 @@ class FilterView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
         height = LayoutHelper.MATCH_PARENT,
         topMargin = 8
       )
-      setLabel("IBU")
+      setLabel("Bitterness units")
+      setRangeValues(0f, 200f)
       translationY = dpToPx(BOTTOM_SHEET_HEIGHT)
     }
     return requireNotNull(ibuSeekBar)
@@ -180,7 +182,8 @@ class FilterView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
         height = LayoutHelper.MATCH_PARENT,
         topMargin = 8
       )
-      setLabel("EBC")
+      setLabel("Beer and wort colour")
+      setRangeValues(0f, 1200f)
       translationY = dpToPx(BOTTOM_SHEET_HEIGHT)
     }
     return requireNotNull(ebcSeekBar)

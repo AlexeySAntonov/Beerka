@@ -27,13 +27,20 @@ class RangeSeekBarWithInfo(context: Context, attrs: AttributeSet? = null) : Fram
     clipToPadding = false
     val contentPad = dpToPx(16f).toInt()
     setPaddings(left = contentPad, right = contentPad)
-    setBackgroundResource(R.color.semiTransparentPink)
     setupLabel()
     setupSlider()
   }
 
   fun setLabel(text: String) {
     label?.text = text
+  }
+
+  fun setRangeValues(from: Float, to: Float) {
+    rangeSlider?.apply {
+      valueFrom = from
+      valueTo = to
+      setValues(from, to)
+    }
   }
 
   private fun setupLabel() {
@@ -59,10 +66,6 @@ class RangeSeekBarWithInfo(context: Context, attrs: AttributeSet? = null) : Fram
         height = LayoutHelper.WRAP_CONTENT,
         gravity = Gravity.BOTTOM
       )
-      valueFrom = 0f
-      valueTo = 100f
-      setValues(0f, 100f)
-      setBackgroundResource(R.color.semiTransparentBlue)
     }
     rangeSlider?.let { addView(it) }
   }

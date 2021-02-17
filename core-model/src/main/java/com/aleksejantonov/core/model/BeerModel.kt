@@ -5,5 +5,8 @@ data class BeerModel(
   val name: String,
   val description: String,
   val image: String?,
+  val abv: Float,
+  val ibu: Float,
+  val ebc: Float,
   val isFavorite: Boolean
 )

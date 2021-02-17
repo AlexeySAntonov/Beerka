@@ -8,5 +8,8 @@ fun BeerResponseDto.model() = BeerModel(
   name = name,
   description = description,
   image = imageUrl,
+  abv = abv,
+  ibu = ibu,
+  ebc = ebc,
   isFavorite = false
 )

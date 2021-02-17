@@ -7,6 +7,9 @@ fun BeerEntity.model() = BeerModel(
   name = name,
   description = description,
   image = imageUrl,
+  abv = abv,
+  ibu = ibu,
+  ebc = ebc,
   isFavorite = isFavorite
 )
 
@@ -15,5 +18,8 @@ fun BeerModel.entity() = BeerEntity(
   name = name,
   description = description,
   imageUrl = image,
+  abv = abv,
+  ibu = ibu,
+  ebc = ebc,
   isFavorite = isFavorite
 )

@@ -10,5 +10,8 @@ data class BeerEntity(
     val name: String = "",
     val description: String = "",
     val imageUrl: String? = null,
+    val abv: Float,
+    val ibu: Float,
+    val ebc: Float,
     val isFavorite: Boolean = false
 )
