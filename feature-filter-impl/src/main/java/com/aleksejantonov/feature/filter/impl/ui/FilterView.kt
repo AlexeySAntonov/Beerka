@@ -4,6 +4,7 @@ import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.drawable.GradientDrawable
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.MotionEvent
@@ -15,6 +16,7 @@ import android.widget.LinearLayout
 import androidx.core.animation.doOnEnd
 import com.aleksejantonov.core.di.ComponentsManager
 import com.aleksejantonov.core.navigation.AppRouter
+import com.aleksejantonov.core.resources.beerColor
 import com.aleksejantonov.core.ui.base.BottomSheetable
 import com.aleksejantonov.core.ui.base.LayoutHelper
 import com.aleksejantonov.core.ui.base.custom.RangeSeekBarWithInfo
@@ -23,6 +25,7 @@ import com.aleksejantonov.core.ui.base.mvvm.dpToPx
 import com.aleksejantonov.core.ui.base.mvvm.navBarHeight
 import com.aleksejantonov.core.ui.base.mvvm.setPaddings
 import com.aleksejantonov.feature.filter.impl.R
+import com.google.android.material.slider.LabelFormatter
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
 import kotlin.properties.Delegates
@@ -38,9 +41,9 @@ class FilterView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
 
   private var dimView: View? = null
   private var bottomSheetContainer: LinearLayout? = null
-  private var abvSeekBar: View? = null
-  private var ibuSeekBar: View? = null
-  private var ebcSeekBar: View? = null
+  private var abvSeekBar: RangeSeekBarWithInfo? = null
+  private var ibuSeekBar: RangeSeekBarWithInfo? = null
+  private var ebcSeekBar: RangeSeekBarWithInfo? = null
 
   init {
     layoutParams = LayoutHelper.getFrameParams(
@@ -152,8 +155,13 @@ class FilterView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
         height = LayoutHelper.MATCH_PARENT,
         topMargin = 16
       )
-      setLabel("Alcohol by volume")
+      setTitle(resources.getString(R.string.alcohol_by_volume))
       setRangeValues(0f, 60f)
+      setRangeLabelBehaviour(LabelFormatter.LABEL_FLOATING)
+      setStartTrackingListener { toggleAuxiliaryFieldsVisibility(false) }
+      setStopTrackingListener { toggleAuxiliaryFieldsVisibility(true) }
+      setChangeValueListener { setAuxiliaryFieldsValues() }
+      toggleAuxiliaryFieldsVisibility(true)
       translationY = dpToPx(BOTTOM_SHEET_HEIGHT)
     }
     return requireNotNull(abvSeekBar)
@@ -167,8 +175,13 @@ class FilterView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
         height = LayoutHelper.MATCH_PARENT,
         topMargin = 8
       )
-      setLabel("Bitterness units")
+      setTitle(resources.getString(R.string.bitterness_units))
       setRangeValues(0f, 200f)
+      setRangeLabelBehaviour(LabelFormatter.LABEL_FLOATING)
+      setStartTrackingListener { toggleAuxiliaryFieldsVisibility(false) }
+      setStopTrackingListener { toggleAuxiliaryFieldsVisibility(true) }
+      setChangeValueListener { setAuxiliaryFieldsValues() }
+      toggleAuxiliaryFieldsVisibility(true)
       translationY = dpToPx(BOTTOM_SHEET_HEIGHT)
     }
     return requireNotNull(ibuSeekBar)
@@ -182,11 +195,28 @@ class FilterView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
         height = LayoutHelper.MATCH_PARENT,
         topMargin = 8
       )
-      setLabel("Beer and wort colour")
-      setRangeValues(0f, 1200f)
+      setTitle(resources.getString(R.string.beer_and_wort_colour))
+      setTitleTextColor(R.color.white)
+      setTitleBackgroundRes(R.drawable.bg_rounded_20dp)
+      setRangeValues(0f, 80f)
+      setRangeLabelBehaviour(LabelFormatter.LABEL_GONE)
+      setChangeValueListener { updateEbcLabelBackground(getRangeValues()) }
+      toggleAuxiliaryFieldsVisibility(false)
       translationY = dpToPx(BOTTOM_SHEET_HEIGHT)
     }
+    ebcSeekBar?.let { updateEbcLabelBackground(it.getRangeValues()) }
     return requireNotNull(ebcSeekBar)
+  }
+
+  private fun updateEbcLabelBackground(values: List<Float>) {
+    ebcSeekBar?.setTitleBackground(
+      GradientDrawable().apply {
+        cornerRadius = dpToPx(8f)
+        gradientType = GradientDrawable.LINEAR_GRADIENT
+        orientation = GradientDrawable.Orientation.LEFT_RIGHT
+        colors = values.map { beerColor(it) }.toIntArray()
+      }
+    )
   }
 
   private var oldEventY = 0f
@@ -222,7 +252,6 @@ class FilterView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
 
   companion object {
     private const val BOTTOM_SHEET_HEIGHT = 400f
-    private const val SEEK_BAR_HEIGHT = 88
     private const val SHEET_APPEARANCE_DURATION = 220L
     private const val SHEET_BOUNCING_DURATION = 160L
     private const val SEEK_BAR_APPEARANCE_DURATION = 120L

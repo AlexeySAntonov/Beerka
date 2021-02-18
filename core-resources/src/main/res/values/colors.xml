@@ -27,4 +27,18 @@
   <color name="actionButtonColorPressed">@color/semiTransparentPink</color>
   <color name="actionButtonColorPressedBlue">@color/semiTransparentBlue</color>
   <color name="actionButtonColorPressedGreen">@color/semiTransparentGreen</color>
+
+  <!--  Beers' colors  -->
+  <color name="paleStraw">#FFE26F</color>
+  <color name="straw">#FEBB1D</color>
+  <color name="paleGold">#ED9C19</color>
+  <color name="deepGold">#D67D1E</color>
+  <color name="paleAmber">#C66122</color>
+  <color name="mediumAmber">#A94524</color>
+  <color name="deepAmber">#8C2F1A</color>
+  <color name="amberBrown">#6B1B10</color>
+  <color name="brown">#550808</color>
+  <color name="rubyBrown">#410002</color>
+  <color name="deepBrown">#2F0001</color>
+  <color name="black">#220001</color>
 </resources>

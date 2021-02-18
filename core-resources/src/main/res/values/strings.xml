@@ -5,4 +5,7 @@
   <string name="favorites">Favorites</string>
   <string name="add_to_favorite">Add to favorite</string>
   <string name="remove_from_favorite">Remove from favorite</string>
+  <string name="alcohol_by_volume">Alcohol by volume</string>
+  <string name="bitterness_units">Bitterness units</string>
+  <string name="beer_and_wort_colour">Beer and wort colour</string>
 </resources>
