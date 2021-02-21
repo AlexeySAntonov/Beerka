@@ -39,6 +39,7 @@ dependencies {
     implementation(project(":core-db-api"))
     implementation(project(":core-api"))
     implementation(project(":core-navigation"))
+    implementation(project(":core-mediator-api"))
 
     implementation(Libs.coroutines)
     implementation(Libs.dagger)

@@ -4,6 +4,7 @@ import com.aleksejantonov.core.db.api.di.CoreDatabaseApi
 import com.aleksejantonov.core.di.ComponentKey
 import com.aleksejantonov.core.di.ComponentsManager
 import com.aleksejantonov.core.di.FeatureScope
+import com.aleksejantonov.core.mediator.api.FilterDataMediator
 import com.aleksejantonov.core.ui.base.mvvm.ViewModelFactoryProvider
 import com.aleksejantonov.feature.filter.api.di.FeatureFilterApi
 import dagger.BindsInstance
@@ -23,6 +24,9 @@ interface FeatureFilterComponent : FeatureFilterApi, ViewModelFactoryProvider {
     @BindsInstance
     fun coreDatabaseApi(coreDatabaseApi: CoreDatabaseApi): Builder
 
+    @BindsInstance
+    fun filterDataMediator(filterDataMediator: FilterDataMediator): Builder
+
     fun build(): FeatureFilterComponent
   }
 
@@ -33,6 +37,7 @@ interface FeatureFilterComponent : FeatureFilterApi, ViewModelFactoryProvider {
       return DaggerFeatureFilterComponent.builder()
         .componentKey(componentKey)
         .coreDatabaseApi(dependencies.coreDatabaseApi())
+        .filterDataMediator(dependencies.filterDataMediator())
         .build()
         .also { ComponentsManager.save(componentKey, it) } to componentKey
     }
@@ -44,4 +49,5 @@ interface FeatureFilterComponent : FeatureFilterApi, ViewModelFactoryProvider {
  */
 interface FeatureFilterComponentDependencies {
   fun coreDatabaseApi(): CoreDatabaseApi
+  fun filterDataMediator(): FilterDataMediator
 }

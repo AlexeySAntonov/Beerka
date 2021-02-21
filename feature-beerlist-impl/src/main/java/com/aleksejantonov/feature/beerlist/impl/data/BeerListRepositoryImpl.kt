@@ -3,7 +3,9 @@ package com.aleksejantonov.feature.beerlist.impl.data
 import com.aleksejantonov.core.api.BeersApi
 import com.aleksejantonov.core.db.api.di.CoreDatabaseApi
 import com.aleksejantonov.core.di.RootScope
+import com.aleksejantonov.core.mediator.api.FilterDataMediator
 import com.aleksejantonov.core.model.BeerModel
+import com.aleksejantonov.core.model.FilterModel
 import com.aleksejantonov.core.ui.base.PagingState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -18,7 +20,8 @@ import kotlin.Exception
 @RootScope
 class BeerListRepositoryImpl @Inject constructor(
   private val beersApi: BeersApi,
-  private val databaseApi: CoreDatabaseApi
+  private val databaseApi: CoreDatabaseApi,
+  private val filterDataMediator: FilterDataMediator
 ) : BeerListRepository {
 
   private val beersChannelFlow = MutableSharedFlow<PagingState<BeerModel>>(replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
@@ -29,7 +32,12 @@ class BeerListRepositoryImpl @Inject constructor(
 
   override suspend fun data(): Flow<PagingState<BeerModel>> {
     job = scope.launch { initialData().collect { beersChannelFlow.tryEmit(it) } }
-    return beersChannelFlow
+    return combine(
+      beersChannelFlow,
+      filterDataMediator.filterDataFlow.onStart { emit(FilterModel.default()) }
+    ) { state, filter ->
+      state
+    }
   }
 
   override suspend fun loadMore() {

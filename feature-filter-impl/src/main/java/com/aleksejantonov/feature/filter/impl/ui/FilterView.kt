@@ -64,7 +64,11 @@ class FilterView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
   override fun onAttachedToWindow() {
     super.onAttachedToWindow()
     scope?.launch {
-      viewModel.data.collect { }
+      viewModel.data.collect { filter ->
+        abvSeekBar?.setValues(filter.abvPair.first, filter.abvPair.second)
+        ibuSeekBar?.setValues(filter.ibuPair.first, filter.ibuPair.second)
+        ebcSeekBar?.setValues(filter.ebcPair.first, filter.ebcPair.second)
+      }
     }
   }
 
@@ -156,7 +160,7 @@ class FilterView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
         topMargin = 16
       )
       setTitle(resources.getString(R.string.alcohol_by_volume))
-      setRangeValues(0f, 60f)
+      setRange(0f, 60f)
       setRangeLabelBehaviour(LabelFormatter.LABEL_FLOATING)
       setStartTrackingListener { toggleAuxiliaryFieldsVisibility(false) }
       setStopTrackingListener { toggleAuxiliaryFieldsVisibility(true) }
@@ -176,7 +180,7 @@ class FilterView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
         topMargin = 8
       )
       setTitle(resources.getString(R.string.bitterness_units))
-      setRangeValues(0f, 200f)
+      setRange(0f, 200f)
       setRangeLabelBehaviour(LabelFormatter.LABEL_FLOATING)
       setStartTrackingListener { toggleAuxiliaryFieldsVisibility(false) }
       setStopTrackingListener { toggleAuxiliaryFieldsVisibility(true) }
@@ -198,13 +202,13 @@ class FilterView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
       setTitle(resources.getString(R.string.beer_and_wort_colour))
       setTitleTextColor(R.color.white)
       setTitleBackgroundRes(R.drawable.bg_rounded_20dp)
-      setRangeValues(0f, 80f)
+      setRange(0f, 80f)
       setRangeLabelBehaviour(LabelFormatter.LABEL_GONE)
-      setChangeValueListener { updateEbcLabelBackground(getRangeValues()) }
+      setChangeValueListener { updateEbcLabelBackground(getValues()) }
       toggleAuxiliaryFieldsVisibility(false)
       translationY = dpToPx(BOTTOM_SHEET_HEIGHT)
     }
-    ebcSeekBar?.let { updateEbcLabelBackground(it.getRangeValues()) }
+    ebcSeekBar?.let { updateEbcLabelBackground(it.getValues()) }
     return requireNotNull(ebcSeekBar)
   }
 

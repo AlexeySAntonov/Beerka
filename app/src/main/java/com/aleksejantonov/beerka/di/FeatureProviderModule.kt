@@ -3,6 +3,7 @@ package com.aleksejantonov.beerka.di
 import com.aleksejantonov.core.api.BeersApi
 import com.aleksejantonov.core.db.api.di.CoreDatabaseApi
 import com.aleksejantonov.core.di.GlobalFeatureProvider
+import com.aleksejantonov.core.mediator.api.FilterDataMediator
 import com.aleksejantonov.feature.beerlist.api.di.FeatureBeerListApi
 import com.aleksejantonov.feature.beerlist.impl.di.FeatureBeerListComponent
 import com.aleksejantonov.feature.beerlist.impl.di.FeatureBeerListComponentDependencies
@@ -43,11 +44,13 @@ class FeatureProviderModule {
   @Singleton
   fun provideFeatureBeerListDependencies(
     beersApi: BeersApi,
-    coreDatabaseApi: CoreDatabaseApi
+    coreDatabaseApi: CoreDatabaseApi,
+    filterDataMediator: FilterDataMediator
   ): FeatureBeerListComponentDependencies {
     return object : FeatureBeerListComponentDependencies {
       override fun beersApi(): BeersApi = beersApi
       override fun coreDatabaseApi(): CoreDatabaseApi = coreDatabaseApi
+      override fun filterDataMediator(): FilterDataMediator = filterDataMediator
     }
   }
 
@@ -98,10 +101,12 @@ class FeatureProviderModule {
   @Provides
   @Singleton
   fun provideFeatureFilterDependencies(
-    coreDatabaseApi: CoreDatabaseApi
+    coreDatabaseApi: CoreDatabaseApi,
+    filterDataMediator: FilterDataMediator
   ): FeatureFilterComponentDependencies {
     return object : FeatureFilterComponentDependencies {
       override fun coreDatabaseApi(): CoreDatabaseApi = coreDatabaseApi
+      override fun filterDataMediator(): FilterDataMediator = filterDataMediator
     }
   }
 

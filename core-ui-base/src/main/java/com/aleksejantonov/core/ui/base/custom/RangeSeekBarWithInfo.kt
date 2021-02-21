@@ -60,7 +60,7 @@ class RangeSeekBarWithInfo(context: Context, attrs: AttributeSet? = null) : Fram
     title?.background = drawable
   }
 
-  fun setRangeValues(from: Float, to: Float) {
+  fun setRange(from: Float, to: Float) {
     rangeSlider?.apply {
       valueFrom = from
       valueTo = to
@@ -69,16 +69,20 @@ class RangeSeekBarWithInfo(context: Context, attrs: AttributeSet? = null) : Fram
     setAuxiliaryFieldsValues()
   }
 
+  fun setValues(from: Float, to: Float) {
+    rangeSlider?.setValues(from, to)
+  }
+
+  fun getValues(): List<Float> {
+    return rangeSlider?.values ?: emptyList()
+  }
+
   fun setRangeLabelBehaviour(behaviour: Int) {
     rangeSlider?.labelBehavior = behaviour
   }
 
-  fun getRangeValues(): List<Float> {
-    return rangeSlider?.values ?: emptyList()
-  }
-
   fun setAuxiliaryFieldsValues() {
-    getRangeValues().let { rangeValues ->
+    getValues().let { rangeValues ->
       rangeValues.firstOrNull()?.let { fromField?.text = "%.2f".format(it) }
       rangeValues.lastOrNull()?.let { toField?.text = "%.2f".format(it) }
     }

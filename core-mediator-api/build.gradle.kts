@@ -1,7 +1,6 @@
 plugins {
     id("com.android.library")
     id("kotlin-android")
-    id("kotlin-kapt")
 }
 
 android {
@@ -32,14 +31,7 @@ android {
 }
 
 dependencies {
-    api(project(":feature-filter-api"))
-    implementation(project(":core-ui-base"))
-    implementation(project(":core-db-api"))
-    implementation(project(":core-navigation"))
-    implementation(project(":core-mediator-api"))
-
+    api(project(":core-model"))
+    implementation(Libs.kotlin)
     implementation(Libs.coroutines)
-    implementation(Libs.dagger)
-    kapt(Libs.daggerCompiler)
-
 }

@@ -43,6 +43,7 @@ dependencies {
     implementation(project(":feature-favorites-impl"))
     implementation(project(":feature-details-impl"))
     implementation(project(":feature-filter-impl"))
+    implementation(project(":core-mediator-impl"))
 
     implementation(Libs.dagger)
     kapt(Libs.daggerCompiler)

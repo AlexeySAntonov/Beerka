@@ -5,6 +5,7 @@ import com.aleksejantonov.core.db.api.di.CoreDatabaseApi
 import com.aleksejantonov.core.di.ComponentKey
 import com.aleksejantonov.core.di.ComponentsManager
 import com.aleksejantonov.core.di.RootScope
+import com.aleksejantonov.core.mediator.api.FilterDataMediator
 import com.aleksejantonov.core.ui.base.mvvm.ViewModelFactoryProvider
 import com.aleksejantonov.feature.beerlist.api.di.FeatureBeerListApi
 import dagger.BindsInstance
@@ -27,6 +28,9 @@ interface FeatureBeerListComponent : FeatureBeerListApi, ViewModelFactoryProvide
         @BindsInstance
         fun coreDatabaseApi(coreDatabaseApi: CoreDatabaseApi): Builder
 
+        @BindsInstance
+        fun filterDataMediator(filterDataMediator: FilterDataMediator): Builder
+
         fun build(): FeatureBeerListComponent
     }
 
@@ -38,6 +42,7 @@ interface FeatureBeerListComponent : FeatureBeerListApi, ViewModelFactoryProvide
                 .componentKey(componentKey)
                 .beersApi(dependencies.beersApi())
                 .coreDatabaseApi(dependencies.coreDatabaseApi())
+                .filterDataMediator(dependencies.filterDataMediator())
                 .build()
                 .also { ComponentsManager.save(componentKey, it) } to componentKey
         }
@@ -50,4 +55,5 @@ interface FeatureBeerListComponent : FeatureBeerListApi, ViewModelFactoryProvide
 interface FeatureBeerListComponentDependencies {
     fun beersApi(): BeersApi
     fun coreDatabaseApi(): CoreDatabaseApi
+    fun filterDataMediator(): FilterDataMediator
 }
