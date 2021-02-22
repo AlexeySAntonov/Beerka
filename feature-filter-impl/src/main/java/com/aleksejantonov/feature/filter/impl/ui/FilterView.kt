@@ -15,6 +15,7 @@ import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.core.animation.doOnEnd
 import com.aleksejantonov.core.di.ComponentsManager
+import com.aleksejantonov.core.model.FilterModel
 import com.aleksejantonov.core.navigation.AppRouter
 import com.aleksejantonov.core.resources.beerColor
 import com.aleksejantonov.core.ui.base.BottomSheetable
@@ -24,7 +25,9 @@ import com.aleksejantonov.core.ui.base.mvvm.ViewModelFactoryProvider
 import com.aleksejantonov.core.ui.base.mvvm.dpToPx
 import com.aleksejantonov.core.ui.base.mvvm.navBarHeight
 import com.aleksejantonov.core.ui.base.mvvm.setPaddings
+import com.aleksejantonov.core.ui.model.FilterItem
 import com.aleksejantonov.feature.filter.impl.R
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.slider.LabelFormatter
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
@@ -44,6 +47,7 @@ class FilterView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
   private var abvSeekBar: RangeSeekBarWithInfo? = null
   private var ibuSeekBar: RangeSeekBarWithInfo? = null
   private var ebcSeekBar: RangeSeekBarWithInfo? = null
+  private var applyButton: MaterialButton? = null
 
   init {
     layoutParams = LayoutHelper.getFrameParams(
@@ -142,11 +146,12 @@ class FilterView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
       orientation = LinearLayout.VERTICAL
       setBackgroundResource(R.drawable.bg_rounded_20dp)
       translationY = dpToPx(BOTTOM_SHEET_HEIGHT)
-      setPaddings(bottom = context.navBarHeight() + dpToPx(24f).toInt())
+      setPaddings(bottom = context.navBarHeight() + dpToPx(12f).toInt())
 
       addView(setupAbvSeekBar())
       addView(setupIbuSeekBar())
       addView(setupEbcSeekBar())
+      addView(setupApplyButton())
     }
     bottomSheetContainer?.let { addView(it) }
   }
@@ -160,7 +165,7 @@ class FilterView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
         topMargin = 16
       )
       setTitle(resources.getString(R.string.alcohol_by_volume))
-      setRange(0f, 60f)
+      setRange(FilterModel.ABV_MIN, FilterModel.ABV_MAX)
       setRangeLabelBehaviour(LabelFormatter.LABEL_FLOATING)
       setStartTrackingListener { toggleAuxiliaryFieldsVisibility(false) }
       setStopTrackingListener { toggleAuxiliaryFieldsVisibility(true) }
@@ -180,7 +185,7 @@ class FilterView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
         topMargin = 8
       )
       setTitle(resources.getString(R.string.bitterness_units))
-      setRange(0f, 200f)
+      setRange(FilterModel.IBU_MIN, FilterModel.IBU_MAX)
       setRangeLabelBehaviour(LabelFormatter.LABEL_FLOATING)
       setStartTrackingListener { toggleAuxiliaryFieldsVisibility(false) }
       setStopTrackingListener { toggleAuxiliaryFieldsVisibility(true) }
@@ -202,7 +207,7 @@ class FilterView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
       setTitle(resources.getString(R.string.beer_and_wort_colour))
       setTitleTextColor(R.color.white)
       setTitleBackgroundRes(R.drawable.bg_rounded_20dp)
-      setRange(0f, 80f)
+      setRange(FilterModel.EBC_MIN, FilterModel.EBC_MAX)
       setRangeLabelBehaviour(LabelFormatter.LABEL_GONE)
       setChangeValueListener { updateEbcLabelBackground(getValues()) }
       toggleAuxiliaryFieldsVisibility(false)
@@ -221,6 +226,36 @@ class FilterView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
         colors = values.map { beerColor(it) }.toIntArray()
       }
     )
+  }
+
+  private fun setupApplyButton(): MaterialButton {
+    applyButton = MaterialButton(context).apply {
+      layoutParams = LayoutHelper.getLinearParams(
+        context = context,
+        width = LayoutHelper.MATCH_PARENT,
+        height = 48,
+        weight = 0f,
+        topMargin = 8,
+        leftMargin = 16,
+        rightMargin = 16
+      )
+      text = resources.getString(R.string.apply)
+      setOnClickListener {
+        viewModel.applyFilter(FilterItem(
+          abvPair = abvSeekBar?.getValues()?.let {
+            (it.firstOrNull() ?: FilterModel.ABV_MIN) to (it.lastOrNull() ?: FilterModel.ABV_MAX)
+          } ?: Pair(FilterModel.ABV_MIN, FilterModel.ABV_MAX),
+          ibuPair = ibuSeekBar?.getValues()?.let {
+            (it.firstOrNull() ?: FilterModel.IBU_MIN) to (it.lastOrNull() ?: FilterModel.IBU_MAX)
+          } ?: Pair(FilterModel.IBU_MIN, FilterModel.IBU_MAX),
+          ebcPair = ebcSeekBar?.getValues()?.let {
+            (it.firstOrNull() ?: FilterModel.EBC_MIN) to (it.lastOrNull() ?: FilterModel.EBC_MAX)
+          } ?: Pair(FilterModel.EBC_MIN, FilterModel.EBC_MAX)
+        ))
+        animateHide()
+      }
+    }
+    return requireNotNull(applyButton)
   }
 
   private var oldEventY = 0f
@@ -255,7 +290,7 @@ class FilterView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
   }
 
   companion object {
-    private const val BOTTOM_SHEET_HEIGHT = 400f
+    private const val BOTTOM_SHEET_HEIGHT = 448f
     private const val SHEET_APPEARANCE_DURATION = 220L
     private const val SHEET_BOUNCING_DURATION = 160L
     private const val SEEK_BAR_APPEARANCE_DURATION = 120L

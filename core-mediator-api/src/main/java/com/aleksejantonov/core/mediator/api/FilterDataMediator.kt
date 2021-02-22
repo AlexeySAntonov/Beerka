@@ -1,8 +1,8 @@
 package com.aleksejantonov.core.mediator.api
 
 import com.aleksejantonov.core.model.FilterModel
-import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.MutableSharedFlow
 
 interface FilterDataMediator {
-  val filterDataFlow: SharedFlow<FilterModel>
+  val filterDataFlow: MutableSharedFlow<FilterModel>
 }

@@ -30,14 +30,25 @@ class BeerListRepositoryImpl @Inject constructor(
   private var job: Job? = null
   private var allLoadedEnd: Boolean = false
 
+  init {
+    scope.launch {
+      filterDataMediator.filterDataFlow.collect {  }
+    }
+  }
+
   override suspend fun data(): Flow<PagingState<BeerModel>> {
     job = scope.launch { initialData().collect { beersChannelFlow.tryEmit(it) } }
-    return combine(
-      beersChannelFlow,
-      filterDataMediator.filterDataFlow.onStart { emit(FilterModel.default()) }
-    ) { state, filter ->
-      state
-    }
+    return beersChannelFlow
+//    return combine(
+//      beersChannelFlow,
+//      filterDataMediator.filterDataFlow.onStart { emit(FilterModel.default()) }
+//    ) { state, filter ->
+//      state.copy(data = state.data.filter { beer ->
+//        beer.abv in filter.abvPair.first..filter.abvPair.second
+//            && beer.ibu in filter.ibuPair.first..filter.ibuPair.second
+//            && beer.ebc in filter.ebcPair.first..filter.ebcPair.second
+//      })
+//    }
   }
 
   override suspend fun loadMore() {

@@ -16,5 +16,11 @@ data class FilterItem(
         ebcPair = ebcPair
       )
     }
+
+    fun FilterItem.model() = FilterModel(
+      abvPair = abvPair,
+      ibuPair = ibuPair,
+      ebcPair = ebcPair
+    )
   }
 }

@@ -21,9 +21,15 @@ class FilterViewModel @Inject constructor(
 
   init {
     viewModelScope.launch(Dispatchers.IO + exceptionHandler) {
-      interactor.data().collect {
+      interactor.initialData().collect {
         _data.emit(it)
       }
+    }
+  }
+
+  fun applyFilter(item: FilterItem) {
+    viewModelScope.launch(Dispatchers.IO + exceptionHandler) {
+      interactor.applyFilter(item)
     }
   }
 
