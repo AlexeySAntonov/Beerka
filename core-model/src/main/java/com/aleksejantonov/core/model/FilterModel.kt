@@ -8,11 +8,11 @@ data class FilterModel(
 
   companion object {
     const val ABV_MIN = 0f
-    const val ABV_MAX = 60f
+    const val ABV_MAX = 100f
     const val IBU_MIN = 0f
-    const val IBU_MAX = 200f
+    const val IBU_MAX = 2000f
     const val EBC_MIN = 0f
-    const val EBC_MAX = 80f
+    const val EBC_MAX = 800f
 
     fun default() = FilterModel(
       abvPair = Pair(ABV_MIN, ABV_MAX),

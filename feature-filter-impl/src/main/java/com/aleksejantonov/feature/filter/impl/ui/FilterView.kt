@@ -15,7 +15,6 @@ import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.core.animation.doOnEnd
 import com.aleksejantonov.core.di.ComponentsManager
-import com.aleksejantonov.core.model.FilterModel
 import com.aleksejantonov.core.navigation.AppRouter
 import com.aleksejantonov.core.resources.beerColor
 import com.aleksejantonov.core.ui.base.BottomSheetable
@@ -165,7 +164,7 @@ class FilterView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
         topMargin = 16
       )
       setTitle(resources.getString(R.string.alcohol_by_volume))
-      setRange(FilterModel.ABV_MIN, FilterModel.ABV_MAX)
+      setRange(FilterItem.ABV_UI_MIN, FilterItem.ABV_UI_MAX)
       setRangeLabelBehaviour(LabelFormatter.LABEL_FLOATING)
       setStartTrackingListener { toggleAuxiliaryFieldsVisibility(false) }
       setStopTrackingListener { toggleAuxiliaryFieldsVisibility(true) }
@@ -185,7 +184,7 @@ class FilterView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
         topMargin = 8
       )
       setTitle(resources.getString(R.string.bitterness_units))
-      setRange(FilterModel.IBU_MIN, FilterModel.IBU_MAX)
+      setRange(FilterItem.IBU_UI_MIN, FilterItem.IBU_UI_MAX)
       setRangeLabelBehaviour(LabelFormatter.LABEL_FLOATING)
       setStartTrackingListener { toggleAuxiliaryFieldsVisibility(false) }
       setStopTrackingListener { toggleAuxiliaryFieldsVisibility(true) }
@@ -207,7 +206,7 @@ class FilterView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
       setTitle(resources.getString(R.string.beer_and_wort_colour))
       setTitleTextColor(R.color.white)
       setTitleBackgroundRes(R.drawable.bg_rounded_20dp)
-      setRange(FilterModel.EBC_MIN, FilterModel.EBC_MAX)
+      setRange(FilterItem.EBC_UI_MIN, FilterItem.EBC_UI_MAX)
       setRangeLabelBehaviour(LabelFormatter.LABEL_GONE)
       setChangeValueListener { updateEbcLabelBackground(getValues()) }
       toggleAuxiliaryFieldsVisibility(false)
@@ -243,14 +242,14 @@ class FilterView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
       setOnClickListener {
         viewModel.applyFilter(FilterItem(
           abvPair = abvSeekBar?.getValues()?.let {
-            (it.firstOrNull() ?: FilterModel.ABV_MIN) to (it.lastOrNull() ?: FilterModel.ABV_MAX)
-          } ?: Pair(FilterModel.ABV_MIN, FilterModel.ABV_MAX),
+            (it.firstOrNull() ?: FilterItem.ABV_UI_MIN) to (it.lastOrNull() ?: FilterItem.ABV_UI_MAX)
+          } ?: Pair(FilterItem.ABV_UI_MIN, FilterItem.ABV_UI_MAX),
           ibuPair = ibuSeekBar?.getValues()?.let {
-            (it.firstOrNull() ?: FilterModel.IBU_MIN) to (it.lastOrNull() ?: FilterModel.IBU_MAX)
-          } ?: Pair(FilterModel.IBU_MIN, FilterModel.IBU_MAX),
+            (it.firstOrNull() ?: FilterItem.IBU_UI_MIN) to (it.lastOrNull() ?: FilterItem.IBU_UI_MAX)
+          } ?: Pair(FilterItem.IBU_UI_MIN, FilterItem.IBU_UI_MAX),
           ebcPair = ebcSeekBar?.getValues()?.let {
-            (it.firstOrNull() ?: FilterModel.EBC_MIN) to (it.lastOrNull() ?: FilterModel.EBC_MAX)
-          } ?: Pair(FilterModel.EBC_MIN, FilterModel.EBC_MAX)
+            (it.firstOrNull() ?: FilterItem.EBC_UI_MIN) to (it.lastOrNull() ?: FilterItem.EBC_UI_MAX)
+          } ?: Pair(FilterItem.EBC_UI_MIN, FilterItem.EBC_UI_MAX)
         ))
         animateHide()
       }

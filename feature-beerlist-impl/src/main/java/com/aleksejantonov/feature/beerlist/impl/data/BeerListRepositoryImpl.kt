@@ -13,6 +13,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
 import kotlin.Exception
@@ -32,37 +33,42 @@ class BeerListRepositoryImpl @Inject constructor(
 
   init {
     scope.launch {
-      filterDataMediator.filterDataFlow.collect {  }
+      filterDataMediator.filterDataFlow
+        .onStart { emit(FilterModel.default()) }
+        .collect {
+          job?.cancel()
+          job = scope.launch {
+            allLoadedEnd = false
+            initialData(it).collect {
+              beersChannelFlow.tryEmit(it)
+            }
+          }
+        }
     }
   }
 
   override suspend fun data(): Flow<PagingState<BeerModel>> {
-    job = scope.launch { initialData().collect { beersChannelFlow.tryEmit(it) } }
     return beersChannelFlow
-//    return combine(
-//      beersChannelFlow,
-//      filterDataMediator.filterDataFlow.onStart { emit(FilterModel.default()) }
-//    ) { state, filter ->
-//      state.copy(data = state.data.filter { beer ->
-//        beer.abv in filter.abvPair.first..filter.abvPair.second
-//            && beer.ibu in filter.ibuPair.first..filter.ibuPair.second
-//            && beer.ebc in filter.ebcPair.first..filter.ebcPair.second
-//      })
-//    }
   }
 
   override suspend fun loadMore() {
     if (busy.compareAndSet(false, true) && !beersChannelFlow.replayCache[0].allLoadedEnd) {
       job?.cancel()
       job = scope.launch {
-        databaseApi.beersStore().beersData(DEFAULT_LIMIT + beersChannelFlow.replayCache[0].itemCount(), 0)
+        val filterRequest = filterDataMediator.filterDataFlow.replayCache.getOrNull(0) ?: FilterModel.default()
+        databaseApi.beersStore().beersData(DEFAULT_LIMIT + beersChannelFlow.replayCache[0].itemCount(), 0, filterRequest)
           .map { PagingState(data = it, allLoadedEnd = allLoadedEnd) }
           .onStart {
             try {
-              val beers = beersApi.getBeers(page = beersChannelFlow.replayCache[0].itemCount() / DEFAULT_LIMIT + 1, limit = DEFAULT_LIMIT)
+              val beers = beersApi.getBeers(
+                page = beersChannelFlow.replayCache[0].itemCount() / DEFAULT_LIMIT + 1,
+                limit = DEFAULT_LIMIT,
+                filterRequest = filterRequest
+              )
               allLoadedEnd = beers.size < DEFAULT_LIMIT
               databaseApi.beersStore().insertBeers(beers)
             } catch (e: Exception) {
+              Timber.e(e)
             }
           }
           .collect { beersChannelFlow.tryEmit(it) }
@@ -71,12 +77,13 @@ class BeerListRepositoryImpl @Inject constructor(
     }
   }
 
-  private fun initialData(): Flow<PagingState<BeerModel>> {
-    return databaseApi.beersStore().beersData(DEFAULT_LIMIT, 0)
+  private fun initialData(filterRequest: FilterModel): Flow<PagingState<BeerModel>> {
+    busy.set(false)
+    return databaseApi.beersStore().beersData(DEFAULT_LIMIT, 0, filterRequest)
       .map { PagingState(data = it, allLoadedEnd = allLoadedEnd) }
       .onStart {
         try {
-          val beers = beersApi.getBeers(page = 1, limit = DEFAULT_LIMIT)
+          val beers = beersApi.getBeers(page = 1, limit = DEFAULT_LIMIT, filterRequest = filterRequest)
           allLoadedEnd = beers.size < DEFAULT_LIMIT
           databaseApi.beersStore().insertBeers(beers)
         } catch (e: Exception) {

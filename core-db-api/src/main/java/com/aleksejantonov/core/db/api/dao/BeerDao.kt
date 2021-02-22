@@ -19,8 +19,14 @@ interface BeerDao {
   @Query("SELECT * FROM beers WHERE id = :id")
   fun beerData(id: Long): Flow<BeerEntity>
 
-  @Query("SELECT * FROM beers LIMIT :limit OFFSET :offset")
-  fun beersData(limit: Int, offset: Int): Flow<List<BeerEntity>>
+  @Query(
+    """
+    SELECT * FROM beers 
+    WHERE abv > :abvGT AND abv < :abvLT AND ibu > :ibuGT AND ibu < :ibuLT AND ebc > :ebcGT AND ebc < :ebcLT
+    LIMIT :limit OFFSET :offset
+    """
+  )
+  fun beersData(limit: Int, offset: Int, abvGT: Float, abvLT: Float, ibuGT: Float, ibuLT: Float, ebcGT: Float, ebcLT: Float): Flow<List<BeerEntity>>
 
   @Query("SELECT * FROM beers WHERE isFavorite = 1 LIMIT :limit OFFSET :offset")
   fun favoriteBeersData(limit: Int, offset: Int): Flow<List<BeerEntity>>
