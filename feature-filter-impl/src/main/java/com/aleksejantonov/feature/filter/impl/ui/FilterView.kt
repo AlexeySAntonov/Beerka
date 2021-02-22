@@ -14,16 +14,15 @@ import android.view.animation.AccelerateInterpolator
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.core.animation.doOnEnd
+import androidx.core.view.isVisible
 import com.aleksejantonov.core.di.ComponentsManager
 import com.aleksejantonov.core.navigation.AppRouter
 import com.aleksejantonov.core.resources.beerColor
 import com.aleksejantonov.core.ui.base.BottomSheetable
 import com.aleksejantonov.core.ui.base.LayoutHelper
 import com.aleksejantonov.core.ui.base.custom.RangeSeekBarWithInfo
-import com.aleksejantonov.core.ui.base.mvvm.ViewModelFactoryProvider
-import com.aleksejantonov.core.ui.base.mvvm.dpToPx
-import com.aleksejantonov.core.ui.base.mvvm.navBarHeight
-import com.aleksejantonov.core.ui.base.mvvm.setPaddings
+import com.aleksejantonov.core.ui.base.mvvm.*
+import com.aleksejantonov.core.ui.base.show
 import com.aleksejantonov.core.ui.model.FilterItem
 import com.aleksejantonov.feature.filter.impl.R
 import com.google.android.material.button.MaterialButton
@@ -146,10 +145,15 @@ class FilterView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
       setBackgroundResource(R.drawable.bg_rounded_20dp)
       translationY = dpToPx(BOTTOM_SHEET_HEIGHT)
       setPaddings(bottom = context.navBarHeight() + dpToPx(12f).toInt())
+      clipChildren = false
+      clipToPadding = false
 
       addView(setupAbvSeekBar())
+      addView(setupDivider())
       addView(setupIbuSeekBar())
+      addView(setupDivider())
       addView(setupEbcSeekBar())
+      addView(setupDivider())
       addView(setupApplyButton())
     }
     bottomSheetContainer?.let { addView(it) }
@@ -168,7 +172,10 @@ class FilterView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
       setRangeLabelBehaviour(LabelFormatter.LABEL_FLOATING)
       setStartTrackingListener { toggleAuxiliaryFieldsVisibility(false) }
       setStopTrackingListener { toggleAuxiliaryFieldsVisibility(true) }
-      setChangeValueListener { setAuxiliaryFieldsValues() }
+      setChangeValueListener {
+        enableApplyIfNeeded()
+        setAuxiliaryFieldsValues()
+      }
       toggleAuxiliaryFieldsVisibility(true)
       translationY = dpToPx(BOTTOM_SHEET_HEIGHT)
     }
@@ -188,7 +195,10 @@ class FilterView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
       setRangeLabelBehaviour(LabelFormatter.LABEL_FLOATING)
       setStartTrackingListener { toggleAuxiliaryFieldsVisibility(false) }
       setStopTrackingListener { toggleAuxiliaryFieldsVisibility(true) }
-      setChangeValueListener { setAuxiliaryFieldsValues() }
+      setChangeValueListener {
+        enableApplyIfNeeded()
+        setAuxiliaryFieldsValues()
+      }
       toggleAuxiliaryFieldsVisibility(true)
       translationY = dpToPx(BOTTOM_SHEET_HEIGHT)
     }
@@ -208,7 +218,10 @@ class FilterView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
       setTitleBackgroundRes(R.drawable.bg_rounded_20dp)
       setRange(FilterItem.EBC_UI_MIN, FilterItem.EBC_UI_MAX)
       setRangeLabelBehaviour(LabelFormatter.LABEL_GONE)
-      setChangeValueListener { updateEbcLabelBackground(getValues()) }
+      setChangeValueListener {
+        enableApplyIfNeeded()
+        updateEbcLabelBackground(getValues())
+      }
       toggleAuxiliaryFieldsVisibility(false)
       translationY = dpToPx(BOTTOM_SHEET_HEIGHT)
     }
@@ -232,13 +245,17 @@ class FilterView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
       layoutParams = LayoutHelper.getLinearParams(
         context = context,
         width = LayoutHelper.MATCH_PARENT,
-        height = 48,
+        height = 56,
         weight = 0f,
         topMargin = 8,
         leftMargin = 16,
         rightMargin = 16
       )
       text = resources.getString(R.string.apply)
+      cornerRadius = dpToPx(12f).toInt()
+      setBackgroundTint(R.color.appBlue)
+      alpha = 0f
+      isEnabled = false
       setOnClickListener {
         viewModel.applyFilter(FilterItem(
           abvPair = abvSeekBar?.getValues()?.let {
@@ -255,6 +272,27 @@ class FilterView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
       }
     }
     return requireNotNull(applyButton)
+  }
+
+  private fun enableApplyIfNeeded() {
+    if (applyButton?.isEnabled == false) {
+      applyButton?.isEnabled = true
+      applyButton?.show(true)
+    }
+  }
+
+  private fun setupDivider(): View {
+    return View(context).apply {
+      layoutParams = LayoutHelper.getLinearParams(
+        context = context,
+        width = LayoutHelper.MATCH_PARENT,
+        height = 1,
+        weight = 0f,
+        leftMargin = 32,
+        rightMargin = 32
+      )
+      setBackgroundResource(R.color.divider)
+    }
   }
 
   private var oldEventY = 0f
@@ -289,7 +327,7 @@ class FilterView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
   }
 
   companion object {
-    private const val BOTTOM_SHEET_HEIGHT = 448f
+    private const val BOTTOM_SHEET_HEIGHT = 464f
     private const val SHEET_APPEARANCE_DURATION = 220L
     private const val SHEET_BOUNCING_DURATION = 160L
     private const val SEEK_BAR_APPEARANCE_DURATION = 120L
