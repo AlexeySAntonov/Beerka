@@ -16,21 +16,20 @@ import kotlinx.coroutines.channels.sendBlocking
 import kotlinx.coroutines.flow.asFlow
 import java.lang.ref.WeakReference
 import java.util.*
+import javax.inject.Inject
+import javax.inject.Singleton
 import kotlin.reflect.KClass
 
-object AppRouter {
+@Singleton
+class GlobalRouter @Inject constructor(
+  private val globalFeatureProvider: GlobalFeatureProvider
+) {
 
   /** FEATURE NAVIGATION REGION */
 
-  private lateinit var globalFeatureProvider: GlobalFeatureProvider
-
-  fun attachFeatureProvider(provider: GlobalFeatureProvider) {
-    this.globalFeatureProvider = provider
-  }
-
   fun openDetailsFeature(screenData: ScreenData) {
-//    val fragment = globalFeatureProvider.provideFeatureDetails(screenData)
-//    openFullScreen(fragment)
+    val screenKey = globalFeatureProvider.provideFeatureDetails(screenData)
+    openFullScreen(screenKey)
   }
 
   /** MODALS */
@@ -55,15 +54,9 @@ object AppRouter {
 
   /** FEATURE NAVIGATION REGION END */
 
-  const val EXTRA_FRAGMENT_KEY = "extra_fragment_key"
-  const val EXTRA_ACTIVITY_TRANSITION = "extra_activity_transition"
   private val activityArgs = mutableMapOf<String, Fragment>()
 
   private var activityRef: WeakReference<BaseNavHostActivity>? = null
-
-  private val navigationRoutes = BroadcastChannel<NavigationRoute>(1)
-
-  fun observeRoutes() = navigationRoutes.asFlow()
 
   fun popActivityArgs(key: String): Fragment? =
     activityArgs[key]?.also {
@@ -97,12 +90,12 @@ object AppRouter {
     current.overridePendingTransition(transition.openEnter, transition.openExit)
   }
 
-  fun switchTab(rootFactory: () -> Fragment, tab: NavigationTab) {
-//    navigationRoutes.sendBlocking(NavigationRoute.Tab(tab, rootFactory))
+  fun switchTab(screenKey: String, tab: NavigationTab) {
+    navigationRoutes.sendBlocking(NavigationRoute.Tab(screenKey, tab))
   }
 
-  fun openFullScreen(fragment: Fragment, addToStack: Boolean = true) {
-//    navigationRoutes.sendBlocking(NavigationRoute.FullScreen({ fragment }, addToStack))
+  fun openFullScreen(screenKey: String, addToStack: Boolean = true) {
+    navigationRoutes.sendBlocking(NavigationRoute.FullScreen(screenKey, addToStack))
   }
 
   fun back(force: Boolean = false) {
@@ -115,4 +108,12 @@ object AppRouter {
   fun currentScreen(): Fragment? = activity()?.currentScreen()
 
   fun activity(): BaseNavHostActivity? = activityRef?.get()
+
+  companion object {
+    const val EXTRA_FRAGMENT_KEY = "extra_fragment_key"
+    const val EXTRA_ACTIVITY_TRANSITION = "extra_activity_transition"
+
+    private val navigationRoutes = BroadcastChannel<NavigationRoute>(1)
+    fun observeRoutes() = navigationRoutes.asFlow()
+  }
 }

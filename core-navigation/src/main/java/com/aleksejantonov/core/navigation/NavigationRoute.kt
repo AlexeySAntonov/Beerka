@@ -7,24 +7,24 @@ sealed class NavigationRoute {
   data class Page(val index: Int) : NavigationRoute()
 
   data class Tab(
-      val id: NavigationTab,
-      val fragmentFactory: () -> Fragment
+    val screenKey: String,
+    val tab: NavigationTab
   ) : NavigationRoute()
 
   data class FullScreen(
-      val fragmentFactory: () -> Fragment,
-      val addToBackStack: Boolean = true
+    val screenKey: String,
+    val addToBackStack: Boolean = true
   ) : NavigationRoute()
 
   data class PersistentBottom(
-      val fragmentFactory: () -> Fragment,
-      val addToBackStack: Boolean = true
+    val screenKey: String,
+    val addToBackStack: Boolean = true
   ) : NavigationRoute()
 
   data class NextScreen(
-      val fragmentFactory: () -> Fragment,
-      val addToBackStack: Boolean = true,
-      val ignoreBottomSheetNavigation: Boolean = false
+    val screenKey: String,
+    val addToBackStack: Boolean = true,
+    val ignoreBottomSheetNavigation: Boolean = false
   ) : NavigationRoute()
 
   data class Back(val force: Boolean = false) : NavigationRoute()

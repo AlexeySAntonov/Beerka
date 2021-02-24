@@ -5,22 +5,25 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
+import com.aleksejantonov.beerka.di.DI
 import com.aleksejantonov.beerka.ui.MainTabsFragment
-import com.aleksejantonov.core.navigation.localrouting.MainScreenLocalRouter
+import com.aleksejantonov.core.navigation.localrouting.MainScreenNavigator
 import com.aleksejantonov.core.navigation.BaseNavHostActivity
 import com.aleksejantonov.core.navigation.navigation.PagerNavigation
 import com.aleksejantonov.core.navigation.navigation.PersistentBottomSheetNavigation
 import com.aleksejantonov.core.navigation.navigation.TabNavigation
-import com.aleksejantonov.core.navigation.localrouting.LocalRouter
+import com.aleksejantonov.core.navigation.localrouting.Navigator
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseNavHostActivity() {
+
+  private val globalRouter by lazy { DI.appComponent.globalRouter() }
 
   val localRouter by lazy {
 //    val bottomSheetHost = supportFragmentManager
 //      .findFragmentById(R.id.persistentBottomSheetContainer)
 //      ?: throw  IllegalStateException("Bottom sheet host not found")
-    MainScreenLocalRouter(
+    MainScreenNavigator(
       activity = this,
       pagerNavigation = PagerNavigation(R.id.pager),
       tabNavigation = TabNavigation { //TODO move this navigation to MainTabsFragment
@@ -32,7 +35,7 @@ class MainActivity : BaseNavHostActivity() {
 
 
 
-  override fun localRouter(): LocalRouter = localRouter
+  override fun localRouter(): Navigator = localRouter
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -42,6 +45,7 @@ class MainActivity : BaseNavHostActivity() {
       adapter = PagerAdapter(supportFragmentManager)
       currentItem = 0
       addOnPageChangeListener(pageChangeListener)
+      setRouter(globalRouter)
     }
   }
 

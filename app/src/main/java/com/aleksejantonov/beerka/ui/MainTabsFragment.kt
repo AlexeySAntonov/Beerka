@@ -9,8 +9,6 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.aleksejantonov.beerka.MainActivity
 import com.aleksejantonov.beerka.R
-import com.aleksejantonov.beerka.di.DI
-import com.aleksejantonov.core.navigation.AppRouter
 import com.aleksejantonov.core.navigation.NavigationTab
 import com.aleksejantonov.core.ui.base.BaseFragment
 import com.aleksejantonov.core.ui.base.mvvm.dpToPx
@@ -36,7 +34,7 @@ class MainTabsFragment : BaseFragment(R.layout.fragment_main_tabs) {
         TabsSwitcherBlockView.SwitchTab.FAVORITES -> viewModel.onTabClick(NavigationTab.FAVORITES, false)
       }
     }
-    toggleGroup.onFilterClick { context?.let { AppRouter.openFilterFeature(it) } }
+    toggleGroup.onFilterClick { context?.let { viewModel.openFilterFeature(it) } }
 
     beerListContainer.isVisible = true
     favoriteBeersContainer.isVisible = false
@@ -61,8 +59,9 @@ class MainTabsFragment : BaseFragment(R.layout.fragment_main_tabs) {
     super.onResume()
     val tabNavigation = (activity as? MainActivity)?.localRouter?.tabNavigation ?: return
     if (tabNavigation.currentScreen() == null) {
-      val fragment = DI.appComponent.globalFeatureProvider().provideFeatureBeerList()
-      tabNavigation.switchTab({ fragment }, NavigationTab.BEER_LIST)
+//      val fragment = DI.appComponent.globalFeatureProvider().provideFeatureBeerList()
+//      tabNavigation.switchTab({ fragment }, NavigationTab.BEER_LIST)
+      viewModel.onTabClick(NavigationTab.BEER_LIST, false)
     }
   }
 

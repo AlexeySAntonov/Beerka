@@ -1,6 +1,7 @@
 plugins {
     id("com.android.library")
     id("kotlin-android")
+    id("kotlin-kapt")
 }
 
 android {
@@ -37,4 +38,6 @@ dependencies {
     implementation(Libs.coroutines)
     implementation(Libs.lifecycleViewModelKtx)
     implementation(Libs.fragment)
+    implementation(Libs.dagger)
+    kapt(Libs.daggerCompiler)
 }

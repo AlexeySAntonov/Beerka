@@ -22,7 +22,7 @@ class TabNavigation(
 //  private val transitionProvider = TabTransitionProvider()
 
   fun switchTab(
-      rootFactory: () -> Fragment,
+      fragment: Fragment,
       tab: NavigationTab
   ) {
     val fm = fragmentManager(tab) ?: return
@@ -42,17 +42,16 @@ class TabNavigation(
       }
     } else {
 //      (currentTabScreen(currentTab.requireValue()) as? OnShowFragmentListener)?.onShow(false) //hide screen
-      open(rootFactory, tab) //tab to open does not contain any screens
+      open(fragment, tab) //tab to open does not contain any screens
     }
   }
 
   fun open(
-      fragmentFactory: () -> Fragment,
+    fragment: Fragment,
       tab: NavigationTab = currentTab.requireValue(),
       addToBackStack: Boolean = true
   ) {
     val fm = fragmentManager(tab) ?: return
-    val fragment = fragmentFactory.invoke()
     fragment.arguments = (fragment.arguments ?: Bundle()).apply {
       putBoolean(BaseFragment.ARG_IS_IN_TAB_NAVIGATION, true)
     }

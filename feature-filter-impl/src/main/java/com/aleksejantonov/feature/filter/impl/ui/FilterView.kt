@@ -14,9 +14,7 @@ import android.view.animation.AccelerateInterpolator
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.core.animation.doOnEnd
-import androidx.core.view.isVisible
 import com.aleksejantonov.core.di.ComponentsManager
-import com.aleksejantonov.core.navigation.AppRouter
 import com.aleksejantonov.core.resources.beerColor
 import com.aleksejantonov.core.ui.base.BottomSheetable
 import com.aleksejantonov.core.ui.base.LayoutHelper
@@ -114,7 +112,7 @@ class FilterView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
       )
       interpolator = AccelerateInterpolator()
       duration = 130L
-      doOnEnd { AppRouter.removeCurrentModal() }
+      doOnEnd { viewModel.onClose() }
       start()
     }
   }

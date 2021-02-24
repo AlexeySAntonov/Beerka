@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.lifecycleScope
 import com.aleksejantonov.core.di.ScreenData
-import com.aleksejantonov.core.navigation.AppRouter
 import com.aleksejantonov.core.ui.base.BaseFragment
 import com.aleksejantonov.core.ui.base.GlideApp
 import com.aleksejantonov.core.ui.base.mvvm.dpToPx
@@ -25,7 +24,7 @@ class DetailsFragment : BaseFragment(R.layout.fragment_details) {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     uiStateJob = lifecycleScope.launch { viewModel.data.collect { setData(it) } }
-    backButton.setOnClickListener { AppRouter.back() }
+    backButton.setOnClickListener { viewModel.onBack() }
     favoriteButton.setOnClickListener { viewModel.toggleFavorite() }
   }
 

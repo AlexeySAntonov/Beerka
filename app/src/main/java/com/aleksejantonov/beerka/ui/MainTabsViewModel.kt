@@ -1,13 +1,16 @@
 package com.aleksejantonov.beerka.ui
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.aleksejantonov.beerka.di.DI
-import com.aleksejantonov.core.navigation.AppRouter
 import com.aleksejantonov.core.navigation.NavigationTab
 import com.aleksejantonov.core.ui.base.BaseViewModel
 
 class MainTabsViewModel : BaseViewModel() {
+  // TODO: Refactor: MainTabsComponent + inject
+  private val appRouter by lazy { DI.appComponent.globalRouter() }
+  private val featureProvider by lazy { DI.appComponent.globalFeatureProvider() }
 
   // first -> navigation tab
   // second -> show/hide red dot
@@ -20,17 +23,21 @@ class MainTabsViewModel : BaseViewModel() {
   fun onTabClick(tab: NavigationTab, wasSelected: Boolean) {
     when (tab) {
       NavigationTab.BEER_LIST -> {
-        AppRouter.switchTab(
-            rootFactory = { DI.appComponent.globalFeatureProvider().provideFeatureBeerList() },
-            tab = NavigationTab.BEER_LIST
+        appRouter.switchTab(
+          screenKey = featureProvider.provideFeatureBeerList(),
+          tab = NavigationTab.BEER_LIST
         )
       }
       NavigationTab.FAVORITES -> {
-          AppRouter.switchTab(
-              rootFactory = { DI.appComponent.globalFeatureProvider().provideFeatureFavorites() },
-              tab = NavigationTab.FAVORITES
-          )
+        appRouter.switchTab(
+          screenKey = featureProvider.provideFeatureFavorites(),
+          tab = NavigationTab.FAVORITES
+        )
       }
     }
+  }
+
+  fun openFilterFeature(context: Context) {
+    appRouter.openFilterFeature(context)
   }
 }

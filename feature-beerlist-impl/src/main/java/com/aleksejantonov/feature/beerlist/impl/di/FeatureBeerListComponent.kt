@@ -6,6 +6,7 @@ import com.aleksejantonov.core.di.ComponentKey
 import com.aleksejantonov.core.di.ComponentsManager
 import com.aleksejantonov.core.di.RootScope
 import com.aleksejantonov.core.mediator.api.FilterDataMediator
+import com.aleksejantonov.core.navigation.GlobalRouter
 import com.aleksejantonov.core.ui.base.mvvm.ViewModelFactoryProvider
 import com.aleksejantonov.feature.beerlist.api.di.FeatureBeerListApi
 import dagger.BindsInstance
@@ -31,6 +32,9 @@ interface FeatureBeerListComponent : FeatureBeerListApi, ViewModelFactoryProvide
         @BindsInstance
         fun filterDataMediator(filterDataMediator: FilterDataMediator): Builder
 
+        @BindsInstance
+        fun router(router: GlobalRouter): Builder
+
         fun build(): FeatureBeerListComponent
     }
 
@@ -43,6 +47,7 @@ interface FeatureBeerListComponent : FeatureBeerListApi, ViewModelFactoryProvide
                 .beersApi(dependencies.beersApi())
                 .coreDatabaseApi(dependencies.coreDatabaseApi())
                 .filterDataMediator(dependencies.filterDataMediator())
+                .router(dependencies.router())
                 .build()
                 .also { ComponentsManager.save(componentKey, it) } to componentKey
         }
@@ -56,4 +61,5 @@ interface FeatureBeerListComponentDependencies {
     fun beersApi(): BeersApi
     fun coreDatabaseApi(): CoreDatabaseApi
     fun filterDataMediator(): FilterDataMediator
+    fun router(): GlobalRouter
 }

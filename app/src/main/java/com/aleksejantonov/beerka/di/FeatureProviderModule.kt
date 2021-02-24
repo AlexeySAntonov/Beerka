@@ -4,6 +4,7 @@ import com.aleksejantonov.core.api.BeersApi
 import com.aleksejantonov.core.db.api.di.CoreDatabaseApi
 import com.aleksejantonov.core.di.GlobalFeatureProvider
 import com.aleksejantonov.core.mediator.api.FilterDataMediator
+import com.aleksejantonov.core.navigation.GlobalRouter
 import com.aleksejantonov.feature.beerlist.api.di.FeatureBeerListApi
 import com.aleksejantonov.feature.beerlist.impl.di.FeatureBeerListComponent
 import com.aleksejantonov.feature.beerlist.impl.di.FeatureBeerListComponentDependencies
@@ -45,12 +46,14 @@ class FeatureProviderModule {
   fun provideFeatureBeerListDependencies(
     beersApi: BeersApi,
     coreDatabaseApi: CoreDatabaseApi,
-    filterDataMediator: FilterDataMediator
+    filterDataMediator: FilterDataMediator,
+    router: GlobalRouter
   ): FeatureBeerListComponentDependencies {
     return object : FeatureBeerListComponentDependencies {
       override fun beersApi(): BeersApi = beersApi
       override fun coreDatabaseApi(): CoreDatabaseApi = coreDatabaseApi
       override fun filterDataMediator(): FilterDataMediator = filterDataMediator
+      override fun router(): GlobalRouter = router
     }
   }
 
@@ -65,10 +68,12 @@ class FeatureProviderModule {
   @Provides
   @Singleton
   fun provideFeatureFavoritesDependencies(
-    coreDatabaseApi: CoreDatabaseApi
+    coreDatabaseApi: CoreDatabaseApi,
+    router: GlobalRouter
   ): FeatureFavoritesComponentDependencies {
     return object : FeatureFavoritesComponentDependencies {
       override fun coreDatabaseApi(): CoreDatabaseApi = coreDatabaseApi
+      override fun router(): GlobalRouter = router
     }
   }
 
@@ -83,10 +88,12 @@ class FeatureProviderModule {
   @Provides
   @Singleton
   fun provideFeatureDetailsDependencies(
-    coreDatabaseApi: CoreDatabaseApi
+    coreDatabaseApi: CoreDatabaseApi,
+    router: GlobalRouter
   ): FeatureDetailsComponentDependencies {
     return object : FeatureDetailsComponentDependencies {
       override fun coreDatabaseApi(): CoreDatabaseApi = coreDatabaseApi
+      override fun router(): GlobalRouter = router
     }
   }
 
@@ -102,11 +109,13 @@ class FeatureProviderModule {
   @Singleton
   fun provideFeatureFilterDependencies(
     coreDatabaseApi: CoreDatabaseApi,
-    filterDataMediator: FilterDataMediator
+    filterDataMediator: FilterDataMediator,
+    router: GlobalRouter
   ): FeatureFilterComponentDependencies {
     return object : FeatureFilterComponentDependencies {
       override fun coreDatabaseApi(): CoreDatabaseApi = coreDatabaseApi
       override fun filterDataMediator(): FilterDataMediator = filterDataMediator
+      override fun router(): GlobalRouter = router
     }
   }
 

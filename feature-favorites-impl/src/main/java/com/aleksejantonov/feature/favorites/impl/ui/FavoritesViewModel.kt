@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.aleksejantonov.core.di.ComponentKey
 import com.aleksejantonov.core.di.ComponentsManager
 import com.aleksejantonov.core.di.ScreenData
-import com.aleksejantonov.core.navigation.AppRouter
+import com.aleksejantonov.core.navigation.GlobalRouter
 import com.aleksejantonov.core.ui.base.BaseViewModel
 import com.aleksejantonov.core.ui.model.BeerItem
 import com.aleksejantonov.core.ui.model.ListItem
@@ -19,6 +19,7 @@ import javax.inject.Inject
 class FavoritesViewModel @Inject constructor(
   @ComponentKey private val componentKey: String,
   private val interactor: FavoritesInteractor,
+  private val router: GlobalRouter
 ) :  BaseViewModel() {
 
   private val _data = MutableLiveData<List<ListItem>>()
@@ -37,7 +38,7 @@ class FavoritesViewModel @Inject constructor(
   }
 
   fun navigateToDetails(item: BeerItem) {
-    AppRouter.openDetailsFeature(ScreenData(item.id))
+    router.openDetailsFeature(ScreenData(item.id))
   }
 
   override fun onCleared() {
