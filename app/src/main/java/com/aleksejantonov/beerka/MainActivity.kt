@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
-import com.aleksejantonov.beerka.di.DI
 import com.aleksejantonov.beerka.ui.MainTabsFragment
 import com.aleksejantonov.core.navigation.localrouting.MainScreenNavigator
 import com.aleksejantonov.core.navigation.BaseNavHostActivity
@@ -17,9 +16,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseNavHostActivity() {
 
-  private val globalRouter by lazy { DI.appComponent.globalRouter() }
-
-  val localRouter by lazy {
+  val navigator by lazy {
 //    val bottomSheetHost = supportFragmentManager
 //      .findFragmentById(R.id.persistentBottomSheetContainer)
 //      ?: throw  IllegalStateException("Bottom sheet host not found")
@@ -33,9 +30,7 @@ class MainActivity : BaseNavHostActivity() {
     )
   }
 
-
-
-  override fun localRouter(): Navigator = localRouter
+  override fun navigator(): Navigator = navigator
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -45,7 +40,6 @@ class MainActivity : BaseNavHostActivity() {
       adapter = PagerAdapter(supportFragmentManager)
       currentItem = 0
       addOnPageChangeListener(pageChangeListener)
-      setRouter(globalRouter)
     }
   }
 
@@ -55,7 +49,6 @@ class MainActivity : BaseNavHostActivity() {
         val f = supportFragmentManager.findFragmentByTag(makeFragmentName(i.toLong()))
 //        (f as? OnShowFragmentListener)?.onShow(position == i)
       }
-//      AndroidHelpers.hideKeyboard(binding.pager)
     }
   }
 

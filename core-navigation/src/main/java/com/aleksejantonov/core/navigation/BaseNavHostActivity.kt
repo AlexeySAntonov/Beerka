@@ -11,21 +11,19 @@ abstract class BaseNavHostActivity : AppCompatActivity() {
 
   override fun onResume() {
     super.onResume()
-//    AppRouter.attach(this)
-    viewModel.attachLocalRouter(localRouter())
+    viewModel.attachNavigator(navigator())
   }
 
   override fun onPause() {
-//    AppRouter.detach(this)
-    viewModel.detachLocalRouter()
+    viewModel.detachNavigator()
     super.onPause()
   }
 
   override fun onBackPressed() {
-    localRouter().handleBack(false)
+    navigator().handleBack(false)
   }
 
   fun currentScreen(): Fragment? = viewModel.currentScreen()
 
-  protected abstract fun localRouter(): Navigator
+  protected abstract fun navigator(): Navigator
 }

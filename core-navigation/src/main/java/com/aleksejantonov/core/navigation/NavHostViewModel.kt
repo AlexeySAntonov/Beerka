@@ -32,7 +32,7 @@ class NavHostViewModel : BaseViewModel() {
     }
   }
 
-  fun attachLocalRouter(navigator: Navigator) {
+  fun attachNavigator(navigator: Navigator) {
     this.navigator = navigator
     initialFragment?.let {
       navigator.setInitialScreen(it)
@@ -40,7 +40,7 @@ class NavHostViewModel : BaseViewModel() {
     }
   }
 
-  fun detachLocalRouter() {
+  fun detachNavigator() {
     this.navigator = EmptyNavigator
   }
 

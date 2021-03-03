@@ -5,6 +5,7 @@ import com.aleksejantonov.core.db.api.di.CoreDatabaseApi
 import com.aleksejantonov.core.di.GlobalFeatureProvider
 import com.aleksejantonov.core.mediator.api.FilterDataMediator
 import com.aleksejantonov.core.navigation.GlobalRouter
+import com.aleksejantonov.core.navigation.ModalsRouter
 import com.aleksejantonov.feature.beerlist.api.di.FeatureBeerListApi
 import com.aleksejantonov.feature.beerlist.impl.di.FeatureBeerListComponent
 import com.aleksejantonov.feature.beerlist.impl.di.FeatureBeerListComponentDependencies
@@ -110,12 +111,12 @@ class FeatureProviderModule {
   fun provideFeatureFilterDependencies(
     coreDatabaseApi: CoreDatabaseApi,
     filterDataMediator: FilterDataMediator,
-    router: GlobalRouter
+    modalsRouter: ModalsRouter
   ): FeatureFilterComponentDependencies {
     return object : FeatureFilterComponentDependencies {
       override fun coreDatabaseApi(): CoreDatabaseApi = coreDatabaseApi
       override fun filterDataMediator(): FilterDataMediator = filterDataMediator
-      override fun router(): GlobalRouter = router
+      override fun modalsRouter(): ModalsRouter = modalsRouter
     }
   }
 

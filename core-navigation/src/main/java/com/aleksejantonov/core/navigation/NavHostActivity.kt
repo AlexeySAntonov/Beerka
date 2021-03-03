@@ -15,7 +15,7 @@ class NavHostActivity : BaseNavHostActivity() {
     (intent.getSerializableExtra(GlobalRouter.EXTRA_ACTIVITY_TRANSITION) as? ActivityTransition) ?: ActivityTransition.Slide()
   }
 
-  private val localRouter by lazy {
+  private val navigator by lazy {
 //    val bottomSheetHost = supportFragmentManager
 //        .findFragmentById(R.id.persistentBottomSheetContainer)
 //        ?: throw IllegalStateException("Bottom sheet host not found")
@@ -52,7 +52,7 @@ class NavHostActivity : BaseNavHostActivity() {
     overridePendingTransition(transition.closeEnter, transition.closeExit)
   }
 
-  override fun localRouter(): Navigator = localRouter
+  override fun navigator(): Navigator = navigator
 
   private fun handleIntent(intent: Intent) {
     // Under dev

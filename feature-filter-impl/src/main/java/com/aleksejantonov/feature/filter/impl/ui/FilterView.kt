@@ -112,7 +112,7 @@ class FilterView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
       )
       interpolator = AccelerateInterpolator()
       duration = 130L
-      doOnEnd { viewModel.onClose() }
+      doOnEnd { viewModel.onClose(context) }
       start()
     }
   }

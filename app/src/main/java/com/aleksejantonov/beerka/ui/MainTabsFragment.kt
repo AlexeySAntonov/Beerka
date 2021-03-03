@@ -30,8 +30,8 @@ class MainTabsFragment : BaseFragment(R.layout.fragment_main_tabs) {
     super.onViewCreated(view, savedInstanceState)
     toggleGroup.onSwitchTabClick { tab ->
       when (tab) {
-        TabsSwitcherBlockView.SwitchTab.BEERS -> viewModel.onTabClick(NavigationTab.BEER_LIST, false)
-        TabsSwitcherBlockView.SwitchTab.FAVORITES -> viewModel.onTabClick(NavigationTab.FAVORITES, false)
+        TabsSwitcherBlockView.SwitchTab.BEERS -> viewModel.onTabClick(NavigationTab.BEER_LIST)
+        TabsSwitcherBlockView.SwitchTab.FAVORITES -> viewModel.onTabClick(NavigationTab.FAVORITES)
       }
     }
     toggleGroup.onFilterClick { context?.let { viewModel.openFilterFeature(it) } }
@@ -39,7 +39,7 @@ class MainTabsFragment : BaseFragment(R.layout.fragment_main_tabs) {
     beerListContainer.isVisible = true
     favoriteBeersContainer.isVisible = false
 
-    (activity as? MainActivity)?.localRouter?.tabNavigation?.currentTab?.observe {
+    (activity as? MainActivity)?.navigator?.tabNavigation?.currentTab?.observe {
       toggleGroup.switchTab(TabsSwitcherBlockView.SwitchTab.values()[it.ordinal])
       visibleContainer?.show(false)
       when (it) {
@@ -57,11 +57,9 @@ class MainTabsFragment : BaseFragment(R.layout.fragment_main_tabs) {
 
   override fun onResume() {
     super.onResume()
-    val tabNavigation = (activity as? MainActivity)?.localRouter?.tabNavigation ?: return
+    val tabNavigation = (activity as? MainActivity)?.navigator?.tabNavigation ?: return
     if (tabNavigation.currentScreen() == null) {
-//      val fragment = DI.appComponent.globalFeatureProvider().provideFeatureBeerList()
-//      tabNavigation.switchTab({ fragment }, NavigationTab.BEER_LIST)
-      viewModel.onTabClick(NavigationTab.BEER_LIST, false)
+      viewModel.onTabClick(NavigationTab.BEER_LIST)
     }
   }
 

@@ -1,7 +1,8 @@
 package com.aleksejantonov.feature.filter.impl.ui
 
+import android.content.Context
 import androidx.lifecycle.viewModelScope
-import com.aleksejantonov.core.navigation.GlobalRouter
+import com.aleksejantonov.core.navigation.ModalsRouter
 import com.aleksejantonov.core.ui.base.BaseViewModel
 import com.aleksejantonov.core.ui.model.FilterItem
 import com.aleksejantonov.feature.filter.impl.data.FilterInteractor
@@ -15,7 +16,7 @@ import javax.inject.Inject
 
 class FilterViewModel @Inject constructor(
   private val interactor: FilterInteractor,
-  private val router: GlobalRouter
+  private val modalsRouter: ModalsRouter
 ) : BaseViewModel() {
 
   private val _data = MutableSharedFlow<FilterItem>(replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
@@ -35,8 +36,8 @@ class FilterViewModel @Inject constructor(
     }
   }
 
-  fun onClose() {
-    router.removeCurrentModal()
+  fun onClose(parentContext: Context) {
+    modalsRouter.removeCurrentModal(parentContext)
   }
 
 }
