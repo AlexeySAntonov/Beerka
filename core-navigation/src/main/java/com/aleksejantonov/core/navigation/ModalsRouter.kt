@@ -1,12 +1,9 @@
 package com.aleksejantonov.core.navigation
 
-import android.app.Activity
 import android.content.Context
 import android.view.View
 import com.aleksejantonov.core.di.GlobalFeatureProvider
 import com.aleksejantonov.core.ui.base.BottomSheetable
-import com.aleksejantonov.core.ui.base.mvvm.addViewOnTheVeryTop
-import com.aleksejantonov.core.ui.base.mvvm.removeViewFromTheVeryTop
 import java.lang.ref.WeakReference
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -19,18 +16,18 @@ class ModalsRouter @Inject constructor(
   private var modalViewRef: WeakReference<View>? = null
 
   fun openFilterModal(context: Context) {
-    openModalView(globalFeatureProvider.provideFeatureFilter(context), context)
+    openModalView(globalFeatureProvider.provideFeatureFilter(context))
   }
 
-  private fun openModalView(view: View, parentContext: Context) {
-    removeCurrentModal(parentContext)
+  private fun openModalView(view: View) {
+    removeCurrentModal(view.context)
     modalViewRef = WeakReference(view)
-    modalViewRef?.get()?.let { (parentContext as? Activity).addViewOnTheVeryTop(view) }
+    modalViewRef?.get()?.let { (view.context as? ModalsHost)?.addModalView(view) }
     (modalViewRef?.get() as? BottomSheetable)?.animateShow()
   }
 
   fun removeCurrentModal(parentContext: Context) {
-    modalViewRef?.get()?.let { (parentContext as? Activity).removeViewFromTheVeryTop(it) }
+    modalViewRef?.get()?.let { (parentContext as? ModalsHost)?.removeModalView() }
     modalViewRef = null
   }
 
