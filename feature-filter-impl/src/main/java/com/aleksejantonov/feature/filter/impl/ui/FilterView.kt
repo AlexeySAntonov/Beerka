@@ -108,7 +108,7 @@ class FilterView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
     AnimatorSet().apply {
       playTogether(
         ObjectAnimator.ofFloat(requireNotNull(dimView), View.ALPHA, 1f, 0f),
-        ObjectAnimator.ofFloat(requireNotNull(bottomSheetContainer), View.TRANSLATION_Y, 0f, dpToPx(BOTTOM_SHEET_HEIGHT)),
+        ObjectAnimator.ofFloat(requireNotNull(bottomSheetContainer), View.TRANSLATION_Y, bottomSheetContainer?.translationY ?: 0f, dpToPx(BOTTOM_SHEET_HEIGHT)),
       )
       interpolator = AccelerateInterpolator()
       duration = 130L
@@ -153,6 +153,7 @@ class FilterView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
       addView(setupEbcSeekBar())
       addView(setupDivider())
       addView(setupApplyButton())
+      setupContainerTouchListener(this)
     }
     bottomSheetContainer?.let { addView(it) }
   }
@@ -294,28 +295,28 @@ class FilterView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
   }
 
   private var oldEventY = 0f
-  private var oldViewY = 0f
 
   @SuppressLint("ClickableViewAccessibility")
-  private fun setupBottomSheetTouch() {
-    setOnTouchListener { view, event ->
+  private fun setupContainerTouchListener(container: View) {
+    container.setOnTouchListener { view, event ->
       when (event.actionMasked) {
         MotionEvent.ACTION_DOWN -> {
-          oldViewY = view.y
           oldEventY = event.y
           true
         }
         MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
-//              view.y = oldViewY
-          view.animate().y(oldViewY).setDuration(300L).start()
-          oldViewY = 0f
-          oldEventY = 0f
+          if (view.y - (context.getScreenHeight() - dpToPx(BOTTOM_SHEET_HEIGHT)) > dpToPx(BOTTOM_SHEET_HEIGHT) / 3) {
+            animateHide()
+          } else {
+            view.animate().translationY(0f).setDuration(SHEET_BOUNCING_DURATION).start()
+            oldEventY = 0f
+          }
           true
         }
         MotionEvent.ACTION_MOVE -> {
           val dy = event.y - oldEventY
           if (dy > 0) {
-            view.y = view.y + dy
+            view.translationY = view.translationY + dy
           }
           true
         }
