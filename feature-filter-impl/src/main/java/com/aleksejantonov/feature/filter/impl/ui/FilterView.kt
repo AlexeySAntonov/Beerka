@@ -315,10 +315,12 @@ class FilterView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
         }
         MotionEvent.ACTION_MOVE -> {
           val dy = event.y - oldEventY
-          if (dy > 0) {
-            view.translationY = view.translationY + dy
+          val translationDelta = view.translationY + dy
+          if (translationDelta > 0) {
+            view.translationY = translationDelta
+            return@setOnTouchListener true
           }
-          true
+          false
         }
         else -> false
       }
