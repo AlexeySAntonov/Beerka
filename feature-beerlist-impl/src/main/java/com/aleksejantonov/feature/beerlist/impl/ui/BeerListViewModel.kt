@@ -32,13 +32,19 @@ class BeerListViewModel @Inject constructor(
   }
 
   fun loadMore() {
-    viewModelScope.launch(Dispatchers.IO) {
+    viewModelScope.launch(Dispatchers.IO + exceptionHandler) {
       interactor.loadMore()
     }
   }
 
   fun navigateToDetails(item: BeerItem) {
     router.openDetailsFeature(ScreenData(item.id))
+  }
+
+  fun toggleFavorite(id: Long) {
+    viewModelScope.launch(Dispatchers.IO + exceptionHandler) {
+      interactor.toggleFavorite(id)
+    }
   }
 
   override fun onCleared() {

@@ -77,6 +77,10 @@ class BeerListRepositoryImpl @Inject constructor(
     }
   }
 
+  override suspend fun toggleFavorite(id: Long) {
+    databaseApi.beersStore().toggleFavorite(id)
+  }
+
   private fun initialData(filterRequest: FilterModel): Flow<PagingState<BeerModel>> {
     busy.set(false)
     return databaseApi.beersStore().beersData(DEFAULT_LIMIT, 0, filterRequest)

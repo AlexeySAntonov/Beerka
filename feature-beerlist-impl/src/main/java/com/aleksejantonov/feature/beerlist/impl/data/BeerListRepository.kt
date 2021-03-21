@@ -7,4 +7,5 @@ import kotlinx.coroutines.flow.Flow
 interface BeerListRepository {
   suspend fun data(): Flow<PagingState<BeerModel>>
   suspend fun loadMore()
+  suspend fun toggleFavorite(id: Long)
 }

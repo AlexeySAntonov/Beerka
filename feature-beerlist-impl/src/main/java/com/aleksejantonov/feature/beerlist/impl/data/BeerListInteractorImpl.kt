@@ -25,4 +25,9 @@ class BeerListInteractorImpl @Inject constructor(
   override suspend fun loadMore() {
     repository.loadMore()
   }
+
+  override suspend fun toggleFavorite(id: Long) {
+    repository.toggleFavorite(id)
+  }
+
 }
