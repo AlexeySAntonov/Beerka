@@ -19,7 +19,12 @@ import kotlinx.android.synthetic.main.fragment_favorites.*
 class FavoritesFragment : BaseFragment(R.layout.fragment_favorites) {
 
   private val viewModel by trueViewModels<FavoritesViewModel>()
-  private val adapter by lazy { FavoritesAdapter { viewModel.navigateToDetails(it) } }
+  private val adapter by lazy {
+    FavoritesAdapter(
+      onItemClick = { viewModel.navigateToDetails(it) },
+      onRemoveClick = { viewModel.removeFromFavorites(it) }
+    )
+  }
 
   private val scrollListener by lazy {
     object : RecyclerView.OnScrollListener() {
@@ -74,11 +79,15 @@ class FavoritesFragment : BaseFragment(R.layout.fragment_favorites) {
     }
   }
 
-  private class FavoritesAdapter(onItemClick: (BeerItem) -> Unit) : SimpleDiffAdapter() {
+  private class FavoritesAdapter(
+    onItemClick: (BeerItem) -> Unit,
+    onRemoveClick: (id: Long) -> Unit
+  ) : SimpleDiffAdapter() {
+
     init {
       delegatesManager
         .addDelegate(PaginationLoadingDelegate())
-        .addDelegate(FavoriteItemDelegate(onItemClick))
+        .addDelegate(FavoriteItemDelegate(onItemClick, onRemoveClick))
     }
   }
 

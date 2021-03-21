@@ -37,8 +37,8 @@ interface BeerDao {
   @Query("SELECT COUNT(*) FROM beers")
   fun beersCount(): Long
 
-  @Query("UPDATE beers SET isFavorite = 1 WHERE id = :id")
-  fun setFavorite(id: Long)
+  @Query("UPDATE beers SET isFavorite = :favorite WHERE id = :id")
+  fun setFavorite(id: Long, favorite: Boolean)
 
   @Query("UPDATE beers SET isFavorite = NOT isFavorite WHERE id = :id")
   fun toggleFavorite(id: Long)

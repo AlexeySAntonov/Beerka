@@ -11,6 +11,6 @@ interface BeersStore {
   fun favoriteBeersData(limit: Int, offset: Int): Flow<List<BeerModel>>
   fun favoriteBeersCountData(): Flow<Long>
   fun beersCount(): Int
-  fun setFavorite(id: Long)
+  fun setFavorite(id: Long, favorite: Boolean)
   fun toggleFavorite(id: Long)
 }

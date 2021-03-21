@@ -45,6 +45,10 @@ class FavoritesRepositoryImpl @Inject constructor(
     }
   }
 
+  override suspend fun removeFromFavorites(id: Long) {
+    databaseApi.beersStore().setFavorite(id, favorite = false)
+  }
+
   private fun initialData(): Flow<PagingState<BeerModel>> {
     return databaseApi.beersStore().favoriteBeersData(DEFAULT_LIMIT, 0)
       .map { PagingState(data = it) }

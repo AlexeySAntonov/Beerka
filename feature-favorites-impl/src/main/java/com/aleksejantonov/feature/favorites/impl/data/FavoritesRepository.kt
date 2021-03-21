@@ -7,4 +7,5 @@ import kotlinx.coroutines.flow.Flow
 interface FavoritesRepository {
   suspend fun data(): Flow<PagingState<BeerModel>>
   suspend fun loadMore()
+  suspend fun removeFromFavorites(id: Long)
 }
