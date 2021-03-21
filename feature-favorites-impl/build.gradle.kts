@@ -37,6 +37,7 @@ dependencies {
     implementation(project(":core-ui-base"))
     implementation(project(":core-db-api"))
     implementation(project(":core-navigation"))
+    implementation(project(":core-util"))
 
     implementation(Libs.dagger)
     kapt(Libs.daggerCompiler)

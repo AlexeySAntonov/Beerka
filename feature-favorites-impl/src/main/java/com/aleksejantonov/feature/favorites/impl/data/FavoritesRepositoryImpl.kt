@@ -4,6 +4,7 @@ import com.aleksejantonov.core.db.api.di.CoreDatabaseApi
 import com.aleksejantonov.core.di.RootScope
 import com.aleksejantonov.core.model.BeerModel
 import com.aleksejantonov.core.ui.base.PagingState
+import com.aleksejantonov.core.util.value
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -37,7 +38,7 @@ class FavoritesRepositoryImpl @Inject constructor(
     if (busy.compareAndSet(false, true)) {
       job?.cancel()
       job = scope.launch {
-        databaseApi.beersStore().favoriteBeersData(DEFAULT_LIMIT + beersChannelFlow.replayCache[0].itemCount(), 0)
+        databaseApi.beersStore().favoriteBeersData(DEFAULT_LIMIT + (beersChannelFlow.value(0)?.itemCount() ?: 0), 0)
           .map { PagingState(data = it) }
           .collect { beersChannelFlow.tryEmit(it) }
       }
