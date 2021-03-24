@@ -14,7 +14,6 @@ import android.view.animation.AccelerateInterpolator
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.core.animation.doOnEnd
-import com.aleksejantonov.core.di.ComponentsManager
 import com.aleksejantonov.core.resources.beerColor
 import com.aleksejantonov.core.ui.base.BottomSheetable
 import com.aleksejantonov.core.ui.base.LayoutHelper
@@ -23,6 +22,7 @@ import com.aleksejantonov.core.ui.base.mvvm.*
 import com.aleksejantonov.core.ui.base.show
 import com.aleksejantonov.core.ui.model.FilterItem
 import com.aleksejantonov.feature.filter.impl.R
+import com.aleksejantonov.feature.filter.impl.di.FeatureFilterComponentsHolder
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.slider.LabelFormatter
 import kotlinx.coroutines.*
@@ -33,7 +33,7 @@ class FilterView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
 
   private var componentKey: String by Delegates.notNull()
   private val component: ViewModelFactoryProvider by lazy {
-    requireNotNull(ComponentsManager.get(componentKey) as? ViewModelFactoryProvider)
+    requireNotNull(FeatureFilterComponentsHolder.get(componentKey) as? ViewModelFactoryProvider)
   }
   private val viewModel: FilterViewModel by lazy { component.viewModelFactory().create(FilterViewModel::class.java) }
   private var scope: CoroutineScope? = null
@@ -75,7 +75,7 @@ class FilterView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
   override fun onDetachedFromWindow() {
     scope?.cancel()
     scope = null
-    ComponentsManager.release(componentKey)
+    FeatureFilterComponentsHolder.reset(componentKey)
     super.onDetachedFromWindow()
   }
 

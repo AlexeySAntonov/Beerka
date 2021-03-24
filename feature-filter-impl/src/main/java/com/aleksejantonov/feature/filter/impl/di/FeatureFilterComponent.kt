@@ -2,12 +2,12 @@ package com.aleksejantonov.feature.filter.impl.di
 
 import com.aleksejantonov.core.db.api.di.CoreDatabaseApi
 import com.aleksejantonov.core.di.ComponentKey
-import com.aleksejantonov.core.di.ComponentsManager
 import com.aleksejantonov.core.di.FeatureScope
 import com.aleksejantonov.core.mediator.api.FilterDataMediator
 import com.aleksejantonov.core.navigation.ModalsRouter
 import com.aleksejantonov.core.ui.base.mvvm.ViewModelFactoryProvider
 import com.aleksejantonov.feature.filter.api.di.FeatureFilterApi
+import com.aleksejantonov.module.injector.BaseDependencies
 import dagger.BindsInstance
 import dagger.Component
 import java.util.*
@@ -43,8 +43,7 @@ interface FeatureFilterComponent : FeatureFilterApi, ViewModelFactoryProvider {
         .coreDatabaseApi(dependencies.coreDatabaseApi())
         .filterDataMediator(dependencies.filterDataMediator())
         .modalsRouter(dependencies.modalsRouter())
-        .build()
-        .also { ComponentsManager.save(componentKey, it) } to componentKey
+        .build() to componentKey
     }
   }
 }
@@ -52,7 +51,7 @@ interface FeatureFilterComponent : FeatureFilterApi, ViewModelFactoryProvider {
 /**
  * Clear interface which hides dependencies provider implementation
  */
-interface FeatureFilterComponentDependencies {
+interface FeatureFilterComponentDependencies : BaseDependencies {
   fun coreDatabaseApi(): CoreDatabaseApi
   fun filterDataMediator(): FilterDataMediator
   fun modalsRouter(): ModalsRouter

@@ -16,8 +16,8 @@ import com.aleksejantonov.feature.favorites.api.di.FeatureFavoritesApi
 import com.aleksejantonov.feature.favorites.impl.di.FeatureFavoritesComponentDependencies
 import com.aleksejantonov.feature.favorites.impl.di.FeatureFavoritesComponentsHolder
 import com.aleksejantonov.feature.filter.api.di.FeatureFilterApi
-import com.aleksejantonov.feature.filter.impl.di.FeatureFilterComponent
 import com.aleksejantonov.feature.filter.impl.di.FeatureFilterComponentDependencies
+import com.aleksejantonov.feature.filter.impl.di.FeatureFilterComponentsHolder
 import dagger.Module
 import dagger.Provides
 import javax.inject.Provider
@@ -125,7 +125,7 @@ class FeatureProviderModule {
   fun provideFeatureFilterApi(
     dependencies: FeatureFilterComponentDependencies
   ): Pair<FeatureFilterApi, String> {
-    return FeatureFilterComponent.init(dependencies)
+    return FeatureFilterComponentsHolder.init(dependencies)
   }
 
 }

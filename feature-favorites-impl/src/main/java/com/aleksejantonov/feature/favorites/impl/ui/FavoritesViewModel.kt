@@ -4,13 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.aleksejantonov.core.di.ComponentKey
-import com.aleksejantonov.core.di.ComponentsManager
 import com.aleksejantonov.core.di.ScreenData
 import com.aleksejantonov.core.navigation.GlobalRouter
 import com.aleksejantonov.core.ui.base.BaseViewModel
 import com.aleksejantonov.core.ui.model.BeerItem
 import com.aleksejantonov.core.ui.model.ListItem
 import com.aleksejantonov.feature.favorites.impl.data.FavoritesInteractor
+import com.aleksejantonov.feature.favorites.impl.di.FeatureFavoritesComponentsHolder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -48,6 +48,6 @@ class FavoritesViewModel @Inject constructor(
   }
 
   override fun onCleared() {
-    ComponentsManager.release(componentKey)
+    FeatureFavoritesComponentsHolder.reset(componentKey)
   }
 }

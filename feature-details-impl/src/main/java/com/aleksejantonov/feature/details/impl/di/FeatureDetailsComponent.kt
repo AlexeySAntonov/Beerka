@@ -2,7 +2,6 @@ package com.aleksejantonov.feature.details.impl.di
 
 import com.aleksejantonov.core.db.api.di.CoreDatabaseApi
 import com.aleksejantonov.core.di.ComponentKey
-import com.aleksejantonov.core.di.ComponentsManager
 import com.aleksejantonov.core.di.FeatureScope
 import com.aleksejantonov.core.navigation.GlobalRouter
 import com.aleksejantonov.core.ui.base.mvvm.ViewModelFactoryProvider

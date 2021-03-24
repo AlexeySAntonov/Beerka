@@ -2,7 +2,6 @@ package com.aleksejantonov.feature.favorites.impl.di
 
 import com.aleksejantonov.core.db.api.di.CoreDatabaseApi
 import com.aleksejantonov.core.di.ComponentKey
-import com.aleksejantonov.core.di.ComponentsManager
 import com.aleksejantonov.core.di.RootScope
 import com.aleksejantonov.core.navigation.GlobalRouter
 import com.aleksejantonov.core.ui.base.mvvm.ViewModelFactoryProvider
@@ -39,8 +38,7 @@ interface FeatureFavoritesComponent : FeatureFavoritesApi, ViewModelFactoryProvi
                 .componentKey(componentKey)
                 .coreDatabaseApi(dependencies.coreDatabaseApi())
                 .router(dependencies.router())
-                .build()
-                .also { ComponentsManager.save(componentKey, it) } to componentKey
+                .build() to componentKey
 
         }
     }
