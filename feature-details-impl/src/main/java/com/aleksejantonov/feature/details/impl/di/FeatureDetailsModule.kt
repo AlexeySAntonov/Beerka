@@ -1,8 +1,6 @@
 package com.aleksejantonov.feature.details.impl.di
 
 import androidx.lifecycle.ViewModel
-import com.aleksejantonov.core.di.EntityIdProvider
-import com.aleksejantonov.core.di.EntityIdProviderImpl
 import com.aleksejantonov.core.di.FeatureScope
 import com.aleksejantonov.core.ui.base.mvvm.ViewModelKey
 import com.aleksejantonov.feature.details.api.data.FeatureDetailsScreenProvider
@@ -14,10 +12,6 @@ import dagger.multibindings.IntoMap
 
 @Module
 abstract class FeatureDetailsModule {
-
-  @Binds
-  @FeatureScope
-  abstract fun entityIdProvider(provider: EntityIdProviderImpl): EntityIdProvider
 
   @Binds
   @FeatureScope

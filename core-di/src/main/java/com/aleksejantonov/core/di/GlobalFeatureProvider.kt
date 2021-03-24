@@ -4,9 +4,11 @@ import android.content.Context
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.aleksejantonov.feature.beerlist.api.di.FeatureBeerListApi
+import com.aleksejantonov.feature.details.api.data.FeatureDetailsScreenData
 import com.aleksejantonov.feature.details.api.di.FeatureDetailsApi
 import com.aleksejantonov.feature.favorites.api.di.FeatureFavoritesApi
 import com.aleksejantonov.feature.filter.api.di.FeatureFilterApi
+import com.aleksejantonov.module.injector.ScreenCustomDependencies
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Provider
@@ -34,10 +36,10 @@ class GlobalFeatureProvider @Inject constructor(
     }
   }
 
-  fun provideFeatureDetails(screenData: ScreenData): String {
+  fun provideFeatureDetails(customDependencies: ScreenCustomDependencies): String {
     val (component, componentKey) = featureDetailsApiProvider.get()
     return UUID.randomUUID().toString().also { screenKey ->
-      save(screenKey, component.featureDetailsScreenProvider().screen(componentKey, screenData))
+      save(screenKey, component.featureDetailsScreenProvider().screen(componentKey, customDependencies))
     }
   }
 

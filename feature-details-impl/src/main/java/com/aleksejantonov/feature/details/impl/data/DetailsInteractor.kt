@@ -4,6 +4,6 @@ import com.aleksejantonov.core.ui.model.BeerItem
 import kotlinx.coroutines.flow.Flow
 
 interface DetailsInteractor {
-  suspend fun data(): Flow<BeerItem>
-  fun toggleFavorite()
+  suspend fun data(beerId: Long): Flow<BeerItem>
+  fun toggleFavorite(beerId: Long)
 }

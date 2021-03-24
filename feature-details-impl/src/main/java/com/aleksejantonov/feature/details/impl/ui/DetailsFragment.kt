@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.aleksejantonov.core.di.ScreenData
 import com.aleksejantonov.core.ui.base.BaseFragment
 import com.aleksejantonov.core.ui.base.GlideApp
 import com.aleksejantonov.core.ui.base.mvvm.ViewModelFactoryProvider
@@ -12,6 +11,7 @@ import com.aleksejantonov.core.ui.base.mvvm.dpToPx
 import com.aleksejantonov.core.ui.base.mvvm.setBackgroundTint
 import com.aleksejantonov.core.ui.base.mvvm.setMargins
 import com.aleksejantonov.core.ui.model.BeerItem
+import com.aleksejantonov.feature.details.api.data.FeatureDetailsScreenData
 import com.aleksejantonov.feature.details.impl.R
 import com.aleksejantonov.feature.details.impl.di.FeatureDetailsComponentsHolder
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
@@ -23,6 +23,12 @@ class DetailsFragment : BaseFragment(R.layout.fragment_details) {
 
   private val viewModel by viewModels<DetailsViewModel> {
     (FeatureDetailsComponentsHolder.get(requireNotNull(arguments?.getString(COMPONENT_KEY))) as ViewModelFactoryProvider).viewModelFactory()
+  }
+
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    // Link screen data and viewModel
+    viewModel.passScreenData(requireNotNull(arguments?.getSerializable(SCREEN_DATA) as FeatureDetailsScreenData))
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -62,10 +68,7 @@ class DetailsFragment : BaseFragment(R.layout.fragment_details) {
   }
 
   companion object {
-    /**
-     * ScreenData: args[0] - id: Long
-     */
-    fun create(componentKey: String, screenData: ScreenData) = DetailsFragment().apply {
+    fun create(componentKey: String, screenData: FeatureDetailsScreenData) = DetailsFragment().apply {
       arguments = Bundle().apply {
         putString(COMPONENT_KEY, componentKey)
         putSerializable(SCREEN_DATA, screenData)

@@ -5,12 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.aleksejantonov.core.di.ComponentKey
 import com.aleksejantonov.core.ui.base.BaseViewModel
-import com.aleksejantonov.core.di.ScreenData
 import com.aleksejantonov.core.navigation.GlobalRouter
 import com.aleksejantonov.core.ui.model.ListItem
 import com.aleksejantonov.feature.beerlist.impl.data.BeerListInteractor
 import com.aleksejantonov.core.ui.model.BeerItem
 import com.aleksejantonov.feature.beerlist.impl.di.FeatureBeerListComponentsHolder
+import com.aleksejantonov.module.injector.ScreenCustomDependencies
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -38,7 +38,7 @@ class BeerListViewModel @Inject constructor(
   }
 
   fun navigateToDetails(item: BeerItem) {
-    router.openDetailsFeature(ScreenData(item.id))
+    router.openDetailsFeature(ScreenCustomDependencies(item.id))
   }
 
   fun toggleFavorite(id: Long) {

@@ -7,5 +7,7 @@ interface ComponentsHolder<C : BaseApi, B : BaseDependencies> {
   fun reset(componentKey: String)
 }
 
+// Marker
 interface BaseApi
+// Marker
 interface BaseDependencies

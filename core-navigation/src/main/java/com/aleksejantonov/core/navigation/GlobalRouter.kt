@@ -2,8 +2,7 @@ package com.aleksejantonov.core.navigation
 
 import android.content.Context
 import com.aleksejantonov.core.di.GlobalFeatureProvider
-import com.aleksejantonov.core.di.ScreenData
-import com.aleksejantonov.core.ui.base.BottomSheetable
+import com.aleksejantonov.module.injector.ScreenCustomDependencies
 import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.sendBlocking
 import kotlinx.coroutines.flow.asFlow
@@ -19,8 +18,8 @@ class GlobalRouter @Inject constructor(
 
   /** FEATURE NAVIGATION REGION */
 
-  fun openDetailsFeature(screenData: ScreenData) {
-    val screenKey = globalFeatureProvider.provideFeatureDetails(screenData)
+  fun openDetailsFeature(customDependencies: ScreenCustomDependencies) {
+    val screenKey = globalFeatureProvider.provideFeatureDetails(customDependencies)
     openFullScreen(screenKey)
   }
 

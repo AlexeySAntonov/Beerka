@@ -14,8 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
-            android:screenOrientation="portrait">
+            android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,7 +25,6 @@
         <activity
             android:name="com.aleksejantonov.core.navigation.NavHostActivity"
             android:parentActivityName=".MainActivity"
-            android:screenOrientation="portrait"
             android:theme="@style/NavHostTheme"
             android:windowSoftInputMode="adjustNothing"
             tools:ignore="LockedOrientationActivity" />

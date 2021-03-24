@@ -11,12 +11,12 @@ class DetailsInteractorImpl @Inject constructor(
   private val repository: DetailsRepository
 ) : DetailsInteractor {
 
-  override suspend fun data(): Flow<BeerItem> {
-    return repository.data().map { model -> BeerItem.from(model) }
+  override suspend fun data(beerId: Long): Flow<BeerItem> {
+    return repository.data(beerId).map { model -> BeerItem.from(model) }
   }
 
-  override fun toggleFavorite() {
-    repository.toggleFavorite()
+  override fun toggleFavorite(beerId: Long) {
+    repository.toggleFavorite(beerId)
   }
 
 }

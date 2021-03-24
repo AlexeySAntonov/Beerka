@@ -34,6 +34,7 @@ android {
 dependencies {
     implementation(project(":core-ui-base"))
     implementation(project(":core-di"))
+    implementation(project(":module-injector"))
 
     implementation(Libs.coroutines)
     implementation(Libs.lifecycleViewModelKtx)
