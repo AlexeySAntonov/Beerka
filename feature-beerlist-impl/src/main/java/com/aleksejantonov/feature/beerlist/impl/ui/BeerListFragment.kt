@@ -2,18 +2,22 @@ package com.aleksejantonov.feature.beerlist.impl.ui
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.aleksejantonov.core.ui.base.BaseFragment
+import com.aleksejantonov.core.ui.base.mvvm.ViewModelFactoryProvider
 import com.aleksejantonov.core.ui.base.mvvm.setMargins
 import com.aleksejantonov.core.ui.base.mvvm.setPaddings
-import com.aleksejantonov.core.ui.base.mvvm.trueViewModels
 import com.aleksejantonov.feature.beerlist.impl.R
+import com.aleksejantonov.feature.beerlist.impl.di.FeatureBeerListComponentsHolder
 import kotlinx.android.synthetic.main.fragment_beer_list.*
 
 class BeerListFragment : BaseFragment(R.layout.fragment_beer_list) {
 
-  private val viewModel by trueViewModels<BeerListViewModel>()
+  private val viewModel by viewModels<BeerListViewModel> {
+    (FeatureBeerListComponentsHolder.get(requireNotNull(arguments?.getString(COMPONENT_KEY))) as ViewModelFactoryProvider).viewModelFactory()
+  }
   private val adapter by lazy {
     BeersAdapter(
       onBeerClick = { viewModel.navigateToDetails(it) },

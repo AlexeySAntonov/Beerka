@@ -3,12 +3,12 @@ package com.aleksejantonov.feature.beerlist.impl.di
 import com.aleksejantonov.core.api.BeersApi
 import com.aleksejantonov.core.db.api.di.CoreDatabaseApi
 import com.aleksejantonov.core.di.ComponentKey
-import com.aleksejantonov.core.di.ComponentsManager
 import com.aleksejantonov.core.di.RootScope
 import com.aleksejantonov.core.mediator.api.FilterDataMediator
 import com.aleksejantonov.core.navigation.GlobalRouter
 import com.aleksejantonov.core.ui.base.mvvm.ViewModelFactoryProvider
 import com.aleksejantonov.feature.beerlist.api.di.FeatureBeerListApi
+import com.aleksejantonov.module.injector.BaseDependencies
 import dagger.BindsInstance
 import dagger.Component
 import java.util.*
@@ -48,8 +48,7 @@ interface FeatureBeerListComponent : FeatureBeerListApi, ViewModelFactoryProvide
                 .coreDatabaseApi(dependencies.coreDatabaseApi())
                 .filterDataMediator(dependencies.filterDataMediator())
                 .router(dependencies.router())
-                .build()
-                .also { ComponentsManager.save(componentKey, it) } to componentKey
+                .build() to componentKey
         }
     }
 }
@@ -57,7 +56,7 @@ interface FeatureBeerListComponent : FeatureBeerListApi, ViewModelFactoryProvide
 /**
  * Clear interface which hides dependencies provider implementation
  */
-interface FeatureBeerListComponentDependencies {
+interface FeatureBeerListComponentDependencies : BaseDependencies {
     fun beersApi(): BeersApi
     fun coreDatabaseApi(): CoreDatabaseApi
     fun filterDataMediator(): FilterDataMediator

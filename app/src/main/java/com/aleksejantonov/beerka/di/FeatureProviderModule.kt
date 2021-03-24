@@ -7,10 +7,9 @@ import com.aleksejantonov.core.mediator.api.FilterDataMediator
 import com.aleksejantonov.core.navigation.GlobalRouter
 import com.aleksejantonov.core.navigation.ModalsRouter
 import com.aleksejantonov.feature.beerlist.api.di.FeatureBeerListApi
-import com.aleksejantonov.feature.beerlist.impl.di.FeatureBeerListComponent
 import com.aleksejantonov.feature.beerlist.impl.di.FeatureBeerListComponentDependencies
+import com.aleksejantonov.feature.beerlist.impl.di.FeatureBeerListComponentsHolder
 import com.aleksejantonov.feature.details.api.di.FeatureDetailsApi
-import com.aleksejantonov.feature.details.impl.di.FeatureDetailsComponent
 import com.aleksejantonov.feature.details.impl.di.FeatureDetailsComponentDependencies
 import com.aleksejantonov.feature.details.impl.di.FeatureDetailsComponentsHolder
 import com.aleksejantonov.feature.favorites.api.di.FeatureFavoritesApi
@@ -64,7 +63,7 @@ class FeatureProviderModule {
   fun provideFeatureBeerListApi(
     dependencies: FeatureBeerListComponentDependencies
   ): Pair<FeatureBeerListApi, String> {
-    return FeatureBeerListComponent.init(dependencies)
+    return FeatureBeerListComponentsHolder.init(dependencies)
   }
 
   @Provides

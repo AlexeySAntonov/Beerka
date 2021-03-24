@@ -39,8 +39,7 @@ interface FeatureDetailsComponent : FeatureDetailsApi, ViewModelFactoryProvider 
         .componentKey(componentKey)
         .coreDatabaseApi(dependencies.coreDatabaseApi())
         .router(dependencies.router())
-        .build()
-        .also { ComponentsManager.save(componentKey, it) } to componentKey
+        .build() to componentKey
     }
   }
 }
