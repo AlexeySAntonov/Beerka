@@ -9,12 +9,14 @@ import com.aleksejantonov.core.ui.base.releaseGlide
 import com.aleksejantonov.core.ui.model.BeerItem
 import com.aleksejantonov.core.ui.model.ListItem
 import com.aleksejantonov.feature.beerlist.impl.R
+import com.aleksejantonov.feature.beerlist.impl.ui.BeersAdapter.Companion.PAYLOAD_FAVORITE
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
 import com.hannesdorfmann.adapterdelegates4.AbsListItemAdapterDelegate
 import kotlinx.android.synthetic.main.item_beer.view.*
 
 class BeerItemDelegate(
-  private val onBeerClick: (BeerItem) -> Unit
+  private val onBeerClick: (BeerItem) -> Unit,
+  private val onFavoriteClick: (id: Long) -> Unit
 ) : AbsListItemAdapterDelegate<BeerItem, ListItem, BeerItemDelegate.ViewHolder>() {
 
   override fun onCreateViewHolder(parent: ViewGroup): ViewHolder {
@@ -23,6 +25,10 @@ class BeerItemDelegate(
 
   override fun isForViewType(item: ListItem, items: MutableList<ListItem>, position: Int): Boolean = item is BeerItem
   override fun onBindViewHolder(item: BeerItem, holder: ViewHolder, payloads: MutableList<Any>) {
+    if (payloads.any { it == PAYLOAD_FAVORITE }) {
+      holder.updateFavorite(item)
+      return
+    }
     holder.bind(item)
   }
 
@@ -38,6 +44,7 @@ class BeerItemDelegate(
         description.text = item.description
         setOnClickListener { onBeerClick.invoke(item) }
         favoriteIcon.setImageResource(if (item.isFavorite) R.drawable.ic_star_24 else R.drawable.ic_star_empty_24)
+        favoriteOverlay.setOnClickListener { onFavoriteClick.invoke(item.id) }
 
         GlideApp.with(context)
           .load(item.image)
@@ -46,6 +53,10 @@ class BeerItemDelegate(
           .error(R.drawable.ic_beer_stub)
           .into(image)
       }
+    }
+
+    fun updateFavorite(item: BeerItem) {
+      itemView.favoriteIcon.setImageResource(if (item.isFavorite) R.drawable.ic_star_24 else R.drawable.ic_star_empty_24)
     }
 
     fun release() {

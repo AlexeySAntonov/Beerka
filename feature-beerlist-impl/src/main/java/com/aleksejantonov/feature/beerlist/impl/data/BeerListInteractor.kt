@@ -6,4 +6,5 @@ import kotlinx.coroutines.flow.Flow
 interface BeerListInteractor {
   suspend fun data(): Flow<List<ListItem>>
   suspend fun loadMore()
+  suspend fun toggleFavorite(id: Long)
 }

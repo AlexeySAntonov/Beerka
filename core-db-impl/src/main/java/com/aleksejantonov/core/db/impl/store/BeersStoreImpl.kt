@@ -49,8 +49,8 @@ class BeersStoreImpl @Inject constructor(private val db: DatabaseClientApi) : Be
     return db.beerDao().beersCount().toInt()
   }
 
-  override fun setFavorite(id: Long) {
-    db.beerDao().setFavorite(id)
+  override fun setFavorite(id: Long, favorite: Boolean) {
+    db.beerDao().setFavorite(id, favorite)
   }
 
   override fun toggleFavorite(id: Long) {

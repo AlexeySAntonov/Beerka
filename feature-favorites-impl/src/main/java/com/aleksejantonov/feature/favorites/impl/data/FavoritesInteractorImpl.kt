@@ -25,4 +25,9 @@ class FavoritesInteractorImpl @Inject constructor(
   override suspend fun loadMore() {
     repository.loadMore()
   }
+
+  override suspend fun removeFromFavorites(id: Long) {
+    repository.removeFromFavorites(id)
+  }
+
 }

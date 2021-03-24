@@ -24,6 +24,27 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@drawable/ic_beer_stub" />
 
+    <ImageView
+        android:id="@+id/removeIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:src="@drawable/ic_close_24"
+        android:tint="@color/appGreyLight"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/removeOverlay"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:background="@drawable/bg_ripple_dark"
+        app:layout_constraintBottom_toBottomOf="@+id/removeIcon"
+        app:layout_constraintEnd_toEndOf="@+id/removeIcon"
+        app:layout_constraintStart_toStartOf="@+id/removeIcon"
+        app:layout_constraintTop_toTopOf="@+id/removeIcon" />
+
     <TextView
         android:id="@+id/name"
         android:layout_width="0dp"

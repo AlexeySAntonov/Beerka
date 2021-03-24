@@ -32,13 +32,19 @@ class FavoritesViewModel @Inject constructor(
   }
 
   fun loadMore() {
-    viewModelScope.launch(Dispatchers.IO) {
+    viewModelScope.launch(Dispatchers.IO + exceptionHandler) {
       interactor.loadMore()
     }
   }
 
   fun navigateToDetails(item: BeerItem) {
     router.openDetailsFeature(ScreenData(item.id))
+  }
+
+  fun removeFromFavorites(id: Long) {
+    viewModelScope.launch(Dispatchers.IO + exceptionHandler) {
+      interactor.removeFromFavorites(id)
+    }
   }
 
   override fun onCleared() {

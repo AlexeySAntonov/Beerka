@@ -14,7 +14,8 @@ import com.hannesdorfmann.adapterdelegates4.AbsListItemAdapterDelegate
 import kotlinx.android.synthetic.main.item_favorite.view.*
 
 class FavoriteItemDelegate(
-  private val onBeerClick: (BeerItem) -> Unit
+  private val onBeerClick: (BeerItem) -> Unit,
+  private val onRemoveClick: (id: Long) -> Unit
 ) : AbsListItemAdapterDelegate<BeerItem, ListItem, FavoriteItemDelegate.ViewHolder>() {
 
   override fun onCreateViewHolder(parent: ViewGroup): ViewHolder {
@@ -37,6 +38,7 @@ class FavoriteItemDelegate(
         name.text = item.name
         description.text = item.description
         setOnClickListener { onBeerClick.invoke(item) }
+        removeOverlay.setOnClickListener { onRemoveClick.invoke(item.id) }
 
         GlideApp.with(context)
           .load(item.image)

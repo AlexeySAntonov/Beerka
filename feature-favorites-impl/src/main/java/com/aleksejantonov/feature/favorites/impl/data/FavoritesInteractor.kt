@@ -6,4 +6,5 @@ import kotlinx.coroutines.flow.Flow
 interface FavoritesInteractor {
   suspend fun data(): Flow<List<ListItem>>
   suspend fun loadMore()
+  suspend fun removeFromFavorites(id: Long)
 }

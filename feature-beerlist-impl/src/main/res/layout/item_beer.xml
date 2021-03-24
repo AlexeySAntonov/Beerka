@@ -60,6 +60,16 @@
       app:layout_constraintTop_toTopOf="@+id/name" />
 
   <View
+      android:id="@+id/favoriteOverlay"
+      android:layout_width="36dp"
+      android:layout_height="36dp"
+      android:background="@drawable/bg_ripple_dark"
+      app:layout_constraintBottom_toBottomOf="@+id/favoriteIcon"
+      app:layout_constraintEnd_toEndOf="@+id/favoriteIcon"
+      app:layout_constraintStart_toStartOf="@+id/favoriteIcon"
+      app:layout_constraintTop_toTopOf="@+id/favoriteIcon" />
+
+  <View
       android:layout_width="0dp"
       android:layout_height="0.5dp"
       android:layout_marginStart="16dp"

@@ -7,6 +7,7 @@ import com.aleksejantonov.core.mediator.api.FilterDataMediator
 import com.aleksejantonov.core.model.BeerModel
 import com.aleksejantonov.core.model.FilterModel
 import com.aleksejantonov.core.ui.base.PagingState
+import com.aleksejantonov.core.util.value
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -52,16 +53,16 @@ class BeerListRepositoryImpl @Inject constructor(
   }
 
   override suspend fun loadMore() {
-    if (busy.compareAndSet(false, true) && !beersChannelFlow.replayCache[0].allLoadedEnd) {
+    if (busy.compareAndSet(false, true) && beersChannelFlow.value(0)?.allLoadedEnd != true) {
       job?.cancel()
       job = scope.launch {
-        val filterRequest = filterDataMediator.filterDataFlow.replayCache.getOrNull(0) ?: FilterModel.default()
-        databaseApi.beersStore().beersData(DEFAULT_LIMIT + beersChannelFlow.replayCache[0].itemCount(), 0, filterRequest)
+        val filterRequest = filterDataMediator.filterDataFlow.value(0) ?: FilterModel.default()
+        databaseApi.beersStore().beersData(DEFAULT_LIMIT + (beersChannelFlow.value(0)?.itemCount() ?: 0), 0, filterRequest)
           .map { PagingState(data = it, allLoadedEnd = allLoadedEnd) }
           .onStart {
             try {
               val beers = beersApi.getBeers(
-                page = beersChannelFlow.replayCache[0].itemCount() / DEFAULT_LIMIT + 1,
+                page = (beersChannelFlow.value(0)?.itemCount() ?: 0) / DEFAULT_LIMIT + 1,
                 limit = DEFAULT_LIMIT,
                 filterRequest = filterRequest
               )
@@ -75,6 +76,10 @@ class BeerListRepositoryImpl @Inject constructor(
       }
       busy.set(false)
     }
+  }
+
+  override suspend fun toggleFavorite(id: Long) {
+    databaseApi.beersStore().toggleFavorite(id)
   }
 
   private fun initialData(filterRequest: FilterModel): Flow<PagingState<BeerModel>> {
