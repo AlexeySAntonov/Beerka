@@ -2,23 +2,27 @@ package com.aleksejantonov.feature.favorites.impl.ui
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.aleksejantonov.core.ui.base.BaseFragment
 import com.aleksejantonov.core.ui.base.adapter.SimpleDiffAdapter
 import com.aleksejantonov.core.ui.base.adapter.delegate.PaginationLoadingDelegate
 import com.aleksejantonov.core.ui.base.adapter.delegate.PaginationLoadingItem
+import com.aleksejantonov.core.ui.base.mvvm.ViewModelFactoryProvider
 import com.aleksejantonov.core.ui.base.mvvm.setMargins
 import com.aleksejantonov.core.ui.base.mvvm.setPaddings
-import com.aleksejantonov.core.ui.base.mvvm.trueViewModels
 import com.aleksejantonov.core.ui.model.BeerItem
 import com.aleksejantonov.feature.favorites.impl.R
+import com.aleksejantonov.feature.favorites.impl.di.FeatureFavoritesComponentsHolder
 import com.aleksejantonov.feature.favorites.impl.ui.delegate.FavoriteItemDelegate
 import kotlinx.android.synthetic.main.fragment_favorites.*
 
 class FavoritesFragment : BaseFragment(R.layout.fragment_favorites) {
 
-  private val viewModel by trueViewModels<FavoritesViewModel>()
+  private val viewModel by viewModels<FavoritesViewModel> {
+    (FeatureFavoritesComponentsHolder.get(requireNotNull(arguments?.getString(COMPONENT_KEY))) as ViewModelFactoryProvider).viewModelFactory()
+  }
   private val adapter by lazy {
     FavoritesAdapter(
       onItemClick = { viewModel.navigateToDetails(it) },

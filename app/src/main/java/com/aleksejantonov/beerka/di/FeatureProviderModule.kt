@@ -13,8 +13,8 @@ import com.aleksejantonov.feature.details.api.di.FeatureDetailsApi
 import com.aleksejantonov.feature.details.impl.di.FeatureDetailsComponentDependencies
 import com.aleksejantonov.feature.details.impl.di.FeatureDetailsComponentsHolder
 import com.aleksejantonov.feature.favorites.api.di.FeatureFavoritesApi
-import com.aleksejantonov.feature.favorites.impl.di.FeatureFavoritesComponent
 import com.aleksejantonov.feature.favorites.impl.di.FeatureFavoritesComponentDependencies
+import com.aleksejantonov.feature.favorites.impl.di.FeatureFavoritesComponentsHolder
 import com.aleksejantonov.feature.filter.api.di.FeatureFilterApi
 import com.aleksejantonov.feature.filter.impl.di.FeatureFilterComponent
 import com.aleksejantonov.feature.filter.impl.di.FeatureFilterComponentDependencies
@@ -83,7 +83,7 @@ class FeatureProviderModule {
   fun provideFeatureFavoritesApi(
     dependencies: FeatureFavoritesComponentDependencies
   ): Pair<FeatureFavoritesApi, String> {
-    return FeatureFavoritesComponent.init(dependencies)
+    return FeatureFavoritesComponentsHolder.init(dependencies)
   }
 
   @Provides
