@@ -12,6 +12,7 @@ import com.aleksejantonov.feature.beerlist.impl.di.FeatureBeerListComponentDepen
 import com.aleksejantonov.feature.details.api.di.FeatureDetailsApi
 import com.aleksejantonov.feature.details.impl.di.FeatureDetailsComponent
 import com.aleksejantonov.feature.details.impl.di.FeatureDetailsComponentDependencies
+import com.aleksejantonov.feature.details.impl.di.FeatureDetailsComponentsHolder
 import com.aleksejantonov.feature.favorites.api.di.FeatureFavoritesApi
 import com.aleksejantonov.feature.favorites.impl.di.FeatureFavoritesComponent
 import com.aleksejantonov.feature.favorites.impl.di.FeatureFavoritesComponentDependencies
@@ -103,7 +104,7 @@ class FeatureProviderModule {
   fun provideFeatureDetailsApi(
     dependencies: FeatureDetailsComponentDependencies
   ): Pair<FeatureDetailsApi, String> {
-    return FeatureDetailsComponent.init(dependencies)
+    return FeatureDetailsComponentsHolder.init(dependencies)
   }
 
   @Provides

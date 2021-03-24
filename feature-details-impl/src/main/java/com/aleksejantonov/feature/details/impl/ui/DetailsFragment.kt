@@ -2,16 +2,18 @@ package com.aleksejantonov.feature.details.impl.ui
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.aleksejantonov.core.di.ScreenData
 import com.aleksejantonov.core.ui.base.BaseFragment
 import com.aleksejantonov.core.ui.base.GlideApp
+import com.aleksejantonov.core.ui.base.mvvm.ViewModelFactoryProvider
 import com.aleksejantonov.core.ui.base.mvvm.dpToPx
 import com.aleksejantonov.core.ui.base.mvvm.setBackgroundTint
 import com.aleksejantonov.core.ui.base.mvvm.setMargins
-import com.aleksejantonov.core.ui.base.mvvm.trueViewModels
 import com.aleksejantonov.core.ui.model.BeerItem
 import com.aleksejantonov.feature.details.impl.R
+import com.aleksejantonov.feature.details.impl.di.FeatureDetailsComponentsHolder
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import kotlinx.android.synthetic.main.fragment_details.*
 import kotlinx.coroutines.flow.collect
@@ -19,7 +21,9 @@ import kotlinx.coroutines.launch
 
 class DetailsFragment : BaseFragment(R.layout.fragment_details) {
 
-  private val viewModel by trueViewModels<DetailsViewModel>()
+  private val viewModel by viewModels<DetailsViewModel> {
+    (FeatureDetailsComponentsHolder.get(requireNotNull(arguments?.getString(COMPONENT_KEY))) as ViewModelFactoryProvider).viewModelFactory()
+  }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)

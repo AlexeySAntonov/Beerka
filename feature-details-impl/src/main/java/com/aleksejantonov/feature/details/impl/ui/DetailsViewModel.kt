@@ -2,11 +2,11 @@ package com.aleksejantonov.feature.details.impl.ui
 
 import androidx.lifecycle.viewModelScope
 import com.aleksejantonov.core.di.ComponentKey
-import com.aleksejantonov.core.di.ComponentsManager
 import com.aleksejantonov.core.navigation.GlobalRouter
 import com.aleksejantonov.core.ui.base.BaseViewModel
 import com.aleksejantonov.core.ui.model.BeerItem
 import com.aleksejantonov.feature.details.impl.data.DetailsInteractor
+import com.aleksejantonov.feature.details.impl.di.FeatureDetailsComponentsHolder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -43,6 +43,6 @@ class DetailsViewModel @Inject constructor(
   }
 
   override fun onCleared() {
-    ComponentsManager.release(componentKey)
+    FeatureDetailsComponentsHolder.reset(componentKey)
   }
 }

@@ -32,6 +32,4 @@ android {
 
 dependencies {
     implementation(Libs.kotlin)
-    implementation(Libs.appCompat)
-    api(project(":module-injector"))
 }

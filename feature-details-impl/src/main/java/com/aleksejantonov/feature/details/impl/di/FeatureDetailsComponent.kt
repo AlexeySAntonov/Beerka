@@ -7,6 +7,7 @@ import com.aleksejantonov.core.di.FeatureScope
 import com.aleksejantonov.core.navigation.GlobalRouter
 import com.aleksejantonov.core.ui.base.mvvm.ViewModelFactoryProvider
 import com.aleksejantonov.feature.details.api.di.FeatureDetailsApi
+import com.aleksejantonov.module.injector.BaseDependencies
 import dagger.BindsInstance
 import dagger.Component
 import java.util.*
@@ -47,7 +48,7 @@ interface FeatureDetailsComponent : FeatureDetailsApi, ViewModelFactoryProvider 
 /**
  * Clear interface which hides dependencies provider implementation
  */
-interface FeatureDetailsComponentDependencies {
+interface FeatureDetailsComponentDependencies : BaseDependencies {
   fun coreDatabaseApi(): CoreDatabaseApi
   fun router(): GlobalRouter
 }
