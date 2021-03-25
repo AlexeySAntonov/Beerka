@@ -1,9 +1,12 @@
 package com.aleksejantonov.module.injector
 
-interface ComponentsHolder<C : BaseApi, B : BaseDependencies> {
+import java.io.Serializable
+
+interface ComponentsHolder<C : BaseApi, B : BaseDependencies, S : ScreenData> {
   fun init(dependencies: B): Pair<C, String>
-  fun get(componentKey: String): C
-  fun restoreIfPossible(componentKey: String): C
+  fun setScreenDataAndGetComponent(componentKey: String, screenData: S? = null): Pair<C, String>
+  fun restoreComponent(screenData: S? = null): Pair<C, String>
+  fun getScreenData(componentKey: String): S
   fun reset(componentKey: String)
 }
 
@@ -11,3 +14,5 @@ interface ComponentsHolder<C : BaseApi, B : BaseDependencies> {
 interface BaseApi
 // Marker
 interface BaseDependencies
+// Marker
+interface ScreenData : Serializable

@@ -35,6 +35,7 @@ dependencies {
     api(project(":core-resources"))
     api(project(":core-ui-model"))
     api(project(":core-di"))
+    api(project(":module-injector"))
     api(Libs.kotlin)
     api(Libs.appCompat)
     api(Libs.fragment)

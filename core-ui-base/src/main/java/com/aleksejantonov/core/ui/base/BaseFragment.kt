@@ -17,6 +17,7 @@ import com.aleksejantonov.core.ui.base.mvvm.navBarHeight
 import com.aleksejantonov.core.ui.base.mvvm.setMargins
 import com.aleksejantonov.core.ui.base.mvvm.setPaddings
 import com.aleksejantonov.core.ui.base.mvvm.statusBarHeight
+import com.aleksejantonov.module.injector.ScreenData
 import kotlinx.coroutines.Job
 import timber.log.Timber
 
@@ -115,6 +116,18 @@ abstract class BaseFragment(@LayoutRes contentLayoutId: Int) : Fragment(contentL
 
   protected inline fun <T> LiveData<T>.observe(crossinline observer: (T) -> Unit) {
     observe(viewLifecycleOwner, { observer.invoke(it) })
+  }
+
+  protected fun componentKey(): String {
+    return requireNotNull(arguments?.getString(COMPONENT_KEY))
+  }
+
+  protected fun updateComponentKey(componentKey: String) {
+    arguments?.putString(COMPONENT_KEY, componentKey)
+  }
+
+  protected fun screenData(): ScreenData? {
+    return arguments?.getSerializable(SCREEN_DATA) as? ScreenData
   }
 
   companion object {

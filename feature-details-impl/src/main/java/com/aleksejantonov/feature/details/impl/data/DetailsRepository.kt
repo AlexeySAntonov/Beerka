@@ -4,6 +4,6 @@ import com.aleksejantonov.core.model.BeerModel
 import kotlinx.coroutines.flow.Flow
 
 interface DetailsRepository {
-  fun data(beerId: Long): Flow<BeerModel>
-  fun toggleFavorite(beerId: Long)
+  fun data(): Flow<BeerModel>
+  fun toggleFavorite()
 }

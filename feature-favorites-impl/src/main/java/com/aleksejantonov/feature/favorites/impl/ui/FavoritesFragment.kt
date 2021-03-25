@@ -21,7 +21,12 @@ import kotlinx.android.synthetic.main.fragment_favorites.*
 class FavoritesFragment : BaseFragment(R.layout.fragment_favorites) {
 
   private val viewModel by viewModels<FavoritesViewModel> {
-    (FeatureFavoritesComponentsHolder.get(requireNotNull(arguments?.getString(COMPONENT_KEY))) as ViewModelFactoryProvider).viewModelFactory()
+    val (component, componentKey) = FeatureFavoritesComponentsHolder.setScreenDataAndGetComponent(
+      componentKey = componentKey(),
+      screenData = screenData()
+    )
+    updateComponentKey(componentKey)
+    (component as ViewModelFactoryProvider).viewModelFactory()
   }
   private val adapter by lazy {
     FavoritesAdapter(

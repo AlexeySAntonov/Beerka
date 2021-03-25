@@ -22,13 +22,12 @@ import kotlinx.coroutines.launch
 class DetailsFragment : BaseFragment(R.layout.fragment_details) {
 
   private val viewModel by viewModels<DetailsViewModel> {
-    (FeatureDetailsComponentsHolder.get(requireNotNull(arguments?.getString(COMPONENT_KEY))) as ViewModelFactoryProvider).viewModelFactory()
-  }
-
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    // Link screen data and viewModel
-    viewModel.passScreenData(requireNotNull(arguments?.getSerializable(SCREEN_DATA) as FeatureDetailsScreenData))
+    val (component, componentKey) = FeatureDetailsComponentsHolder.setScreenDataAndGetComponent(
+      componentKey = componentKey(),
+      screenData = screenData() as? FeatureDetailsScreenData
+    )
+    updateComponentKey(componentKey)
+    (component as ViewModelFactoryProvider).viewModelFactory()
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

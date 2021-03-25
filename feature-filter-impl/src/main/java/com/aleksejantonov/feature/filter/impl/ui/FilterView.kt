@@ -33,7 +33,8 @@ class FilterView(context: Context, attrs: AttributeSet? = null) : FrameLayout(co
 
   private var componentKey: String by Delegates.notNull()
   private val component: ViewModelFactoryProvider by lazy {
-    requireNotNull(FeatureFilterComponentsHolder.get(componentKey) as? ViewModelFactoryProvider)
+    // TODO update key
+    requireNotNull(FeatureFilterComponentsHolder.setScreenDataAndGetComponent(componentKey).first as? ViewModelFactoryProvider)
   }
   private val viewModel: FilterViewModel by lazy { component.viewModelFactory().create(FilterViewModel::class.java) }
   private var scope: CoroutineScope? = null

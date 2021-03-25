@@ -16,7 +16,12 @@ import kotlinx.android.synthetic.main.fragment_beer_list.*
 class BeerListFragment : BaseFragment(R.layout.fragment_beer_list) {
 
   private val viewModel by viewModels<BeerListViewModel> {
-    (FeatureBeerListComponentsHolder.get(requireNotNull(arguments?.getString(COMPONENT_KEY))) as ViewModelFactoryProvider).viewModelFactory()
+    val (component, componentKey) = FeatureBeerListComponentsHolder.setScreenDataAndGetComponent(
+      componentKey = componentKey(),
+      screenData = screenData()
+    )
+    updateComponentKey(componentKey)
+    (component as ViewModelFactoryProvider).viewModelFactory()
   }
   private val adapter by lazy {
     BeersAdapter(

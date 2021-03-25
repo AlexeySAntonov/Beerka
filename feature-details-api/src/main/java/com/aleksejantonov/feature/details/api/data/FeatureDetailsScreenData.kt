@@ -1,11 +1,11 @@
 package com.aleksejantonov.feature.details.api.data
 
 import com.aleksejantonov.module.injector.ScreenCustomDependencies
-import java.io.Serializable
+import com.aleksejantonov.module.injector.ScreenData
 
 class FeatureDetailsScreenData(
   val beerId: Long
-) : Serializable {
+) : ScreenData {
 
   companion object {
 
