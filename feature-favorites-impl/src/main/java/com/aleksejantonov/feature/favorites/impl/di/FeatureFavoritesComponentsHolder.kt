@@ -6,7 +6,7 @@ import com.aleksejantonov.module.injector.ScreenData
 
 object FeatureFavoritesComponentsHolder : ComponentsHolder<FeatureFavoritesApi, FeatureFavoritesComponentDependencies, ScreenData>() {
 
-  override fun init(dependencies: FeatureFavoritesComponentDependencies): Pair<FeatureFavoritesApi, String> {
+  override fun initComponent(dependencies: FeatureFavoritesComponentDependencies): Pair<FeatureFavoritesApi, String> {
     val (component, componentKey) = FeatureFavoritesComponent.init(dependencies)
     if (restorationDependencies == null) {
       restorationDependencies = dependencies

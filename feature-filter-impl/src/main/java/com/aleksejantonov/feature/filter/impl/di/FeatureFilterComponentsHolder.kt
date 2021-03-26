@@ -6,7 +6,7 @@ import com.aleksejantonov.module.injector.ScreenData
 
 object FeatureFilterComponentsHolder : ComponentsHolder<FeatureFilterApi, FeatureFilterComponentDependencies, ScreenData>() {
 
-  override fun init(dependencies: FeatureFilterComponentDependencies): Pair<FeatureFilterApi, String> {
+  override fun initComponent(dependencies: FeatureFilterComponentDependencies): Pair<FeatureFilterApi, String> {
     val (component, componentKey) = FeatureFilterComponent.init(dependencies)
     if (restorationDependencies == null) {
       restorationDependencies = dependencies

@@ -63,7 +63,7 @@ class FeatureProviderModule {
   fun provideFeatureBeerListApi(
     dependencies: FeatureBeerListComponentDependencies
   ): Pair<FeatureBeerListApi, String> {
-    return FeatureBeerListComponentsHolder.init(dependencies)
+    return FeatureBeerListComponentsHolder.initComponent(dependencies)
   }
 
   @Provides
@@ -83,7 +83,7 @@ class FeatureProviderModule {
   fun provideFeatureFavoritesApi(
     dependencies: FeatureFavoritesComponentDependencies
   ): Pair<FeatureFavoritesApi, String> {
-    return FeatureFavoritesComponentsHolder.init(dependencies)
+    return FeatureFavoritesComponentsHolder.initComponent(dependencies)
   }
 
   @Provides
@@ -103,7 +103,7 @@ class FeatureProviderModule {
   fun provideFeatureDetailsApi(
     dependencies: FeatureDetailsComponentDependencies
   ): Pair<FeatureDetailsApi, String> {
-    return FeatureDetailsComponentsHolder.init(dependencies)
+    return FeatureDetailsComponentsHolder.initComponent(dependencies)
   }
 
   @Provides
@@ -125,7 +125,7 @@ class FeatureProviderModule {
   fun provideFeatureFilterApi(
     dependencies: FeatureFilterComponentDependencies
   ): Pair<FeatureFilterApi, String> {
-    return FeatureFilterComponentsHolder.init(dependencies)
+    return FeatureFilterComponentsHolder.initComponent(dependencies)
   }
 
 }

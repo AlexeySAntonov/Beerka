@@ -6,7 +6,7 @@ import com.aleksejantonov.module.injector.ScreenData
 
 object FeatureBeerListComponentsHolder : ComponentsHolder<FeatureBeerListApi, FeatureBeerListComponentDependencies, ScreenData>() {
 
-  override fun init(dependencies: FeatureBeerListComponentDependencies): Pair<FeatureBeerListApi, String> {
+  override fun initComponent(dependencies: FeatureBeerListComponentDependencies): Pair<FeatureBeerListApi, String> {
     val (component, componentKey) = FeatureBeerListComponent.init(dependencies)
     if (restorationDependencies == null) {
       restorationDependencies = dependencies

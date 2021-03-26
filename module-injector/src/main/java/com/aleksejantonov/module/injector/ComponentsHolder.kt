@@ -8,7 +8,7 @@ abstract class ComponentsHolder<C : BaseApi, B : BaseDependencies, S : ScreenDat
   protected val screenDataMap: HashMap<String, S> = hashMapOf()
   protected var restorationDependencies: B? = null
 
-  abstract fun init(dependencies: B): Pair<C, String>
+  abstract fun initComponent(dependencies: B): Pair<C, String>
   abstract fun restoreComponent(screenData: S? = null): Pair<C, String>
 
   fun setScreenDataAndGetComponent(componentKey: String, screenData: S? = null): Pair<C, String> {

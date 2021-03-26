@@ -7,7 +7,7 @@ import timber.log.Timber
 
 object FeatureDetailsComponentsHolder : ComponentsHolder<FeatureDetailsApi, FeatureDetailsComponentDependencies, FeatureDetailsScreenData>() {
 
-  override fun init(dependencies: FeatureDetailsComponentDependencies): Pair<FeatureDetailsApi, String> {
+  override fun initComponent(dependencies: FeatureDetailsComponentDependencies): Pair<FeatureDetailsApi, String> {
     val (component, componentKey) = FeatureDetailsComponent.init(dependencies)
     if (restorationDependencies == null) {
       restorationDependencies = dependencies
