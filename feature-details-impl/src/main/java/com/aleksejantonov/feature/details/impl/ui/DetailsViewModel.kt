@@ -7,6 +7,7 @@ import com.aleksejantonov.core.ui.base.BaseViewModel
 import com.aleksejantonov.core.ui.model.BeerItem
 import com.aleksejantonov.feature.details.impl.data.DetailsInteractor
 import com.aleksejantonov.feature.details.impl.di.FeatureDetailsComponentsHolder
+import com.aleksejantonov.module.injector.ScreenCustomDependencies
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -38,6 +39,10 @@ class DetailsViewModel @Inject constructor(
     viewModelScope.launch(Dispatchers.IO + exceptionHandler) {
       interactor.toggleFavorite()
     }
+  }
+
+  fun testForCycleNavigation() {
+    router.openDetailsFeature(ScreenCustomDependencies(4L))
   }
 
   fun onBack() {

@@ -35,6 +35,7 @@ class DetailsFragment : BaseFragment(R.layout.fragment_details) {
     uiStateJob = lifecycleScope.launch { viewModel.data.collect { setData(it) } }
     backButton.setOnClickListener { viewModel.onBack() }
     favoriteButton.setOnClickListener { viewModel.toggleFavorite() }
+    image.setOnClickListener { viewModel.testForCycleNavigation() }
   }
 
   override fun onStatusBarHeight(statusBarHeight: Int) {

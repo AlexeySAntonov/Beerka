@@ -32,4 +32,5 @@ android {
 
 dependencies {
     implementation(Libs.kotlin)
+    implementation(Libs.timber)
 }
