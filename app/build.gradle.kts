@@ -6,6 +6,15 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        create("release") {
+            keyAlias = "beerkaKey"
+            keyPassword = project.property("BEERKA_KEY_PASSWORD") as String
+            storeFile = file("/Users/alextrue/project/key_stores/beerka")
+            storePassword = project.property("BEERKA_STORE_PASSWORD") as String
+        }
+    }
+
     compileSdkVersion(Versions.compileSdk)
     buildToolsVersion(Versions.buildTools)
 
@@ -22,14 +31,18 @@ android {
         getByName("release") {
             isMinifyEnabled = true
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
+            isDebuggable = false
+            signingConfig = signingConfigs.getByName("release")
+        }
+        getByName("debug") {
+            isMinifyEnabled = false
+            isDebuggable = true
+            applicationIdSuffix = ".debug"
         }
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = "1.8"
     }
 }
 
@@ -47,5 +60,6 @@ dependencies {
 
     implementation(Libs.dagger)
     kapt(Libs.daggerCompiler)
-    implementation(Libs.leakCanary)
+
+    debugImplementation(Libs.leakCanary)
 }

@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 buildscript {
   repositories {
     jcenter()
@@ -5,7 +7,7 @@ buildscript {
   }
   dependencies {
     classpath(BuildPlugins.kotlinGradlePlugin)
-    classpath(BuildPlugins.androidTools)
+    classpath(BuildPlugins.AGP)
     classpath(BuildPlugins.googleServices)
   }
 }
@@ -15,4 +17,12 @@ allprojects {
     jcenter()
     google()
   }
+
+  tasks.withType<KotlinCompile>().configureEach {
+    kotlinOptions {
+      jvmTarget = "1.8"
+      useIR = true
+    }
+  }
+
 }

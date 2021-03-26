@@ -4,7 +4,7 @@ object Versions {
     const val targetSdk = 30
     const val minSdk = 21
 
-    const val kotlin = "1.4.20"
+    const val kotlin = "1.4.30"
     const val coroutines = "1.4.0"
     const val retrofit = "2.9.0"
     const val stetho = "1.5.1"
@@ -57,6 +57,6 @@ object Libs {
 
 object BuildPlugins {
     const val kotlinGradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
-    const val androidTools = "com.android.tools.build:gradle:4.1.1"
+    const val AGP = "com.android.tools.build:gradle:4.1.3"
     const val googleServices = "com.google.gms:google-services:4.3.4"
 }
