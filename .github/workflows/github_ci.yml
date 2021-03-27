@@ -50,9 +50,11 @@ jobs:
           keyStorePassword: BEERKA_KEYSTORE_PASSWORD
           keyPassword: BEERKA_KEY_PASSWORD
 
+      - name: Check signed path
+        run: echo "Signed apk output = ${{steps.sign_app.outputs.signedReleaseFile}}"
+
       - name: Upload APK
         id: upload_apk
-        run: echo "Signed apk output = ${{ steps.create_release.outputs.upload_url }}"
         uses: actions/upload-artifact@v2.2.0
         with:
           name: Release artifact
