@@ -11,6 +11,12 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    env:
+      BEERKA_KEY_ALIAS: ${{ secrets.BEERKA_KEY_ALIAS }}
+      BEERKA_KEY_PASSWORD: ${{ secrets.BEERKA_KEY_PASSWORD }}
+      BEERKA_KEYSTORE: ${{ secrets.BEERKA_KEYSTORE }}
+      BEERKA_KEYSTORE_PASSWORD: ${{ secrets.BEERKA_KEYSTORE_PASSWORD }}
+
     steps:
       ## Checkout our repository ###
       - name: Checkout
@@ -38,10 +44,10 @@ jobs:
         uses: r0adkll/sign-android-release@v1.0.1
         with:
           releaseDirectory: app/build/outputs/apk/release
-          alias: ${{ secrets.BEERKA_KEY_ALIAS }}
-          signingKeyBase64: ${{ secrets.BEERKA_KEYSTORE }}
-          keyStorePassword: ${{ secrets.BEERKA_KEYSTORE_PASSWORD }}
-          keyPassword: ${{ secrets.BEERKA_KEY_PASSWORD }}
+          alias: BEERKA_KEY_ALIAS
+          signingKeyBase64: BEERKA_KEYSTORE
+          keyStorePassword: BEERKA_KEYSTORE_PASSWORD
+          keyPassword: BEERKA_KEY_PASSWORD
 
       - name: Upload our APK
         uses: actions/upload-artifact@v2.2.0
