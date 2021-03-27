@@ -32,7 +32,8 @@ android {
             isMinifyEnabled = true
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
             isDebuggable = false
-            if (System.getenv()["CI"] != "true") {
+            logger.warn("System ENV CI: ${System.getenv()["CI"]}")
+            if (System.getenv()["CI"] == null) {
                 signingConfig = signingConfigs.getByName("release")
             }
         }
