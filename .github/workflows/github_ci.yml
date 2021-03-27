@@ -40,7 +40,8 @@ jobs:
 
       ## Sign artifact##
       - name: Sign artifact
-        id: signArtifact
+        # ID used to access action output
+        id: sign_app
         uses: r0adkll/sign-android-release@v1.0.1
         with:
           releaseDirectory: app/build/outputs/apk/release
@@ -49,8 +50,10 @@ jobs:
           keyStorePassword: BEERKA_KEYSTORE_PASSWORD
           keyPassword: BEERKA_KEY_PASSWORD
 
-      - name: Upload our APK
+      - name: Upload APK
+        id: upload_apk
+        run: echo "Signed apk output = ${{ steps.create_release.outputs.upload_url }}"
         uses: actions/upload-artifact@v2.2.0
         with:
           name: Release artifact
-          path: ${{steps.signArtifact.outputs.signedReleaseFile}}
+          path: ${{steps.sign_app.outputs.signedReleaseFile}}
