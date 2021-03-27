@@ -6,14 +6,14 @@ plugins {
 }
 
 android {
-//    signingConfigs {
-//        create("release") {
-//            keyAlias = System.getenv()["BEERKA_KEY_ALIAS"] ?: project.property("BEERKA_KEY_ALIAS") as String
-//            keyPassword = System.getenv()["BEERKA_KEY_PASSWORD"] ?: project.property("BEERKA_KEY_PASSWORD") as String
-//            storeFile = file("/Users/alextrue/project/key_stores/beerka")
-//            storePassword = System.getenv()["BEERKA_KEYSTORE_PASSWORD"] ?: project.property("BEERKA_KEYSTORE_PASSWORD") as String
-//        }
-//    }
+    signingConfigs {
+        create("release") {
+            keyAlias = System.getenv()["BEERKA_KEY_ALIAS"] ?: project.property("BEERKA_KEY_ALIAS") as String
+            keyPassword = System.getenv()["BEERKA_KEY_PASSWORD"] ?: project.property("BEERKA_KEY_PASSWORD") as String
+            storeFile = file("/Users/alextrue/project/key_stores/beerka")
+            storePassword = System.getenv()["BEERKA_KEYSTORE_PASSWORD"] ?: project.property("BEERKA_KEYSTORE_PASSWORD") as String
+        }
+    }
 
     compileSdkVersion(Versions.compileSdk)
     buildToolsVersion(Versions.buildTools)
@@ -32,7 +32,9 @@ android {
             isMinifyEnabled = true
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
             isDebuggable = false
-//            signingConfig = signingConfigs.getByName("release")
+            if (System.getenv()["CI"] == null) {
+                signingConfig = signingConfigs.getByName("release")
+            }
         }
         getByName("debug") {
             isMinifyEnabled = false
