@@ -8,7 +8,7 @@ plugins {
 android {
     signingConfigs {
         create("release") {
-            keyAlias = "beerkaKey"
+            keyAlias = project.property("BEERKA_KEY_ALIAS") as String
             keyPassword = project.property("BEERKA_KEY_PASSWORD") as String
             storeFile = file("/Users/alextrue/project/key_stores/beerka")
             storePassword = project.property("BEERKA_STORE_PASSWORD") as String
@@ -32,7 +32,9 @@ android {
             isMinifyEnabled = true
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
             isDebuggable = false
-            signingConfig = signingConfigs.getByName("release")
+            if (System.getenv()["CI"] != "true") {
+                signingConfig = signingConfigs.getByName("release")
+            }
         }
         getByName("debug") {
             isMinifyEnabled = false
