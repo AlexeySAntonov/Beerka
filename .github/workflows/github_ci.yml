@@ -43,7 +43,7 @@ jobs:
       - name: Sign artifact
         # ID used to access action output
         id: sign_app
-        uses: r0adkll/sign-android-release@v1.0.1
+        uses: r0adkll/sign-android-release@master
         with:
           releaseDirectory: app/build/outputs/apk/release
           alias: BEERKA_KEY_ALIAS
