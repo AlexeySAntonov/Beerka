@@ -56,7 +56,7 @@ jobs:
 
       - name: Upload APK
         id: upload_apk
-        uses: actions/upload-artifact@v2.2.0
+        uses: actions/upload-artifact@master
         with:
-          name: Release artifact
+          name: release.apk
           path: ${{steps.sign_app.outputs.signedReleaseFile}}
