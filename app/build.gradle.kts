@@ -10,7 +10,7 @@ android {
         create("release") {
             keyAlias = System.getenv()["BEERKA_KEY_ALIAS"] ?: project.property("BEERKA_KEY_ALIAS") as String
             keyPassword = System.getenv()["BEERKA_KEY_PASSWORD"] ?: project.property("BEERKA_KEY_PASSWORD") as String
-            storeFile = file("/Users/alextrue/project/key_stores/beerka")
+            storeFile = file(System.getenv()["BEERKA_KEYSTORE_PATH"] ?: project.property("BEERKA_KEYSTORE_PATH") as String)
             storePassword = System.getenv()["BEERKA_KEYSTORE_PASSWORD"] ?: project.property("BEERKA_KEYSTORE_PASSWORD") as String
         }
     }

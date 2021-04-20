@@ -16,9 +16,10 @@ jobs:
       BEERKA_KEY_PASSWORD: ${{ secrets.BEERKA_KEY_PASSWORD }}
       BEERKA_KEYSTORE: ${{ secrets.BEERKA_KEYSTORE }}
       BEERKA_KEYSTORE_PASSWORD: ${{ secrets.BEERKA_KEYSTORE_PASSWORD }}
+      BEERKA_KEYSTORE_PATH: ${{ secrets.BEERKA_KEYSTORE_PATH }}
 
     steps:
-      ## Checkout our repository ###
+      ## Checkout repository ###
       - name: Checkout
         uses: actions/checkout@v2.3.3
 
@@ -27,7 +28,7 @@ jobs:
         with:
           java-version: 1.8
 
-      ## Build all our Build Types at once ##
+      ## Build all Build Types at once ##
       - name: Build all artifacts
         id: buildAllApks
         uses: eskatos/gradle-command-action@v1.3.3
