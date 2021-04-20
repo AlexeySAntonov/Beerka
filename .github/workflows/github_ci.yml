@@ -46,10 +46,10 @@ jobs:
         uses: r0adkll/sign-android-release@master
         with:
           releaseDirectory: app/build/outputs/apk/release
-          alias: BEERKA_KEY_ALIAS
-          signingKeyBase64: BEERKA_KEYSTORE
-          keyStorePassword: BEERKA_KEYSTORE_PASSWORD
-          keyPassword: BEERKA_KEY_PASSWORD
+          alias: ${{ secrets.BEERKA_KEY_ALIAS }}
+          signingKeyBase64: ${{ secrets.BEERKA_KEYSTORE }}
+          keyStorePassword: ${{ secrets.BEERKA_KEYSTORE_PASSWORD }}
+          keyPassword: ${{ secrets.BEERKA_KEY_PASSWORD }}
 
       - name: Check signed path
         run: echo "Signed apk output = ${{steps.sign_app.outputs.signedReleaseFile}}"
