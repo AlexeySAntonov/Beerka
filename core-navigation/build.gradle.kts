@@ -33,7 +33,6 @@ dependencies {
     implementation(project(":module-injector"))
 
     implementation(Libs.coroutines)
-    implementation(Libs.lifecycleViewModelKtx)
     implementation(Libs.fragment)
     implementation(Libs.dagger)
     kapt(Libs.daggerCompiler)

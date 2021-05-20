@@ -10,7 +10,6 @@ object Versions {
     const val stetho = "1.5.1"
     const val glide = "4.11.0"
     const val dagger = "2.28"
-    const val lifecycle = "2.2.0"
     const val room = "2.2.5"
 }
 
@@ -29,12 +28,6 @@ object Libs {
     const val dagger = "com.google.dagger:dagger:${Versions.dagger}"
     const val daggerCompiler = "com.google.dagger:dagger-compiler:${Versions.dagger}"
     const val delegates = "com.hannesdorfmann:adapterdelegates4:4.3.0"
-
-    //Lifecycle
-    const val lifecycleExtensions = "androidx.lifecycle:lifecycle-extensions:${Versions.lifecycle}"
-    const val lifecycleCompiler = "androidx.lifecycle:lifecycle-compiler:${Versions.lifecycle}"
-    const val lifecycleViewModelKtx = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle}"
-    const val lifecycleRuntimeKtx = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifecycle}"
 
     //Network
     const val retrofit2 = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"

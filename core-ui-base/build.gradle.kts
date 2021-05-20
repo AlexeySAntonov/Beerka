@@ -39,8 +39,6 @@ dependencies {
     api(Libs.constraintLayout)
     api(Libs.delegates)
     api(Libs.ktx)
-    api(Libs.lifecycleExtensions)
-    api(Libs.lifecycleViewModelKtx)
     api(Libs.timber)
     api(Libs.glide)
     kapt(Libs.glideCompiler)

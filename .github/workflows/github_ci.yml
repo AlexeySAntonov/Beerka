@@ -11,13 +11,6 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    env:
-      BEERKA_KEY_ALIAS: ${{ secrets.BEERKA_KEY_ALIAS }}
-      BEERKA_KEY_PASSWORD: ${{ secrets.BEERKA_KEY_PASSWORD }}
-      BEERKA_KEYSTORE: ${{ secrets.BEERKA_KEYSTORE }}
-      BEERKA_KEYSTORE_PASSWORD: ${{ secrets.BEERKA_KEYSTORE_PASSWORD }}
-      BEERKA_KEYSTORE_PATH: ${{ secrets.BEERKA_KEYSTORE_PATH }}
-
     steps:
       ## Checkout repository ###
       - name: Checkout
